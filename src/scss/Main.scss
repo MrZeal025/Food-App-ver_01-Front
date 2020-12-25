@@ -6,6 +6,8 @@
 
 //partials
 @import './partials/variables.scss';
+@import './partials/profile';
+@import './partials/buttons';
 @import "~bootstrap/scss/bootstrap";
 
 * {
@@ -43,6 +45,7 @@ a, button, div {
     text-transform: capitalize
 }
 
+
 // common
 @import './common/Input.scss';
 
@@ -53,4 +56,50 @@ a, button, div {
 @import './partials/overrides';
 
 
+// ! Footer is still not fixed at the bottom of the page. Please fix.
 
+footer {
+    // clear: both;
+    width: 100%;
+    // position: absolute;
+    // bottom: 0;
+    margin-top: 2em;
+    padding: 3em 0;
+    background-color: #23272a;
+
+    .footer-primary {
+        color: $text-light;
+
+        a,
+        a:hover {
+            color: $text-light;
+        }
+
+        .footer-primary-item {
+            margin-bottom: 2em;
+        }
+
+        .footer-logo {
+            width: auto;
+            height: 2.5em;
+            margin-bottom: 1rem;
+        }
+    }
+
+    .footer-secondary {
+        color: $light-6;
+
+        a,
+        a:hover {
+            color: $light-6;
+        }
+
+        padding-top: 1em;
+        border-top: 1px solid $light-8;
+
+        img {
+            width: auto;
+            height: 1.5em;
+        }
+    }
+}

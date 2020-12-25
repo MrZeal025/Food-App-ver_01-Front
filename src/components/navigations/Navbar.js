@@ -26,7 +26,7 @@ export class NavBar extends Component {
         const { user } = this.state
         return (
             <Navbar className="nav-overrides" collapseOnSelect expand="lg" bg="dark" variant="dark">
-                <Navbar.Brand href="#home">Bitezoo</Navbar.Brand>
+                <Navbar.Brand href="/">Bitezoo</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <div className="flex-grow-1 w-100"></div>
                 <Navbar.Collapse id="responsive-navbar-nav">
@@ -37,7 +37,7 @@ export class NavBar extends Component {
                         <Nav.Link href="#pricing">
                             <IoNotificationsOutline/>
                         </Nav.Link>
-                        <NavDropdown className="to-uppercase" title={user.fullName} id="collasible-nav-dropdown">
+                        <NavDropdown className="to-uppercase" title={user.fullName || "Loading"} id="collasible-nav-dropdown">
                             <NavDropdown.Item href={`/profile/${user._id}`}>Profile</NavDropdown.Item>
                             <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
                             <NavDropdown.Divider />

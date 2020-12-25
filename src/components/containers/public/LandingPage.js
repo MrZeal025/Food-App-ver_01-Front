@@ -5,6 +5,7 @@ import { FaAngleDown } from 'react-icons/fa';
 import jwt_decode from 'jwt-decode';
 //routing
 import {Link} from "react-router-dom";
+const logoLight = process.env.PUBLIC_URL + '/assets/bite-temp-holder.png';
 
 export class LandingPage extends Component {
 
@@ -36,7 +37,7 @@ export class LandingPage extends Component {
                 <Navbar className="landNav" sticky="top" variant="dark">
                     <Navbar.Brand href="#home" className="BZlogo">
                         <img
-                            src="../../../assets/logo192.png"
+                            src={logoLight}
                             width="30"
                             height="30"
                             className="d-inline-block align-top"

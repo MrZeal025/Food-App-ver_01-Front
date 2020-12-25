@@ -1,11 +1,14 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+// components
+import UserFrame from '../UserFrame';
+import ProfileDisplay from './sub_module/ProfileDisplay';
 
 export class index extends Component {
     render() {
         return (
-            <div>
-                Appending profile page
-            </div>
+            <UserFrame>
+                <ProfileDisplay/>
+            </UserFrame>
         )
     }
 }
