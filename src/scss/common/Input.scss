@@ -1,0 +1,16 @@
+.inputHolder {
+    margin: 10px;
+
+    label {
+        display: flex;
+        
+    }
+    input {
+        width: 100%;
+        min-width: 170px;
+        padding: 5px;
+        border: unset;
+        border-radius: 5px;
+        background-color: #ebebeb;
+    }
+}

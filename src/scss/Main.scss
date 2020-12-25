@@ -1,0 +1,56 @@
+// colors
+@import "common/colors";
+
+//fonts
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
+
+//partials
+@import './partials/variables.scss';
+@import "~bootstrap/scss/bootstrap";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+body {
+    background-color: $bg-main;
+}
+
+.d-flex {
+    display: flex;
+    flex-grow: 1;
+}
+
+p {
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+.form-error {
+    color: $red;
+}
+.form-success {
+    color: $green;
+}
+
+a, button, div {
+    outline: none !important;
+}
+
+.to-uppercase {
+    text-transform: capitalize
+}
+
+// common
+@import './common/Input.scss';
+
+//LandingPage
+@import './LandingPage.scss';
+
+// overrides
+@import './partials/overrides';
+
+
+
