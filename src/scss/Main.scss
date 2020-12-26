@@ -8,7 +8,18 @@
 @import './partials/variables.scss';
 @import './partials/profile';
 @import './partials/buttons';
+@import './partials/modal';
+@import './partials/typography';
 @import "~bootstrap/scss/bootstrap";
+
+// common
+@import './common/Input.scss';
+
+//LandingPage
+@import './LandingPage.scss';
+
+// overrides
+@import './partials/overrides';
 
 * {
     margin: 0;
@@ -44,17 +55,6 @@ a, button, div {
 .to-uppercase {
     text-transform: capitalize
 }
-
-
-// common
-@import './common/Input.scss';
-
-//LandingPage
-@import './LandingPage.scss';
-
-// overrides
-@import './partials/overrides';
-
 
 // ! Footer is still not fixed at the bottom of the page. Please fix.
 

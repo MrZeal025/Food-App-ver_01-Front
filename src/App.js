@@ -3,7 +3,8 @@
  * entry point for food-app
  */
 import React, { Component } from 'react'
-//stylesheets
+// stylesheets
+import 'react-toastify/dist/ReactToastify.css';
 import './scss/Main.scss';
 //public components
 import LandingPage from './components/containers/public/LandingPage'

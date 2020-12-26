@@ -3,32 +3,42 @@ import React, { Component } from 'react'
 import { FaCamera } from 'react-icons/fa';
 // utilities
 import jwt_decode from 'jwt-decode';
+import axios from 'axios';
 import DPUploadModal from './DPUploadModal';
 import CPUploadModal from './CPUploadModal';
 
-// profil pic
-const profilPicture = process.env.PUBLIC_URL + '/profile/ako.jpg';
 const token = localStorage.getItem('accessToken');
+const config = {
+    headers: {
+      "Content-type": "application/json",
+      "Authorization" : token
+    },
+};
 
 export class ProfileDisplay extends Component {
 
     state = {
+        _id: '',
         fullname: '',
-        showDPModal: false,
+        profilePicture: '',
         showCPModal: false
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+       
         if(token) {
             const decode = jwt_decode(token);
+            const profile = await axios.get(`/api/user/profile/read/${decode._id}`, config);
             this.setState({
-                fullname: decode.fullName
+                fullname: profile.data.data.fullName,
+                _id: profile.data.data._id,
+                profilePicture: profile.data.data.profilePicture
             })
         }
     }
     
     render() {
-        const { fullname, showCPModal, showDPModal } = this.state
+        const { fullname, showCPModal, _id, profilePicture } = this.state
         return (
             <>
                 <div className="profile-control">
@@ -39,8 +49,7 @@ export class ProfileDisplay extends Component {
                             Edit Cover Photo
                         </button>
                         <div className="profile-pic-container">
-                            <img src={profilPicture} alt="DP"/>
-                            <DPUploadModal/>
+                            <DPUploadModal _id={_id}/>
                         </div>
                     </div>
                     <h2 className="profileName">{fullname !== '' ? fullname : ''}</h2>

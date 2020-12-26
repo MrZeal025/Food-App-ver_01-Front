@@ -1,0 +1,35 @@
+.text-regular {
+    font-weight: 400;
+}
+
+.text-medium {
+    font-weight: 700;
+}
+
+.text-semibold {
+    font-weight: 800;
+}
+
+.text-bold {
+    font-weight: 900;
+}
+
+// .text-extrabold { font-weight: 800; }
+// .text-black { font-weight: 900; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 800;
+}
+
+.text-light {
+    color: $text-light !important;
+
+    & a:focus {
+        color: $text-light !important;
+    }
+}
