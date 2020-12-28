@@ -8,22 +8,22 @@
 import React  from 'react';
 
 // utilities
+import { Route , Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 import PropTypes from 'prop-types';
-import { Route , Redirect } from 'react-router-dom';
 
 const AdminRoute = ({ component: Component, auth, ...rest }) => {
-
+  
     if(auth.accessToken === null){
-        window.location.href = '/login'
+        window.location.href = '/sign-in'
         return ''
     } else {
         const user = auth ? jwt_decode(auth.accessToken) : null
         return (
             <Route
                 {...rest}
-                render={ props => user.user_type === "Admin" ? <Component {...props} /> :  <Redirect to={{ pathname: "/login" }} />}
+                render={ props => user.type === "Admin:Super" ? <Component {...props} /> :  <Redirect to={{ pathname: "/sign-in" }} />}
             />
         )
     }

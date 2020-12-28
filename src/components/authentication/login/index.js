@@ -70,7 +70,7 @@ export class index extends Component {
                     break;
                 case "Admin:Super":
                     window.setTimeout(() => {
-                        window.location.href = '/admin/facility';
+                        window.location.href = '/admin/home';
                     },1000)
                     break;
                 default: break;

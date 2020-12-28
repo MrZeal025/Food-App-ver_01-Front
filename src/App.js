@@ -14,9 +14,12 @@ import RegisterVerifyPanel from './components/containers/public/RegisterVerifyPa
 import RegisterConfirmed from './components/containers/public/RegisterConfirmed';
 // Routes
 import ProtectedUserRoute from './routes/ProtectedUserRoute';
+import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
 // User
 import Home from './components/containers/User/module_Home_Page/index';
 import Profile from './components/containers/User/module_Profile/index';
+// Admin
+import Dashboard from './components/containers/Admin/module_Admin_Page/index';
 //router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // redux
@@ -42,6 +45,9 @@ export class App extends Component {
             {/* User */}
             <ProtectedUserRoute path="/home" exact component={Home} />
             <ProtectedUserRoute path="/profile/:id" exact component={Profile}/>
+
+            {/* Admin */}
+            <ProtectedAdminRoute path="/admin/home" exact component ={Dashboard} />
           </Switch>
         </Router>
       </Provider>

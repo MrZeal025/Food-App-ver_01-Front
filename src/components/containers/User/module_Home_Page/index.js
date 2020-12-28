@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import UserFrame from '../UserFrame';
-import axios from "axios";
 
 export class index extends Component {
 
