@@ -22,6 +22,8 @@ We use React.js as the main framework for the app.
 - Run `npm install` to install the dependencies.
 - Run `npm start` to start the production server.
 - Run `npm test` to run tests.
+- Add "profile" folder on the public directory
+- Add "cover-photo" folder on the public directory
 
 ## Frontend Developers
 - **Marie Pette Joyce Garcia**

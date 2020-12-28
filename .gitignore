@@ -12,6 +12,10 @@
 /build
 .eslintcache
 
+#images
+public/profile
+public/cover-photo
+
 # misc
 .DS_Store
 .env.local

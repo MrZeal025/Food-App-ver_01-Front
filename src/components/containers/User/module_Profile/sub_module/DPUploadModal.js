@@ -113,7 +113,7 @@ export class DPUploadModal extends Component {
         formData.append("profilePicture", image.formData);
         
         try {
-            const upload =  await axios.put(`/api/uploads/profile/${_id}`, formData);
+            const upload =  await axios.put(`/api/uploads/profile/${_id}`, formData, config);
             this.setState({
                 showDPModal: false,
                 profilePicture: upload.data.data.user
