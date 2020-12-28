@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Logout from '../authentication/logout/index';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 import { AiOutlineMessage } from 'react-icons/ai';
-import { IoNotificationsOutline } from 'react-icons/io5';
+import { IoNotificationsOutline, IoHome } from 'react-icons/io5';
 // utilities
 import jwt_decode from 'jwt-decode';
 
@@ -31,6 +31,9 @@ export class NavBar extends Component {
                 <div className="flex-grow-1 w-100"></div>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
+                        <Nav.Link href="/">
+                            <IoHome/>
+                        </Nav.Link>
                         <Nav.Link href="#messages">
                             <AiOutlineMessage/>
                         </Nav.Link>
