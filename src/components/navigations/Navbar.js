@@ -25,7 +25,7 @@ export class NavBar extends Component {
     render() {
         const { user } = this.state
         return (
-            <Navbar className="nav-overrides" collapseOnSelect expand="lg" bg="dark" variant="dark">
+            <Navbar className="nav-overrides" collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
                 <Navbar.Brand href="/">Bitezoo</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <div className="flex-grow-1 w-100"></div>

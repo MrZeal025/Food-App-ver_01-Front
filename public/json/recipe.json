@@ -1,0 +1,77 @@
+[
+    {
+        "recipeName": "Title of a Recipe",
+        "recipeImg": "https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+        "userName": "Juan Dela Cruz",
+        "tags": [{
+            "tagName": "Breakfast",
+            "value": "breakfast",
+            "tagColor": "#e3690c"
+        },
+        {
+            "tagName": "Healthy",
+            "value": "healthy",
+            "tagColor": "#33C200"
+        }]
+    },
+    {
+        "recipeName": "Title of a Recipe",
+        "recipeImg": "https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+        "userName": "Juan Dela Cruz",
+        "tags": [{
+            "tagName": "Breakfast",
+            "value": "breakfast",
+            "tagColor": "#e3690c"
+        },
+        {
+            "tagName": "Healthy",
+            "value": "healthy",
+            "tagColor": "#33C200"
+        }]
+    },
+    {
+        "recipeName": "Title of a Recipe",
+        "recipeImg": "https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+        "userName": "Juan Dela Cruz",
+        "tags": [{
+            "tagName": "Breakfast",
+            "value": "breakfast",
+            "tagColor": "#e3690c"
+        },
+        {
+            "tagName": "Healthy",
+            "value": "healthy",
+            "tagColor": "#33C200"
+        }]
+    },
+    {
+        "recipeName": "Title of a Recipe",
+        "recipeImg": "https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+        "userName": "Juan Dela Cruz",
+        "tags": [{
+            "tagName": "Breakfast",
+            "value": "breakfast",
+            "tagColor": "#e3690c"
+        },
+        {
+            "tagName": "Healthy",
+            "value": "healthy",
+            "tagColor": "#33C200"
+        }]
+    },
+    {
+        "recipeName": "Title of a Recipe",
+        "recipeImg": "https://images.pexels.com/photos/4871119/pexels-photo-4871119.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260",
+        "userName": "Juan Dela Cruz",
+        "tags": [{
+            "tagName": "Breakfast",
+            "value": "breakfast",
+            "tagColor": "#e3690c"
+        },
+        {
+            "tagName": "Healthy",
+            "value": "healthy",
+            "tagColor": "#33C200"
+        }]
+    }
+]

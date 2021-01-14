@@ -1,0 +1,111 @@
+.mainHomeDiv {
+    display: flex;
+    flex-direction: row;
+    padding: 70px 10px 10px 10px;
+}
+
+.left, .right {
+    position: fixed;
+    z-index: 1;
+}
+
+.left {
+    width: 20%;
+    height: 78vh;
+    display: block;
+    background-color: #ffffff;
+    padding: 13px;
+
+    .buttonText {
+        background-color: #0d1475;
+        color: white;
+        font-weight: 600;
+        padding: 6px 12px;
+    }
+    
+    .pholder {
+        font-size: 12px;
+        background-color: #D5D5D5;
+    }
+
+    .tagFilter {
+        padding-left: 0;
+    }
+
+}
+
+.middle {
+    width: 100%;
+    padding: 10px 20%;
+    flex-direction: row;
+    justify-content: center;
+
+
+    .perCard {
+        margin-bottom: 15px;
+    }
+    .customCardBody {
+        padding: 13px;
+    }
+    .title {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    .userName {
+        color: #707070;
+        font-size: 13px;
+    }
+    .rating {
+        display: flex;
+
+        .star {
+            height: 20px;
+            width: 20px;
+            margin-top: 2px;
+            margin-right: 1px; 
+        }
+        .false {
+            color: #D6D6D6;
+        }
+        .true {
+            color: #E4D400;
+        }
+        p {
+            color: #686868;
+        }
+    }
+    .tagDiv {
+        display: flex;
+    }
+    .buttonDiv {
+        display: flex;
+        flex-grow: 1;
+        justify-content: space-between;
+
+        .customButton {
+            padding: 2px 5px;
+        }
+        .secondary {
+            background-color: #3b3b3b;
+        }
+    }
+    
+}
+
+.tag {
+    border-radius: 3px;
+    padding: 1px 3px;
+    margin: 5px 5px 5px 0;
+    font-size: 11px;
+    font-weight: 600;
+    background-color: white;
+}
+
+.right {
+    right: 10px;
+    width: 20%;
+    height: 85vh;
+    display: block;
+    background-color: #ffffff;
+    padding: 15px;
+}

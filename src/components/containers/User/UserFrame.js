@@ -8,7 +8,7 @@ export class index extends Component {
             <>
                 <Navbar/>
                 {this.props.children}
-                <Footer/>
+                {/* <Footer/> */}
             </>
         )
     }

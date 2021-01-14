@@ -1,0 +1,37 @@
+[
+    {
+        "tagName": "Breakfast",
+        "value": "breakfast",
+        "tagColor": "#e3690c"
+    },
+    {
+        "tagName": "Healthy",
+        "value": "healthy",
+        "tagColor": "#33C200"
+    },
+    {
+        "tagName": "Lunch",
+        "value": "lunch",
+        "tagColor": "#ECD500"
+    },
+    {
+        "tagName": "Dinner",
+        "value": "dinner",
+        "tagColor": "#1F5DAF"
+    },
+    {
+        "tagName": "Dessert",
+        "value": "dessert",
+        "tagColor": "#FF3371"
+    },
+    {
+        "tagName": "Meaty",
+        "value": "meaty",
+        "tagColor": "#8D5400"
+    },
+    {
+        "tagName": "Vegan",
+        "value": "vegan",
+        "tagColor": "#266D0C"
+    }
+]
