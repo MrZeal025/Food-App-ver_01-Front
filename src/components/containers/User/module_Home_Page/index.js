@@ -3,7 +3,7 @@ import UserFrame from '../UserFrame';
 import axios from 'axios';
 
 //react bootstrap
-import {Card, Button, InputGroup, FormControl, Container, Row, Col} from 'react-bootstrap'
+import {Card, Button, ButtonGroup, InputGroup, FormControl, Container, Row, Col} from 'react-bootstrap'
 //react icons
 import {MdStar} from 'react-icons/md'
 
@@ -15,7 +15,8 @@ export class index extends Component {
 
     state = {
         recipes: [],
-        tags: []
+        tags: [],
+        tagsSelected: []
     }
 
     async componentDidMount() {
@@ -32,44 +33,55 @@ export class index extends Component {
        }
     }
 
+    setSelectedTags = (i) => {
+        const {tagsSelected} = this.state
+        this.setState({
+            tagsSelected: [...tagsSelected, i]
+            
+        })
+        if (tagsSelected.includes(i)) {
+            this.setState({
+                tagsSelected: tagsSelected.filter(tags => tags !== i)
+            })
+        }
+    }
+
     render() {
-        const { recipes, tags } = this.state
+        const { recipes, tags, tagsSelected } = this.state
         return (
             <UserFrame>
                 <div className="mainHomeDiv">
                     <div className="left">
-                        <InputGroup className="mb-3">
-                            <FormControl
-                            placeholder="Recipient's username"
-                            aria-label="Recipient's username"
-                            aria-describedby="basic-addon2"
-                            />
-                            <InputGroup.Append>
-                            <Button variant="outline-secondary">Button</Button>
-                            </InputGroup.Append>
-                        </InputGroup>
+                    <InputGroup>
+                        <FormControl
+                        placeholder="Search for a recipe"
+                        aria-label="Search for a recipe"
+                        aria-describedby="basic-addon2"
+                        className="pholder2"
+                        />
+                        <InputGroup.Append size="lg">
+                        <Button className="searchButton">Search</Button>
+                        </InputGroup.Append>
+                    </InputGroup>
                         <div className="filterDiv">
                             <h3>Search Filter</h3>
-                            <div>
+                            {/* Tags Filter Div */}
+                            <div className="tagsFiltDiv">
                                 <h5>Tags</h5>
-                                <Container>
-                                    <Row md={3}>
                                         {
                                             tags.map((tag, i) => {
                                                 return(
-                                                    <Col className="tagFilter">
-                                                        <button
-                                                            key={i}
-                                                            className="tag"
-                                                            style={{color:tag.tagColor, border: `2px solid ${tag.tagColor}`}}>
-                                                                {tag.tagName}
-                                                        </button> 
-                                                    </Col>
+                                                    <button
+                                                        key={i}
+                                                        className={tagsSelected.includes(tag.value)? "tag customTag activeTag" : "tag customTag"}
+                                                        style={{color:tag.tagColor, border: `2px solid ${tag.tagColor}`}}
+                                                        onClick={() => {this.setSelectedTags(tag.value)}}
+                                                        >
+                                                            {tag.tagName}
+                                                    </button> 
                                                 )
                                             })
                                         }
-                                    </Row>
-                                </Container>
                                 <InputGroup className="mb-3">
                                     <FormControl
                                         className="pholder"
@@ -77,8 +89,22 @@ export class index extends Component {
                                     />
                                 </InputGroup>
                             </div>
-                            <div>
+                            {/* Serving Size Filter Div */}
+                            <div className="serveFiltDiv">
                                 <h5>Serving Size</h5>
+                                    <button className="serveOp">1</button>
+                                    <button className="serveOp">2</button>
+                                    <button className="serveOp">3-5</button>
+                                    <button className="serveOp">6-10</button>
+                                    <button className="serveOp">11-20</button>
+                                    <button className="serveOp">21 and above</button>
+                            </div>
+                            {/* Rating Filter Div */}
+                            <div className="ratingFiltDiv">
+                                <h5>Rating</h5>
+                                <div>
+                                    <input type="radio" value="1" name="oneStar"className="radio"/><label for="oneStar"><MdStar className="star starfilt true"/></label>
+                                </div>
                             </div>
                         </div>
 
@@ -111,7 +137,7 @@ export class index extends Component {
                                                                             <p 
                                                                                 key={i}
                                                                                 className="tag" 
-                                                                                style={{color:tag.tagColor, border: `2px solid ${tag.tagColor}`}}>
+                                                                                style={{color:tag.tagColor, border: `2px solid ${tag.tagColor} `}}>
                                                                                     {tag.tagName}
                                                                             </p>
                                                                         )
@@ -121,7 +147,7 @@ export class index extends Component {
                                                         </div>
                                                         <div className="buttonDiv">
                                                         <Button className="customButton" variant="primary">See Full Recipe</Button>
-                                                        <Button className="customButton secondary">Add to Pantry</Button>
+                                                        <Button className="customButton custom-secondary">Add to Pantry</Button>
                                                         </div>
                                                         </Card.Body>
                                                     </Card>
