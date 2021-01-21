@@ -58,6 +58,9 @@
     color: #E4D400;
 }
 
+.customButton {
+    width: 100%;
+}
 
 .left, .right {
     position: fixed;
@@ -125,14 +128,18 @@
     }
     //rating filter
     .radio {
-        height: 20px;
-        width: 20px;
+        height: 18px;
+        width: 18px;
         vertical-align: middle;
 
     }
     .starfilt {
         height: 30px;
         width: 30px;
+    }
+    .rateLabel {
+        font-size: 1.5vh;
+        color: #707070;
     }
 
 }
@@ -194,4 +201,5 @@
     display: block;
     background-color: #ffffff;
     padding: 15px;
+
 }

@@ -3,12 +3,10 @@ import UserFrame from '../UserFrame';
 import axios from 'axios';
 
 //react bootstrap
-import {Card, Button, ButtonGroup, InputGroup, FormControl, Container, Row, Col} from 'react-bootstrap'
+import {Card, Button, InputGroup, FormControl, Container, Row, Col} from 'react-bootstrap'
 //react icons
 import {MdStar} from 'react-icons/md'
 
-//stylesheet
-import '../../../../scss/index.scss'
 
 
 export class index extends Component {
@@ -103,7 +101,48 @@ export class index extends Component {
                             <div className="ratingFiltDiv">
                                 <h5>Rating</h5>
                                 <div>
-                                    <input type="radio" value="1" name="oneStar"className="radio"/><label for="oneStar"><MdStar className="star starfilt true"/></label>
+                                    <input type="radio" value="1" name="oneStar"className="radio"/>
+                                    <label for="oneStar" className="rateLabel">
+                                        <MdStar className="star starfilt true"/>
+                                        (and above)
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" value="1" name="twoStar"className="radio"/>
+                                    <label for="twoStar" className="rateLabel">
+                                        <MdStar className="star starfilt true"/>
+                                        <MdStar className="star starfilt true"/>
+                                        (and above)
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" value="1" name="threeStar"className="radio"/>
+                                    <label for="threeStar" className="rateLabel">
+                                        <MdStar className="star starfilt true"/>
+                                        <MdStar className="star starfilt true"/>
+                                        <MdStar className="star starfilt true"/>
+                                        (and above)
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" value="1" name="fourStar"className="radio"/>
+                                    <label for="fourStar" className="rateLabel">
+                                        <MdStar className="star starfilt true"/>
+                                        <MdStar className="star starfilt true"/>
+                                        <MdStar className="star starfilt true"/>
+                                        <MdStar className="star starfilt true"/>
+                                        (and above)
+                                    </label>
+                                </div>
+                                <div>
+                                    <input type="radio" value="1" name="fiveStar"className="radio"/>
+                                    <label for="fiveStar" className="rateLabel">
+                                        <MdStar className="star starfilt true"/>
+                                        <MdStar className="star starfilt true"/>
+                                        <MdStar className="star starfilt true"/>
+                                        <MdStar className="star starfilt true"/>
+                                        <MdStar className="star starfilt true"/>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -159,7 +198,7 @@ export class index extends Component {
                         </Container>
                     </div>
                     <div className="right">
-                        <h1>Add Recipe</h1>
+                        <button className="customButton" onClick="">Add Your Recipe</button>
                     </div>
                 </div>
                
