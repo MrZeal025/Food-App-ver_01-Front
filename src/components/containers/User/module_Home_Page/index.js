@@ -1,13 +1,19 @@
 import React, { Component } from 'react'
 import UserFrame from '../UserFrame';
 import axios from 'axios';
-
 //react bootstrap
-import {Card, Button, InputGroup, FormControl, Container, Row, Col} from 'react-bootstrap'
+import { Card, Button, InputGroup, FormControl, Container, Row, Col } from 'react-bootstrap';
 //react icons
-import {MdStar} from 'react-icons/md'
+import { MdStar } from 'react-icons/md';
 
-
+const path = process.env.PUBLIC_URL;
+const token = localStorage.getItem('accessToken');
+const config = {
+    headers: {
+      "Content-type": "application/json",
+      "Authorization" : token
+    },
+};
 
 export class index extends Component {
 
@@ -19,10 +25,10 @@ export class index extends Component {
 
     async componentDidMount() {
        try {
-            const res = await axios.get('/json/recipe.json');
+            const recipe = await axios.get('/api/recipe/read-all', config);
             const tag = await axios.get('/json/tags.json');
             this.setState({
-                recipes: res.data,
+                recipes: recipe.data.data.recipes,
                 tags: tag.data
             })
        }
@@ -34,6 +40,7 @@ export class index extends Component {
     setSelectedTags = (i) => {
         const {tagsSelected} = this.state
         this.setState({
+            ...this.state,
             tagsSelected: [...tagsSelected, i]
             
         })
@@ -102,14 +109,14 @@ export class index extends Component {
                                 <h5>Rating</h5>
                                 <div>
                                     <input type="radio" value="1" name="oneStar"className="radio"/>
-                                    <label for="oneStar" className="rateLabel">
+                                    <label htmlFor="oneStar" className="rateLabel">
                                         <MdStar className="star starfilt true"/>
                                         (and above)
                                     </label>
                                 </div>
                                 <div>
                                     <input type="radio" value="1" name="twoStar"className="radio"/>
-                                    <label for="twoStar" className="rateLabel">
+                                    <label htmlFor="twoStar" className="rateLabel">
                                         <MdStar className="star starfilt true"/>
                                         <MdStar className="star starfilt true"/>
                                         (and above)
@@ -117,7 +124,7 @@ export class index extends Component {
                                 </div>
                                 <div>
                                     <input type="radio" value="1" name="threeStar"className="radio"/>
-                                    <label for="threeStar" className="rateLabel">
+                                    <label htmlFor="threeStar" className="rateLabel">
                                         <MdStar className="star starfilt true"/>
                                         <MdStar className="star starfilt true"/>
                                         <MdStar className="star starfilt true"/>
@@ -126,7 +133,7 @@ export class index extends Component {
                                 </div>
                                 <div>
                                     <input type="radio" value="1" name="fourStar"className="radio"/>
-                                    <label for="fourStar" className="rateLabel">
+                                    <label htmlFor="fourStar" className="rateLabel">
                                         <MdStar className="star starfilt true"/>
                                         <MdStar className="star starfilt true"/>
                                         <MdStar className="star starfilt true"/>
@@ -136,7 +143,7 @@ export class index extends Component {
                                 </div>
                                 <div>
                                     <input type="radio" value="1" name="fiveStar"className="radio"/>
-                                    <label for="fiveStar" className="rateLabel">
+                                    <label htmlFor="fiveStar" className="rateLabel">
                                         <MdStar className="star starfilt true"/>
                                         <MdStar className="star starfilt true"/>
                                         <MdStar className="star starfilt true"/>
@@ -146,7 +153,6 @@ export class index extends Component {
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div className="middle">
                         <Container fluid >
@@ -156,11 +162,11 @@ export class index extends Component {
                                             return(
                                                 <Col key={i} className="perCard">
                                                     <Card>
-                                                        <Card.Img variant="top" src={recipe.recipeImg} />
+                                                        <Card.Img variant="top" src={path + '/recipe-images/' + recipe.foodImages[0]} />
                                                         <Card.Body className="customCardBody">
-                                                        <Card.Title className="title">{recipe.recipeName}</Card.Title>
+                                                        <Card.Title className="title">{recipe.foodName}</Card.Title>
                                                         <div>
-                                                            <p className="userName">By: {recipe.userName}</p>
+                                                            <p className="userName">By: {recipe.ownerInfo.name}</p>
                                                             <div className="rating">
                                                                 <MdStar className="star true"/>
                                                                 <MdStar className="star true"/>
@@ -176,7 +182,7 @@ export class index extends Component {
                                                                             <p 
                                                                                 key={i}
                                                                                 className="tag" 
-                                                                                style={{color:tag.tagColor, border: `2px solid ${tag.tagColor} `}}>
+                                                                                style={{color:tag.color, border: `2px solid ${tag.color} `}}>
                                                                                     {tag.tagName}
                                                                             </p>
                                                                         )
@@ -198,10 +204,9 @@ export class index extends Component {
                         </Container>
                     </div>
                     <div className="right">
-                        <button className="customButton" onClick="">Add Your Recipe</button>
+                        <button className="customButton" onClick={() => {}}>Add Your Recipe</button>
                     </div>
                 </div>
-               
             </UserFrame>
         )
     }

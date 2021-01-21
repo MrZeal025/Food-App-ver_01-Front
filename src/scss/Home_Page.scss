@@ -180,9 +180,10 @@
     .buttonDiv {
         display: flex;
         flex-grow: 1;
-        justify-content: space-between;
+        justify-content: flex-end;
 
         .customButton {
+            color: white;
             width: 70%;
             padding: 2px 5px;
         }
