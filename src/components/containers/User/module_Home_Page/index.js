@@ -55,7 +55,7 @@ export class index extends Component {
                         placeholder="Search for a recipe"
                         aria-label="Search for a recipe"
                         aria-describedby="basic-addon2"
-                        className="pholder2"
+                        className="searchInput"
                         />
                         <InputGroup.Append size="lg">
                         <Button className="searchButton">Search</Button>
@@ -82,7 +82,7 @@ export class index extends Component {
                                         }
                                 <InputGroup className="mb-3">
                                     <FormControl
-                                        className="pholder"
+                                        className="pHolder customPHolder"
                                         placeholder="Add a tag for your next recipe"
                                     />
                                 </InputGroup>
