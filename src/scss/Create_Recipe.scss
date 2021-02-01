@@ -49,7 +49,6 @@ h5 {
         flex-grow: 1;
         flex-wrap: wrap;
         
-
         .inputSubFormat2_1 {
             display: flex;
             flex-basis: 0;
@@ -57,8 +56,9 @@ h5 {
             min-width: 0;
             max-width: 100%;
         }
+        
     }
-    
+
     label {
         color: $dark-2;
         margin-bottom: 5px;
@@ -76,7 +76,21 @@ h5 {
         margin: 5px 10px 0 5px;
     }
 }
+//checkbox
+.inputSetFormat2 {
+    display: flex;
+    align-items: center;
 
+    input {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+    label {
+
+    }
+}
 
 
 //button css
@@ -95,4 +109,80 @@ h5 {
 .buttonColorGray {
     background-color: $dark-6;
     color: white;
+}
+.buttonColorRed {
+    background-color: $red;
+    color: white;
+}
+.buttonColorBlue {
+    background-color: $blue;
+    color: white;
+}
+.buttonColorBlue:hover {
+    background-color: $primary-dark;
+    color: white;
+}
+//ingredients part
+.addOrDelbuttonDiv{
+    display: flex;
+    align-items: flex-end;
+    max-width: 40px;
+}
+.customButtonFormat2 {
+    width: 34px;
+    height: 34px;
+    margin:10px 0;
+    border: unset;
+
+}
+
+//ingredients
+.ingInputFormat {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    label {
+        color: $dark-2;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+    input, select {
+        display: block;
+        width: 100%;
+        padding: 4px;
+        margin-bottom: 10px;
+        background-color: $light-4;
+        border: 1px solid $light-5;
+        border-radius: 5px;
+    }
+    p {
+        margin: 5px 10px 0 5px;
+    }
+
+    .inpSpace {
+        margin-right: 10px;
+    }
+}
+
+.procInputFormat {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+
+    input {
+        display: flex;
+        width: 100%;
+        padding: 4px;
+        margin-bottom: 10px;
+        background-color: $light-4;
+        border: 1px solid $light-5;
+        border-radius: 5px;
+    }
+    p {
+        //you were here
+    }
 }
