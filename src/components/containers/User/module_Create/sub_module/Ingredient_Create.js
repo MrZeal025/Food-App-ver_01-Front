@@ -12,7 +12,7 @@ const ingredientList = props => {
         price = `price-${idx}`;
     return (
       <div className="ingInputFormat inputSetFormat" key={val.index}>
-        <div className="inputSubFormat2 inpSpace">
+        <div className="inputSubFormat2 mr-10">
           <label>Amount</label>
           <input
             type="number"
@@ -23,10 +23,10 @@ const ingredientList = props => {
             id={amount}
           />
         </div>
-        <div className="inputSubFormat2 inpSpace">
+        <div className="inputSubFormat2 mr-10">
           <label>Unit</label>
           <select className="form-control" name="type" id={unit} data-id={idx}>
-            <option>Select a unit</option>
+            <option value=" " selected hidden>Select a unit</option>
             <option>kg/s</option>
             <option>g/s</option>
             <option>mg/s</option>
@@ -37,7 +37,7 @@ const ingredientList = props => {
             <option>tsp/s</option>
           </select>
         </div>
-        <div className="inputSubFormat2 inpSpace">
+        <div className="inputSubFormat2 mr-10">
           <label>Ingredient Name</label>
           <input
             type="text"
@@ -48,11 +48,11 @@ const ingredientList = props => {
             data-id={idx}
           />
         </div>
-        <div className="inputSubFormat2 inpSpace">
+        <div className="inputSubFormat2 mr-10">
           <label>Price</label>
           <input
             type="number"
-            className="form-control"
+            className=""
             placeholder="000.00"
             name="price"
             id={price}

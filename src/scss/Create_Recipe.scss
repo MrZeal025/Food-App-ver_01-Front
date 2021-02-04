@@ -1,5 +1,6 @@
 .createRecipe {
     width: 80%;
+    min-width: 340px;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
@@ -65,7 +66,7 @@ h5 {
         font-weight: 600;
     }
     input {
-        display: block;
+        display: flex;
         width: 100%;
         padding: 4px;
         background-color: $light-4;
@@ -73,35 +74,29 @@ h5 {
         border-radius: 5px;
     }
     p {
-        margin: 5px 10px 0 5px;
+        margin: 5px 0 0 5px;
     }
 }
-//checkbox
-.inputSetFormat2 {
-    display: flex;
-    align-items: center;
-
-    input {
-        width: 20px;
-        height: 20px;
-        margin-right: 10px;
-        margin-bottom: 10px;
-    }
-    label {
-
-    }
-}
-
 
 //button css
 .customButtonFormat {
     margin:10px 0;
     border: unset;
-    padding: 5px 0;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+
+    p {
+        font-size: 15px;
+        padding: 5px;
+    }
 }
 .customButtonsize100 {
     width: 100%;
 }
+.closeButton {
+    background-color: $red;
+    color: white;
+}
+
 .buttonColorGray:hover {
     background-color: $dark-4;
     color: white;
@@ -122,6 +117,12 @@ h5 {
     background-color: $primary-dark;
     color: white;
 }
+
+.actionButtonDiv {
+    display: flex;
+}
+
+
 //ingredients part
 .addOrDelbuttonDiv{
     display: flex;
@@ -133,7 +134,11 @@ h5 {
     height: 34px;
     margin:10px 0;
     border: unset;
+}
 
+
+.mr-10 {
+    margin-right: 10px;
 }
 
 //ingredients
@@ -161,28 +166,93 @@ h5 {
     p {
         margin: 5px 10px 0 5px;
     }
-
-    .inpSpace {
-        margin-right: 10px;
-    }
 }
-
+//procedure inputs
 .procInputFormat {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 
     input {
         display: flex;
         width: 100%;
         padding: 4px;
+        margin-top: 10px;
         margin-bottom: 10px;
         background-color: $light-4;
         border: 1px solid $light-5;
         border-radius: 5px;
     }
     p {
-        //you were here
+        display: flex;
+        align-items: center;
+        width: 35px;
+        font-size: 23px;
     }
 }
+
+//checkbox
+.inputSetFormat2 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    input {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+    label {
+        display: flex;
+        align-items: center;
+    }
+}
+
+//nutrition
+.titleaAndSub {
+    display: flex;
+    flex-direction: row;
+
+    p {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        color: $light-8;
+        font-weight: 600;
+    }
+}
+.nutInputFormat {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin-left: 4vw;
+    margin-bottom: 10px;
+
+    .nutInputsubFormat1 {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+    }
+
+    input, select {
+        display: flex;
+        width: 130px;
+        min-width: 80px;
+        padding: 4px;
+        background-color: $light-4;
+        border: 1px solid $light-5;
+        border-radius: 5px;
+    }
+    select {
+        width: 80px;
+        min-width: 50px;
+    }
+    p {
+        display: flex;
+        align-items: center;
+
+    }
+}
+
+//Action Buttons 
+

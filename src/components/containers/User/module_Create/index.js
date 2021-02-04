@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import UserFrame from '../UserFrame';
 import axios from 'axios';
 
+//React Bootstrap
+//react bootstrap
+import {InputGroup, FormControl} from 'react-bootstrap'
+
 //Ingredient
 import Ingredient from './sub_module/Ingredient_View'
 //Procedure
@@ -13,7 +17,47 @@ import { MdCloudUpload } from "react-icons/md"
 
 
 export class index extends Component {
+
+    state = {
+        tags: [],
+        tagsSelected: [],
+        checked: true
+    }
+
+    async componentDidMount() {
+        try {
+             const tag = await axios.get('/json/tags.json');
+             this.setState({
+                 tags: tag.data
+             })
+        }
+        catch(error) {
+         console.log(error)
+        }
+    }
+
+    setSelectedTags = (i) => {
+        const {tagsSelected} = this.state
+        this.setState({
+            tagsSelected: [...tagsSelected, i]
+            
+        })
+        if (tagsSelected.includes(i)) {
+            this.setState({
+                tagsSelected: tagsSelected.filter(tags => tags !== i)
+            })
+        }
+    }
+
+    nutState = e => {
+        this.setState({
+            checked: !this.state.checked
+        })
+    }
+    
+
     render() {
+        const { tags, tagsSelected, checked} = this.state
         return (
             <UserFrame>
                 <div className="mainHomeDiv">
@@ -26,7 +70,7 @@ export class index extends Component {
                                 No image chosen yet!
                             </div>
                             <button className="customButtonFormat customButtonsize100 buttonColorGray">
-                                Choose an image
+                                <p>Choose an image</p>
                             </button>
                         </div>
                         {/* Recipe Name */}
@@ -46,7 +90,7 @@ export class index extends Component {
                         <div className="inputSetFormat">
                             <label>How much time does it take to do?</label>
                             <div className="inputSubFormat2">
-                                <div className="inputSubFormat2_1">
+                                <div className="inputSubFormat2_1 mr-10">
                                     <input type="number" min="0" placeholder="0" maxLength="5"/> 
                                     <p>Hour/s</p>
                                 </div>
@@ -65,11 +109,88 @@ export class index extends Component {
 
                         {/* Nutrition */}
                         <div>
-                            <h4>Nutrition Facts</h4>
+                            <div className="titleaAndSub">
+                                <h4>Nutrition Facts</h4>
+                                <p>(Per Serving)</p>
+                            </div>
                             <div className="inputSetFormat2">
-                                <input type="checbox"/>
+                                <input type="checkbox" id="checkNut" checked={checked} onChange={e => this.nutState()}/>
                                 <label>Add nutrition facts to your recipe</label>
                             </div>
+                            {
+                                checked && <div className="nutInputFormat" >
+                                <div className="nutInputsubFormat1">
+                                    <input type="number" min="0" placeholder="0" maxLength="5" className="mr-10"/> 
+                                    <p>Total&nbsp;Calories</p>
+                                </div>
+                                <div className="nutInputsubFormat1">
+                                    <input type="number" min="0" placeholder="0" maxLength="5" className="mr-10"/> 
+                                    <select className="form-control mr-10" name="unit">
+                                        <option value=" " selected hidden>Unit</option>
+                                        <option>kg/s</option>
+                                        <option>g/s</option>
+                                        <option>mg/s</option>
+                                    </select>
+                                    <p>Carbohydrates</p>
+                                </div>
+                                <div className="nutInputsubFormat1">
+                                    <input type="number" min="0" placeholder="0" maxLength="5" className="mr-10"/> 
+                                    <select className="form-control mr-10" name="unit">
+                                        <option value=" " selected hidden>Unit</option>
+                                        <option>kg/s</option>
+                                        <option>g/s</option>
+                                        <option>mg/s</option>
+                                    </select>
+                                    <p>Protein</p>
+                                </div>
+                                <div className="nutInputsubFormat1">
+                                    <input type="number" min="0" placeholder="0" maxLength="5" className="mr-10"/> 
+                                    <select className="form-control mr-10" name="unit">
+                                        <option value=" " selected hidden>Unit</option>
+                                        <option>kg/s</option>
+                                        <option>g/s</option>
+                                        <option>mg/s</option>
+                                    </select>
+                                    <p>Fat</p>
+                                </div>
+                            </div>
+                            }
+                        </div>
+                        {/* Tags */}
+                        <div className="tagsFiltDiv">
+                            <h4>Tags</h4>
+                                    {
+                                        tags.map((tag, i) => {
+                                            return(
+                                                <button
+                                                    key={i}
+                                                    className={tagsSelected.includes(tag.value)? "tag customTag activeTag" : "tag customTag"}
+                                                    style={{color:tag.tagColor, border: `2px solid ${tag.tagColor}`}}
+                                                    onClick={() => {this.setSelectedTags(tag.value)}}
+                                                    >
+                                                        {tag.tagName}
+                                                </button> 
+                                            )
+                                        })
+                                    }
+                            <InputGroup className="mb-3">
+                                <FormControl
+                                    className="pHolder customPHolder"
+                                    placeholder="Add a tag for your next recipe"
+                                />
+                            </InputGroup>
+                        </div>
+                        {/* Action Buttons */}
+                        <div className="actionButtonDiv">
+                            <button className="customButtonFormat buttonColorBlue mr-10">
+                                <p>Save and Post</p>
+                            </button>
+                            <button className="customButtonFormat mr-10">
+                                <p>Save to Drafts</p>
+                            </button>
+                            <button className="customButtonFormat closeButton">
+                                <p>Cancel</p>
+                            </button>
                         </div>
                     </div>
                 </div>
