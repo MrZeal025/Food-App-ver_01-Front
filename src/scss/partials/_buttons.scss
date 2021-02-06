@@ -1,6 +1,6 @@
 button {
     border-radius: 5px !important;
-    padding: 4px 8px !important;
+    padding: 4px 8px;
     font-weight: 600 !important;
     font-size: 12px !important;
 }
@@ -45,6 +45,14 @@ button {
 .buttonColorBlue:hover {
     background-color: $primary-dark;
     color: white;
+}
+// rate post button
+.rateButton {
+    width: fit-content;
+    background-color: $green;
+    color: white;
+    margin-top: unset;
+
 }
 
 .modal-close-button{

@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import UserFrame from '../UserFrame'
 import SearchFilter from '../module_Search'
-import axios from 'axios';
+import axios from 'axios'
 
-import { Container} from 'react-bootstrap'
 //react icons
 import {MdStar} from 'react-icons/md'
 
@@ -14,7 +13,7 @@ export class index extends Component {
                 <div className="mainHomeDiv">
                     <SearchFilter />
                     <div className="middle">
-                        <Container fluid className="white-bg">
+                        <div className="white-bg mb-20">
                             <h4 className="recipeName">Recipe Name Sample</h4>
                             {/* userName */}
                             <div className="flex-row mb-10">
@@ -103,7 +102,71 @@ export class index extends Component {
                                 <button className="customButtonFormat buttonColorBlue mr-10"><p>Add Ingredients to Grocery List</p></button>
                                 <button className="customButtonFormat buttonColorRed"><p>Remove from Pantry</p></button>
                             </div>
-                        </Container>
+                        </div>
+                        <div className="white-bg">
+                            <h5 className="rateTitle mb-10">Ratings</h5>
+                            {/* For Input of the user for a comment */}
+                            <div className="flex-col mb-20">
+                                {/* Stars */}
+                                <div className="rating fullv mb-10">
+                                    <MdStar className="star false"/>
+                                    <MdStar className="star false"/>
+                                    <MdStar className="star false"/>
+                                    <MdStar className="star false"/>
+                                    <MdStar className="star false"/>
+                                </div>
+                                <div className="inputSetFormat no-mb">
+                                    <input type="text" placeholder="Add a comment" className="mb-10"/>
+                                </div>
+                                <button className="customButtonFormat rateButton"><p>Post</p></button>
+                            </div>
+                            {/* Rating Post Sample */}
+                            <div className="flex-col mb-20">
+                                <div className="flex-row mb-10">
+                                    <div className="imgTempo"></div>
+                                    <div className="userName"><h6>Other User</h6></div>
+                                </div>
+                                {/* Stars */}
+                                <div className="rating fullv mb-10">
+                                    <MdStar className="star true"/>
+                                    <MdStar className="star true"/>
+                                    <MdStar className="star true"/>
+                                    <MdStar className="star false"/>
+                                    <MdStar className="star false"/>
+                                </div>
+                                <p className="justify">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione voluptatibus iure recusandae, repellendus quam tenetur voluptates corrupti nesciunt, suscipit perferendis quos ab nostrum tempore aut modi ad porro repudiandae eligendi.</p>
+                            </div>
+                            <div className="flex-col mb-20">
+                                <div className="flex-row mb-10">
+                                    <div className="imgTempo"></div>
+                                    <div className="userName"><h6>Other User</h6></div>
+                                </div>
+                                {/* Stars */}
+                                <div className="rating fullv mb-10">
+                                    <MdStar className="star true"/>
+                                    <MdStar className="star true"/>
+                                    <MdStar className="star true"/>
+                                    <MdStar className="star false"/>
+                                    <MdStar className="star false"/>
+                                </div>
+                                <p className="justify">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione voluptatibus iure recusandae, repellendus quam tenetur voluptates corrupti nesciunt, suscipit perferendis quos ab nostrum tempore aut modi ad porro repudiandae eligendi.</p>
+                            </div>
+                            <div className="flex-col mb-20">
+                                <div className="flex-row mb-10">
+                                    <div className="imgTempo"></div>
+                                    <div className="userName"><h6>Other User</h6></div>
+                                </div>
+                                {/* Stars */}
+                                <div className="rating fullv mb-10">
+                                    <MdStar className="star true"/>
+                                    <MdStar className="star true"/>
+                                    <MdStar className="star true"/>
+                                    <MdStar className="star false"/>
+                                    <MdStar className="star false"/>
+                                </div>
+                                <p className="justify">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione voluptatibus iure recusandae, repellendus quam tenetur voluptates corrupti nesciunt, suscipit perferendis quos ab nostrum tempore aut modi ad porro repudiandae eligendi.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </UserFrame>
