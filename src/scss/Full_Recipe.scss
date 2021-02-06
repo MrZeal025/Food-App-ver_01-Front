@@ -1,0 +1,98 @@
+.white-bg {
+    width: 100%;
+    min-width: 340px;
+    background-color: white;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 0 10px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+.mb_5 {
+    margin-bottom: 5px;
+}
+
+.recipeName {
+    font-weight: bold;
+    color: $dark-2;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+//user
+.imgTempo {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background-color: gray;
+    margin-right: 10px;
+}
+.userName {
+    display: flex;
+    align-items: flex-end;
+}
+
+//rating
+.fullv {
+    .star {
+        height: 30px;
+        width: 30px;
+    }
+    .rateCount {
+        display: flex;
+        align-items: center;
+    }
+}
+
+//recipe Image
+.recImg {
+    border-radius: 5px;
+    width: 50%;
+    max-width: 600px;
+}
+
+//recipe Details
+.recDetails {
+    width: 40%;
+    max-width: 340px;
+    height: fit-content;
+    border: 5px solid #212529;
+    border-radius: 5px;
+    padding: 15px;
+    margin-left: 3%;
+
+    .label {
+        font-weight: bold;
+        color: $dark-6;
+    }
+    .nutCont {
+        width: 50px;
+    }
+}
+
+.ingTitle, .procTitle {
+    font-weight: bold;
+}
+
+.justify {
+    text-align: justify;
+}
+
+//query for the recipe img and details
+@media only (max-width: 1000px) and (min-width: 300px) {
+    .imgAndDetails {
+        flex-direction: column !important;
+    }
+    .recImg {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    .recDetails {
+        width: 100%;
+        margin-left: unset;
+    }
+}

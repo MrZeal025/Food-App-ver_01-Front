@@ -19,6 +19,7 @@ import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
 import Home from './components/containers/User/module_Home_Page/index';
 import Profile from './components/containers/User/module_Profile/index';
 import CreateRecipe from './components/containers/User/module_Create/index';
+import FullRecipe from './components/containers/User/module_Full_Recipe/index';
 // Admin
 import Dashboard from './components/containers/Admin/module_Admin_Page/index';
 //router
@@ -47,6 +48,7 @@ export class App extends Component {
             <ProtectedUserRoute path="/home" exact component={Home} />
             <ProtectedUserRoute path="/profile/:id" exact component={Profile}/>
             <ProtectedUserRoute path="/recipe/create" exact component={CreateRecipe}/>
+            <ProtectedUserRoute path="/recipe/view" exact component={FullRecipe}/>
 
             {/* Admin */}
             <ProtectedAdminRoute path="/admin/home" exact component ={Dashboard} />
