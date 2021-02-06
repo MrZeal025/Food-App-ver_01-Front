@@ -23,14 +23,18 @@
 .mainHomeDiv {
     display: flex;
     flex-direction: row;
-    padding: 70px 10px 10px 10px;
+    justify-content: center;
+    padding-top: 70px;
+    padding-bottom: 10px;
 }
 
-.buttonGrp {
-    display: block;
-    margin-left: 3px;
-}
 //universal tags css
+.pHolder { //for input
+    margin-top:10px;
+    background-color: $light-4;
+    color: $dark-6;
+}
+
 .tag {
     display: inline-block;
     border-radius: 3px;
@@ -68,6 +72,7 @@
 }
 
 .left {
+    left: 10px;
     width: 20%;
     height: 78vh;
     display: block;
@@ -82,9 +87,10 @@
         overflow: auto;
     }
     //searchinput
-    .pholder2 {
+    .searchInput {
         font-size: 14px;
-        background-color: #D5D5D5;
+        background-color:$light-4;
+        color: $dark-6;
     }
     .searchButton {
         height: 100%;
@@ -105,10 +111,8 @@
         box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
         
     }
-    .pholder {
-        margin-top: 5px;
-        font-size: 12px;
-        background-color: #D5D5D5;
+    .customPHolder {
+        font-size: 13px;
     }
     //serving size filter
     .serveOp {
@@ -147,6 +151,7 @@
 .middle {
     width: 100%;
     padding: 10px 20%;
+    margin: 0 10px;
     flex-direction: row;
     justify-content: center;
 
