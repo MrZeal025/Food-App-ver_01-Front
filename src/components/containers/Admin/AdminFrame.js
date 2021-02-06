@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import Navbar from '../../navigations/Navbar';
-import Footer from '../../common/Footer';
+import Navbar from '../../navigations/AdminNavbar';
 
 export class index extends Component {
     render() {
@@ -8,7 +7,6 @@ export class index extends Component {
             <>
                 <Navbar/>
                 {this.props.children}
-                <Footer/>
             </>
         )
     }
