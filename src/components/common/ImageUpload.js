@@ -27,7 +27,7 @@ const ImageUpload = props => {
 
   const renderPhotos = (source) => {
     return source.map((photo, i) => {
-      return <img className="m-2" key={i} src={photo} alt="" height="200" width="250" />;
+      return <img className="m-2" key={i} src={photo} alt="" height="150" width="200" />;
     });
   };
 

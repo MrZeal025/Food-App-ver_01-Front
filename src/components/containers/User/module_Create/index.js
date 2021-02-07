@@ -47,7 +47,17 @@ export class index extends Component {
                 }
             ],
             instruction: [""],
-            nutritions: {},
+            nutritions: {
+                caloricBreakDown: {
+                    carbsLabel : "",
+                    fatLabel : "",
+                    proteinLabel: "",
+
+                    percentCarbs : "",
+                    percentFat : "",
+                    percentProtein :""
+                }
+            },
             ownerInfo: {
                 id: "",
                 name: ""
@@ -180,6 +190,16 @@ export class index extends Component {
     }
 
     // instructions
+    handleInstructions = index => e => {
+        const instructions = [...this.state.recipe.instruction]
+        instructions[index] = e.target.value
+        this.setState({
+            recipe: {
+                ...this.state.recipe,
+                instruction: instructions
+            }
+        })
+    }
 
     addNewInstruction = e => {
         this.setState(prevState => ({
@@ -188,6 +208,44 @@ export class index extends Component {
                 instruction : [...prevState.recipe.instruction, ""]
             }
         }))
+    }
+
+    deleteInstruction = index => {
+        const { recipe } = this.state
+        recipe.instruction.splice(index, 1)
+        this.setState({
+            recipe : {
+                ...this.state.recipe,
+                instruction: recipe.instruction
+            }
+        })
+    }
+
+    handleNutrition = index => e => {
+        this.setState({
+            recipe: {
+                ...this.state.recipe,
+                nutritions: {
+                    ...this.state.recipe.nutritions,
+                    [index]: e.target.value
+                }
+            }
+        })
+    }
+
+    handleNutritionCalories = index => e => {
+        this.setState({
+            recipe: {
+                ...this.state.recipe,
+                nutritions: {
+                    ...this.state.recipe.nutritions,
+                    caloricBreakDown: {
+                        ...this.state.recipe.nutritions.caloricBreakDown,
+                        [index]: e.target.value
+                    }
+                }
+            }
+        })
     }
 
     submitRecipe = async () => {
@@ -200,12 +258,19 @@ export class index extends Component {
             tags: recipe.tags,
             ingredients: recipe.ingredients,
             instruction: recipe.instruction,
-            nutrition: recipe.nutrition,
+            nutrition: {
+                totalCalories: recipe.nutritions.totalCalories,
+                caloricBreakDown: {
+                    percentProtein: recipe.nutritions.caloricBreakDown.percentProtein + " " + recipe.nutritions.caloricBreakDown.proteinLabel, 
+                    percentFat: recipe.nutritions.caloricBreakDown.percentFat + " " + recipe.nutritions.caloricBreakDown.fatLabel,
+                    percentCarbs: recipe.nutritions.caloricBreakDown.percentCarbs + " " + recipe.nutritions.caloricBreakDown.carbsLabel
+                }
+            },
             ownerInfo: recipe.ownerInfo
         }
         try {
             const process = await axios.post('/api/recipe/create', body, config);
-            console.log(process.data)
+            this.setShow(true, process.data.data.message)
         }
         catch(error) {
             if(error.response.data.length > 0){
@@ -317,8 +382,9 @@ export class index extends Component {
                         <h4>Procedure</h4>
                         <Procedure 
                             add={this.addNewInstruction}
-                            delete={this.clickOnDelete}
+                            delete={this.deleteInstruction}
                             procedure={recipe.instruction}
+                            handleInstructions={this.handleInstructions}
                         />
                         <hr/>
                         {/* Nutrition */}
@@ -334,12 +400,33 @@ export class index extends Component {
                             {
                                 checked && <div className="nutInputFormat" >
                                 <div className="nutInputsubFormat1">
-                                    <input type="number" min="0" placeholder="0" maxLength="5" className="mr-10"/> 
+                                    <input 
+                                        type="number" 
+                                        min="0" 
+                                        placeholder="0" 
+                                        maxLength="5" 
+                                        className="mr-10"
+                                        value={recipe.nutritions.totalCalories}
+                                        onChange={this.handleNutrition("totalCalories")}
+                                    /> 
                                     <p>Total&nbsp;Calories</p>
                                 </div>
                                 <div className="nutInputsubFormat1">
-                                    <input type="number" min="0" placeholder="0" maxLength="5" className="mr-10"/> 
-                                    <select className="form-control mr-10" name="unit">
+                                    <input 
+                                        type="number" 
+                                        min="0" 
+                                        placeholder="0" 
+                                        maxLength="5" 
+                                        className="mr-10"
+                                        value={recipe.nutritions.caloricBreakDown.percentProtein}
+                                        onChange={this.handleNutritionCalories('percentProtein')}
+                                    /> 
+                                    <select 
+                                        className="form-control mr-10" 
+                                        name="unit"
+                                        value={recipe.nutritions.caloricBreakDown.proteinLabel}
+                                        onChange={this.handleNutritionCalories('proteinLabel')}
+                                    >
                                         <option value=" " selected hidden>Unit</option>
                                         <option>kg/s</option>
                                         <option>g/s</option>
@@ -348,8 +435,21 @@ export class index extends Component {
                                     <p>Carbohydrates</p>
                                 </div>
                                 <div className="nutInputsubFormat1">
-                                    <input type="number" min="0" placeholder="0" maxLength="5" className="mr-10"/> 
-                                    <select className="form-control mr-10" name="unit">
+                                    <input 
+                                        type="number" 
+                                        min="0" 
+                                        placeholder="0" 
+                                        maxLength="5" 
+                                        className="mr-10"
+                                        value={recipe.nutritions.caloricBreakDown.percentCarbs}
+                                        onChange={this.handleNutritionCalories('percentCarbs')}
+                                    /> 
+                                    <select 
+                                        className="form-control mr-10" 
+                                        name="unit"
+                                        value={recipe.nutritions.caloricBreakDown.carbsLabel}
+                                        onChange={this.handleNutritionCalories('carbsLabel')}
+                                    >
                                         <option value=" " selected hidden>Unit</option>
                                         <option>kg/s</option>
                                         <option>g/s</option>
@@ -358,8 +458,21 @@ export class index extends Component {
                                     <p>Protein</p>
                                 </div>
                                 <div className="nutInputsubFormat1">
-                                    <input type="number" min="0" placeholder="0" maxLength="5" className="mr-10"/> 
-                                    <select className="form-control mr-10" name="unit">
+                                    <input 
+                                        type="number" 
+                                        min="0" 
+                                        placeholder="0" 
+                                        maxLength="5" 
+                                        className="mr-10"
+                                        value={recipe.nutritions.caloricBreakDown.percentFat}
+                                        onChange={this.handleNutritionCalories('percentFat')}
+                                    /> 
+                                    <select 
+                                        className="form-control mr-10" 
+                                        name="unit"
+                                        value={recipe.nutritions.caloricBreakDown.fatLabel}
+                                        onChange={this.handleNutritionCalories('fatLabel')}
+                                    >
                                         <option value=" " selected hidden>Unit</option>
                                         <option>kg/s</option>
                                         <option>g/s</option>

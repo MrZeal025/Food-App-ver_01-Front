@@ -3,9 +3,8 @@ import React from "react";
 import { FaPlus, FaMinus } from "react-icons/fa";
 
 const procedureList = props => {
-  
+  const { handleInstructions } = props
   return props.procedure.map((val, idx) => {
-    
     return (
       <div className="procInputFormat " key={idx}>
         <p id={idx} className="align-center-none">{idx + 1}.</p>
@@ -13,8 +12,10 @@ const procedureList = props => {
             rows="4"
             type="text"
             className="input-type-area"
-            placeholder={`Place instruction number ${idx + 1}`}
+            placeholder={`Instructions goes in here`}
             name="method"
+            value={val}
+            onChange={handleInstructions(idx)}
           />
         <div className="addOrDelbuttonDiv align-item-end-unset">
           {idx === 0 ? (
@@ -28,7 +29,7 @@ const procedureList = props => {
           ) : ( 
             <button
               className="customButtonFormat2 buttonColorRed"
-              onClick={() => props.delete(val.id)}
+              onClick={() => props.delete(idx)}
             >
               <FaMinus />
             </button>
