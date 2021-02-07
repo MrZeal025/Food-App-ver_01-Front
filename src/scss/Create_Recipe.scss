@@ -79,45 +79,6 @@ h5 {
 }
 
 //button css
-.customButtonFormat {
-    margin:10px 0;
-    border: unset;
-    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
-
-    p {
-        font-size: 15px;
-        padding: 5px;
-    }
-}
-.customButtonsize100 {
-    width: 100%;
-}
-.closeButton {
-    background-color: $red;
-    color: white;
-}
-
-.buttonColorGray:hover {
-    background-color: $dark-4;
-    color: white;
-}
-.buttonColorGray {
-    background-color: $dark-6;
-    color: white;
-}
-.buttonColorRed {
-    background-color: $red;
-    color: white;
-}
-.buttonColorBlue {
-    background-color: $blue;
-    color: white;
-}
-.buttonColorBlue:hover {
-    background-color: $primary-dark;
-    color: white;
-}
-
 .actionButtonDiv {
     display: flex;
 }

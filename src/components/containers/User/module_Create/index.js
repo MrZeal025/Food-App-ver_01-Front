@@ -188,7 +188,7 @@ export class index extends Component {
                             <button className="customButtonFormat mr-10">
                                 <p>Save to Drafts</p>
                             </button>
-                            <button className="customButtonFormat closeButton">
+                            <button className="customButtonFormat buttonColorRed">
                                 <p>Cancel</p>
                             </button>
                         </div>
