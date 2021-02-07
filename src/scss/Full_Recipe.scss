@@ -92,6 +92,19 @@
     text-align: justify;
 }
 
+.image-holder {
+    img {
+        height: 100px;
+        width: 150px;
+        margin: 5px 5px;
+    }
+}
+
+.small-avatar {
+    height: 50px;
+    border-radius: 50px;
+}
+
 //query for the recipe img and details
 @media only (max-width: 1000px) and (min-width: 300px) {
     .imgAndDetails {

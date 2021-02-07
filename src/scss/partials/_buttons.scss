@@ -21,7 +21,14 @@ button {
 .customButtonsize100 {
     width: 100%;
 }
-
+.customButton {
+    a {
+        color: white;
+        &:hover {
+            color: white;
+        }
+    }    
+}
 .buttonColorGray:hover {
     background-color: $dark-4;
     color: white;

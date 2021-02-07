@@ -2,23 +2,75 @@ import React, { Component } from 'react'
 import UserFrame from '../UserFrame'
 import SearchFilter from '../module_Search'
 import axios from 'axios'
-
 //react icons
 import {MdStar} from 'react-icons/md'
+import jwt_decode from 'jwt-decode';
+
+const path = process.env.PUBLIC_URL;
+const avatar ="avatar.jpg"
+const token = localStorage.getItem('accessToken');
+const config = {
+    headers: {
+      "Content-type": "application/json",
+      "Authorization" : token
+    },
+};
 
 export class index extends Component {
+
+    state = {
+        recipe: {
+            foodImages: [],
+            nutrition: {
+                totalCalories: "",
+                caloricBreakDown: {},
+            },
+            ownerInfo: {},
+            tags: [],
+            ingredients: [],
+            instruction: []
+        },
+        profilePicture: ''
+    }
+
+    async componentDidMount() {
+
+        try {
+            const decode = jwt_decode(token);
+            const profile = await axios.get(`/api/user/profile/read/${decode._id}`, config);
+            this.setState({
+                profilePicture: profile.data.data.profilePicture
+            })
+        }
+        catch(error) {
+            console.log(error.response)
+        }
+
+        try {
+            const recipe = await axios.get(`/api/recipe/${this.props.match.params.id}`, config);
+            this.setState({
+                recipe: recipe.data.data.recipe,
+            })
+        }
+        catch(error) {
+            console.log(error.response)
+        }
+    }
+
     render() {
+        const { recipe, profilePicture } = this.state
+    
         return (
             <UserFrame>
                 <div className="mainHomeDiv">
                     <SearchFilter />
                     <div className="middle">
                         <div className="white-bg mb-20">
-                            <h4 className="recipeName">Recipe Name Sample</h4>
+                            <h4 className="recipeName">{recipe.foodName}</h4>
                             {/* userName */}
                             <div className="flex-row mb-10">
-                                <div className="imgTempo"></div>
-                                <div className="userName"><h6>By: Juan Dela Cruz</h6></div>
+                                <img className="small-avatar" src={profilePicture !== "" ? path + '/profile/' + profilePicture : path + '/profile/' + avatar } alt="DP"/>
+                                <div className="userName"><h6>By: {recipe.ownerInfo.name}</h6></div>
                             </div>
                             {/* rating */}
                             <div className="rating fullv mb-10">
@@ -32,67 +84,88 @@ export class index extends Component {
                             {/* Image and Details */}
                             <div className="flex-row mb-10 imgAndDetails">
                                 <img 
-                                    src="https://images.pexels.com/photos/704569/pexels-photo-704569.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" 
+                                    src={path + '/recipe-images/' + recipe.foodImages[0]} 
                                     alt="RecipeImage"
                                     className="recImg"
                                 />
                                 <div className="recDetails">
                                     <div className="flex-row mb-10">
                                         <h6 className="label mr-10">Duration:</h6>
-                                        <h6>45 mins</h6>
+                                        <h6>{recipe.readyIn}</h6>
                                     </div>
                                     <div className="flex-row mb-10">
                                         <h6 className="label mr-10">Servings:</h6>
-                                        <h6>3</h6>
+                                        <h6>{recipe.goodFor}</h6>
                                     </div>
                                     <div className="mb-10">
                                         <h6 className="label mb-10">Nutrition Facts</h6>
                                         <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">650</h6>
+                                            <h6 className="nutCont mr-10">{recipe.nutrition.totalCalories === '' ? "None" : recipe.nutrition.totalCalories }</h6>
                                             <h6 className="label">Total Calories</h6>
                                         </div>
                                         <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">125 g</h6>
+                                            <h6 className="nutCont mr-10">{recipe.nutrition.caloricBreakDown.percentCarbs}</h6>
                                             <h6 className="label">Carbohydrates</h6>
                                         </div>
                                         <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">40.5 g</h6>
+                                            <h6 className="nutCont mr-10">{recipe.nutrition.caloricBreakDown.percentProtein}</h6>
                                             <h6 className="label">Protein</h6>
                                         </div>
                                         <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">30.8 g</h6>
+                                            <h6 className="nutCont mr-10">{recipe.nutrition.caloricBreakDown.percentFat}</h6>
                                             <h6 className="label">Fat</h6>
                                         </div>
                                     </div>
                                     {/* tags */}
                                     <div>
                                         <h6 className="label mb-10">Tags</h6>
-                                        <div>
-                                            <button className="tag customTag"><p>Breakfast</p></button>
-                                            <button className="tag customTag"><p>Healthy</p></button>
-                                        </div>
-
+                                        {
+                                            recipe.tags.map((tag, i) => {
+                                                return(
+                                                    <p 
+                                                        key={i}
+                                                        className="tag" 
+                                                        style={{color:tag.color, border: `2px solid ${tag.color} `}}>
+                                                            {tag.tagName}
+                                                    </p>
+                                                )
+                                            })
+                                        }
                                     </div>
                                 </div>
+                            </div>
+                            <div className="image-holder">
+                                {
+                                    recipe.foodImages.map((foodImage, i) => {
+                                        return <img 
+                                            key={i}
+                                            src={path + '/recipe-images/' + foodImage} 
+                                            alt="RecipeImage"
+                                            className="recImg"
+                                        />
+                                    })
+                                }
                             </div>
                             {/* Ingredients */}
                             <div className="mb-10">
                                 <h5 className="mb-10 ingTitle">Ingredients</h5>
                                 <ul>
-                                    <li>1 Avocado</li>
-                                    <li>2 Eggs</li>
-                                    <li>6 pcs Bread</li>
-                                    <li>1 tbsp Olive Oil</li>
-                                    <li>1 tsp Chilli Flakes</li>
+                                    {
+                                        recipe.ingredients.map((ingredient, i) => {
+                                            return <li key={i} >{ingredient.name}</li>
+                                        })
+                                    }
                                 </ul>
                             </div>
                             {/* Procedure */}
                             <div className="mb-10">
                                 <h5 className="mb-10 procTitle">Procedure</h5>
                                 <ol className="justify">
-                                    <li>Slice or mush the avocado.</li>
-                                    <li>Lorem ipsum dolor sit amet consectetur adipisicing elit assumenda ipsum vero deleniti voluptatem facere itaque totam.</li>
-                                    <li>Fugit pariatur quam impedit est quae repellendus cupiditate, nemo error minima illum blanditiis consequatur.</li>
+                                    {
+                                        recipe.instruction.map((intruction, i) => {
+                                            return <li key={i}>{intruction}</li>
+                                        })
+                                    }
                                 </ol>
                             </div>
                             {/* Action Button */}

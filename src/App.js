@@ -50,7 +50,7 @@ export class App extends Component {
             <ProtectedUserRoute path="/home" exact component={Home} />
             <ProtectedUserRoute path="/profile/:id" exact component={Profile}/>
             <ProtectedUserRoute path="/recipe/create" exact component={CreateRecipe}/>
-            <ProtectedUserRoute path="/recipe/view" exact component={FullRecipe}/>
+            <ProtectedUserRoute path="/recipe/view/:id" exact component={FullRecipe}/>
 
             {/* Admin */}
             <ProtectedAdminRoute path="/admin/home" exact component ={Dashboard} />
