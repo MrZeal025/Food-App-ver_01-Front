@@ -13,8 +13,8 @@
 .eslintcache
 
 #images
-public/profile
-public/cover-photo
+#public/profile
+#public/cover-photo
 
 # misc
 .DS_Store
