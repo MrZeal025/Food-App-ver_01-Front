@@ -87,15 +87,24 @@ export class index extends Component {
         }
     }
 
-    setSelectedTags = (i) => {
+    setSelectedTags = (i, tag) => {
         const {tagsSelected} = this.state
+        console.log(tag)
         this.setState({
-            tagsSelected: [...tagsSelected, i]
+            tagsSelected: [...tagsSelected, i],
+            recipe : {
+                ...this.state.recipe,
+                tags: [...this.state.recipe.tags, tag]
+            }
             
         })
         if (tagsSelected.includes(i)) {
             this.setState({
-                tagsSelected: tagsSelected.filter(tags => tags !== i)
+                tagsSelected: tagsSelected.filter(tags => tags !== i),
+                recipe: {
+                    ...this.state.recipe,
+                    tags: this.state.recipe.tags.filter(tag => tag.tagName !== i)
+                }
             })
         }
     }
@@ -249,7 +258,14 @@ export class index extends Component {
     }
 
     submitRecipe = async () => {
-        const { recipe } = this.state
+        const { recipe, image } = this.state
+        const formData = new FormData();
+
+        // loop and compress
+        for (var images of image.formData) {
+            formData.append("recipeImages", images);
+        }
+
         const body = {
             foodName: recipe.foodName,
             goodFor: recipe.goodFor,
@@ -270,6 +286,7 @@ export class index extends Component {
         }
         try {
             const process = await axios.post('/api/recipe/create', body, config);
+            await axios.post('/api/uploads/create/image/recipe', formData);
             this.setShow(true, process.data.data.message)
         }
         catch(error) {
@@ -492,9 +509,9 @@ export class index extends Component {
                                     return(
                                         <button
                                             key={i}
-                                            className={tagsSelected.includes(tag.value)? "tag customTag activeTag" : "tag customTag"}
-                                            style={{color:tag.tagColor, border: `2px solid ${tag.tagColor}`}}
-                                            onClick={() => {this.setSelectedTags(tag.value)}}
+                                            className={tagsSelected.includes(tag.tagName)? "tag customTag activeTag" : "tag customTag"}
+                                            style={{color:tag.color, border: `2px solid ${tag.color}`}}
+                                            onClick={() => {this.setSelectedTags(tag.tagName, tag)}}
                                             >
                                                 {tag.tagName}
                                         </button> 

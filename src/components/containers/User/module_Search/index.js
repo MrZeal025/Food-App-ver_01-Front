@@ -58,20 +58,20 @@ export class index extends Component {
                     {/* Tags Filter Div */}
                     <div className="tagsFiltDiv">
                         <h5>Tags</h5>
-                                {
-                                    tags.map((tag, i) => {
-                                        return(
-                                            <button
-                                                key={i}
-                                                className={tagsSelected.includes(tag.value)? "tag customTag activeTag" : "tag customTag"}
-                                                style={{color:tag.tagColor, border: `2px solid ${tag.tagColor}`}}
-                                                onClick={() => {this.setSelectedTags(tag.value)}}
-                                                >
-                                                    {tag.tagName}
-                                            </button> 
-                                        )
-                                    })
-                                }
+                            {
+                                tags.map((tag, i) => {
+                                    return(
+                                        <button
+                                            key={i}
+                                            className={tagsSelected.includes(tag.tagName)? "tag customTag activeTag" : "tag customTag"}
+                                            style={{color:tag.color, border: `2px solid ${tag.color}`}}
+                                            onClick={() => {this.setSelectedTags(tag.tagName)}}
+                                            >
+                                                {tag.tagName}
+                                        </button> 
+                                    )
+                                })
+                            }
                         <InputGroup className="mb-3">
                             <FormControl
                                 className="pHolder customPHolder"

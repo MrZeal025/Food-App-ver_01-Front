@@ -15,7 +15,7 @@ const ImageUpload = props => {
       // get the file name from uploads array and return it
       const getImageFileName = Array.from(e.target.files).map((file) => { return file.name });
       // return the data to the parent component
-      getImageFromUploads(getImageFileName, e.target.files[0]);
+      getImageFromUploads(getImageFileName, e.target.files);
       // set the selected array
       setSelectedFiles((prevImages) => prevImages.concat(filesArray));
       // remove the URL created by the URL.createObjectURL
