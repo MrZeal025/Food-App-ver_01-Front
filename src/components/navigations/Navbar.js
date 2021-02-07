@@ -36,7 +36,7 @@ export class NavBar extends Component {
                             alt=""
                         />
                 </Navbar.Brand>
-                <Navbar.Brand href="#home" className="brandN">Bitezoo</Navbar.Brand>
+                <Navbar.Brand href="/" className="brandN">Bitezoo</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <div className="flex-grow-1 w-100"></div>
                 <Navbar.Collapse id="responsive-navbar-nav">
