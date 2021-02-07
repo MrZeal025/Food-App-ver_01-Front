@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // components
 import { Modal, Button } from 'react-bootstrap';
-import ImageUpload from '../../../../common/ImageUpload';
+import ImageUpload from '../../../../common/ProfilCoverUpload';
 // utilities
 import { FaCamera, FaTimes } from 'react-icons/fa';
 import axios from 'axios';
