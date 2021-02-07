@@ -4,6 +4,7 @@
  */
 import React, { Component } from 'react'
 // stylesheets
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 import './scss/Main.scss';
 //public components

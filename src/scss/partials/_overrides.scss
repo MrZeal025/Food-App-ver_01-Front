@@ -7,3 +7,26 @@
         justify-content: flex-end;
     }
 }
+
+.toast {
+    font-size: inherit;
+    position: fixed;
+    bottom: 10px;
+    left: 20px;
+    width: 300px;
+
+    .toast-header {
+        background-color: $blue-grey-light-5;
+        color: white;
+
+        strong {
+            font-weight: 600 !important;
+        }
+    }
+
+    .toast-body {
+        background-color: white;
+        font-size: 13px;
+        font-weight: 500;
+    }
+}

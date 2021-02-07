@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { MdCloudUpload } from 'react-icons/md';
 
 const ImageUpload = props => {
 
@@ -26,14 +27,14 @@ const ImageUpload = props => {
 
   const renderPhotos = (source) => {
     return source.map((photo, i) => {
-      return <img key={i} src={photo} alt="" height="100" width="150" />;
+      return <img className="m-2" key={i} src={photo} alt="" height="200" width="250" />;
     });
   };
 
   return (
-    <div className="mb-2">
-        <h6>Select a photo</h6>
-        <input type="file" id="file" onChange={handleImageChange} />
+    <div className="imgUploadDiv mb-2">
+        <MdCloudUpload className="uploadIcon"/>
+        <input className="customButtonFormat buttonColorGray" type="file" id="file" onChange={handleImageChange} multiple/>
         <div>{renderPhotos(selectedFiles)}</div>
     </div>
   );

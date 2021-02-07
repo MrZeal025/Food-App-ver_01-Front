@@ -1,35 +1,67 @@
 import React, { Component } from 'react'
 import UserFrame from '../UserFrame';
 import axios from 'axios';
-
 //React Bootstrap
-//react bootstrap
-import {InputGroup, FormControl} from 'react-bootstrap'
-
-//Ingredient
+import { InputGroup, FormControl, Toast } from 'react-bootstrap'
+// components
 import Ingredient from './sub_module/Ingredient_View'
-//Procedure
 import Procedure from "./sub_module/Procedure_View";
+import ImageUpload from '../../../common/ImageUpload';
+import RenderError from '../../../common/Renderer/RenderErrors';
+// utilities and icons
+import jwtDecode from 'jwt-decode';
+import { FaExclamationTriangle } from 'react-icons/fa';
 
-//icons
-import { MdCloudUpload } from "react-icons/md"
-
-
+const token = localStorage.getItem('accessToken');
+const config = {
+    headers: {
+      "Content-type": "application/json",
+      "Authorization" : token
+    },
+};
 
 export class index extends Component {
 
     state = {
         tags: [],
         tagsSelected: [],
-        checked: true
+        checked: true,
+        image: {
+            name: "",
+            formData: []
+        },
+        recipe: {
+            foodName: "",
+            goodFor: "",
+            readyIn: "",
+            foodImages: "",
+            tags: [],
+            ingredients: [],
+            instructions: [],
+            nutritions: {},
+            ownerInfo: {
+                id: "",
+                name: ""
+            }
+        },
+        errors: {},
+        showtoast: false,
+        toastMessage: ""
     }
 
     async componentDidMount() {
         try {
-             const tag = await axios.get('/json/tags.json');
-             this.setState({
-                 tags: tag.data
-             })
+            const tag = await axios.get('/json/tags.json');
+            this.setState({
+                tags: tag.data,
+                recipe: {
+                    ...this.state.recipe,
+                    ownerInfo: {
+                        id: jwtDecode(token)._id,
+                        name: jwtDecode(token).fullName
+                    }
+                }
+            })
         }
         catch(error) {
          console.log(error)
@@ -54,35 +86,114 @@ export class index extends Component {
             checked: !this.state.checked
         })
     }
+
+    setShow = (condition, message) => {
+        this.setState({
+            showtoast: condition,
+            toastMessage: message ? message : "Something went wrong"
+        })
+    }
     
+    getImageFromUploads = (data, formData) => {
+        const processName = []
+        // file name processing
+        for(var i in data) {
+            const extn = data[i].split('.').pop()
+            const processFile = "xs.prcs." + data[i].split('.').join('_') + "." + extn 
+            processName.push(processFile)   
+        }
+        this.setState({
+            ...this.state,
+            image: {
+                name: processName,
+                formData: formData
+            },
+            recipe : {
+                ...this.state.recipe,
+                foodImages: processName
+            }
+        })
+    }
+
+    handleRecipeChange = input => e => {
+        this.setState({
+            recipe: {
+                [input]: e.target.value
+            },
+            errors: {
+                ...this.state.errors,
+                [input]: ''
+            }
+        })
+    }
+
+    submitRecipe = async () => {
+        const { recipe } = this.state
+        try {
+            const process = await axios.post('/api/recipe/create', recipe, config);
+            console.log(process.data)
+        }
+        catch(error) {
+            if(error.response.data.length > 0){
+                this.setState({
+                    errors: error.response.data
+                })
+            }
+            this.setShow(true, "Failes")
+        }
+    }
+    
+    processError = (errors, lookUP) => {
+        if(errors.length > 0) {
+            return errors.filter(d => d.path[0] === lookUP).length > 0 ? true : false
+        }
+        return false
+    }
 
     render() {
-        const { tags, tagsSelected, checked} = this.state
+        const { 
+            tags, 
+            tagsSelected, 
+            checked, 
+            recipe,
+            showtoast,
+            toastMessage,
+            errors
+        } = this.state
         return (
             <UserFrame>
                 <div className="mainHomeDiv">
                     <div className="createRecipe">
                         <h5>Fill in details for your recipe!</h5>
                         {/* image upload */}
-                        <div>
-                            <div className="imgUploadDiv">
-                                <MdCloudUpload className="uploadIcon"/>
-                                No image chosen yet!
-                            </div>
-                            <button className="customButtonFormat customButtonsize100 buttonColorGray">
-                                <p>Choose an image</p>
-                            </button>
-                        </div>
+                        <ImageUpload getImageFromUploads={this.getImageFromUploads}/>
                         {/* Recipe Name */}
                         <div className="inputSetFormat">
                             <label>Name of Recipe</label>
-                            <input type="value" placeholder="" maxLength="40"/>
+                            <input 
+                                type="text" 
+                                maxLength="40" 
+                                value={recipe.foodName} 
+                                className={this.processError(errors, 'foodName') ? "err" : ''}
+                                onChange={this.handleRecipeChange('foodName')}
+                            />
+                            <RenderError 
+                                data={errors.length > 0 ? errors.filter(d => d.path[0] === "foodName") : ''}
+                            />
                         </div>
                         {/* Servings */}
                         <div className="inputSetFormat">
                             <label>Good for how many servings?</label>
                             <div className="inputsubFormat1">
-                                <input type="number" min="1" placeholder="1" maxLength="30"/> 
+                                <input 
+                                    type="number" 
+                                    min="1"
+                                    placeholder="1" 
+                                    maxLength="30"
+                                    value={recipe.goodFor} 
+                                    className={this.processError(errors, 'goodFor') ? "err" : ''}
+                                    onChange={this.handleRecipeChange('goodFor')}
+                                /> 
                                 <p>Serving/s</p>
                             </div>
                         </div>
@@ -182,7 +293,10 @@ export class index extends Component {
                         </div>
                         {/* Action Buttons */}
                         <div className="actionButtonDiv">
-                            <button className="customButtonFormat buttonColorBlue mr-10">
+                            <button 
+                                className="customButtonFormat buttonColorBlue mr-10"
+                                onClick={() => this.submitRecipe()}
+                            >
                                 <p>Save and Post</p>
                             </button>
                             <button className="customButtonFormat mr-10">
@@ -194,6 +308,14 @@ export class index extends Component {
                         </div>
                     </div>
                 </div>
+                <Toast onClose={() => this.setShow(false)} show={showtoast} delay={4000} autohide>
+                    <Toast.Header>
+                        <FaExclamationTriangle/>
+                        <strong className="mr-auto ml-2"> Notice!</strong>
+                        <small>just now</small>
+                    </Toast.Header>
+                    <Toast.Body>{toastMessage}!</Toast.Body>
+                </Toast>
             </UserFrame>
         )
     }
