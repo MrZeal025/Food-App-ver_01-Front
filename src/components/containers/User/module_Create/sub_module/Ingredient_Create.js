@@ -3,13 +3,15 @@ import React from "react";
 //icons
 import { FaPlus, FaMinus } from "react-icons/fa";
 
-
 const ingredientList = props => {
+  const { handleIngredients } = props
   return props.ingredientDetails.map((val, idx) => {
-    let amount = `amount-${idx}`,
-        unit = `unit-${idx}`,
-        ingredientName = `ingredientName-${idx}`,
-        price = `price-${idx}`;
+
+    let amount = `amount-${idx}`
+    let unit = `unit-${idx}`
+    let name = `name-${idx}`
+    let price = `price-${idx}`
+
     return (
       <div className="ingInputFormat inputSetFormat" key={val.index}>
         <div className="inputSubFormat2 mr-10">
@@ -21,11 +23,12 @@ const ingredientList = props => {
             name="amount"
             data-id={idx}
             id={amount}
+            onChange={handleIngredients}
           />
         </div>
         <div className="inputSubFormat2 mr-10">
           <label>Unit</label>
-          <select className="form-control" name="type" id={unit} data-id={idx}>
+          <select className="form-control" name="unit" id={unit} data-id={idx} onChange={handleIngredients}>
             <option value=" " selected hidden>Select a unit</option>
             <option>kg/s</option>
             <option>g/s</option>
@@ -43,13 +46,14 @@ const ingredientList = props => {
             type="text"
             className="form-control"
             placeholder=""
-            name="ingredientName"
-            id={ingredientName}
+            name="name"
+            id={name}
             data-id={idx}
+            onChange={handleIngredients}
           />
         </div>
         <div className="inputSubFormat2 mr-10">
-          <label>Price</label>
+          <label>Price (Php)</label>
           <input
             type="number"
             className=""
@@ -57,6 +61,7 @@ const ingredientList = props => {
             name="price"
             id={price}
             data-id={idx}
+            onChange={handleIngredients}
           />
         </div>
         <div className="inputSubFormat2 addOrDelbuttonDiv">

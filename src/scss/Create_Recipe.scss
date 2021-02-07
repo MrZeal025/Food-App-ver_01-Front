@@ -97,6 +97,10 @@ h5 {
     display: flex;
     align-items: flex-end;
     max-width: 40px;
+    &.align-item-end-unset {
+        align-items: unset;
+        margin-top: -10px;
+    }
 }
 .customButtonFormat2 {
     width: 34px;
@@ -157,6 +161,9 @@ h5 {
         align-items: center;
         width: 35px;
         font-size: 23px;
+        &.align-center-none {
+            align-items:unset;
+        }
     }
 }
 
@@ -223,6 +230,17 @@ h5 {
         align-items: center;
 
     }
+}
+
+.input-type-area {
+    padding: 5px 12px;
+    font-size: 14px;
+    background-color: $light-3;
+    width: 100%;
+    margin-right: 10px;
+    outline: none;
+    border: 1px solid $light-5;
+    border-radius: 5px;
 }
 
 //Action Buttons 

@@ -4,8 +4,8 @@ import axios from 'axios';
 //React Bootstrap
 import { InputGroup, FormControl, Toast } from 'react-bootstrap'
 // components
-import Ingredient from './sub_module/Ingredient_View'
-import Procedure from "./sub_module/Procedure_View";
+import Ingredient from './sub_module/Ingredient_Create'
+import Procedure from "./sub_module/Procedure_Create";
 import ImageUpload from '../../../common/ImageUpload';
 import RenderError from '../../../common/Renderer/RenderErrors';
 // utilities and icons
@@ -33,11 +33,20 @@ export class index extends Component {
         recipe: {
             foodName: "",
             goodFor: "",
+            hours: "",
+            mins: "",
             readyIn: "",
             foodImages: "",
             tags: [],
-            ingredients: [],
-            instructions: [],
+            ingredients: [
+                {
+                    amount: "",
+                    unit: "",
+                    name: "",
+                    price: ""
+                }
+            ],
+            instruction: [""],
             nutritions: {},
             ownerInfo: {
                 id: "",
@@ -116,21 +125,86 @@ export class index extends Component {
     }
 
     handleRecipeChange = input => e => {
+        const { errors } = this.state
         this.setState({
             recipe: {
+                ...this.state.recipe,
                 [input]: e.target.value
             },
-            errors: {
-                ...this.state.errors,
-                [input]: ''
-            }
+            errors:  errors.length > 0 ? errors.filter(error => error.path[0] !== (input === "mins" || input === "hours" ? "readyIn" : input)) : ''
         })
+    }
+
+    // Ingredient Section
+    handleIngredients = e => {
+        if ( ["amount", "unit", "name", "price"].includes(e.target.name)) {
+            let ingredients = [...this.state.recipe.ingredients];
+            ingredients[e.target.dataset.id][e.target.name] = e.target.value;
+        }
+        else {
+            this.setState({ 
+                recipe: {
+                    ...this.state.recipe,
+                    [e.target.name]: e.target.value 
+                }
+            });
+        }
+    }
+
+    addNewRow = e => {
+        this.setState(prevState => ({
+            recipe: {
+                ...this.state.recipe,
+                ingredients: [
+                    ...prevState.recipe.ingredients,
+                    {
+                        amount: "",
+                        unit: "",
+                        name: "",
+                        price: ""
+                    }
+                ]
+            }
+        }))
+    }
+
+    clickOnDelete = (record) =>  {
+        const { recipe } = this.state
+        this.setState({
+            recipe: {
+                ...recipe,
+                ingredients: recipe.ingredients.filter(r => r !== record)
+            }
+        });
+        console.log(this.state.recipe.ingredients.filter(r => r !== record))
+    }
+
+    // instructions
+
+    addNewInstruction = e => {
+        this.setState(prevState => ({
+            recipe: {
+                ...this.state.recipe,
+                instruction : [...prevState.recipe.instruction, ""]
+            }
+        }))
     }
 
     submitRecipe = async () => {
         const { recipe } = this.state
+        const body = {
+            foodName: recipe.foodName,
+            goodFor: recipe.goodFor,
+            readyIn: recipe.hours !== '' || recipe.mins !== '' ? recipe.hours + " hour/s " +  + recipe.mins + " minute/s" : '',
+            foodImages: recipe.foodImages,
+            tags: recipe.tags,
+            ingredients: recipe.ingredients,
+            instruction: recipe.instruction,
+            nutrition: recipe.nutrition,
+            ownerInfo: recipe.ownerInfo
+        }
         try {
-            const process = await axios.post('/api/recipe/create', recipe, config);
+            const process = await axios.post('/api/recipe/create', body, config);
             console.log(process.data)
         }
         catch(error) {
@@ -139,7 +213,7 @@ export class index extends Component {
                     errors: error.response.data
                 })
             }
-            this.setShow(true, "Failes")
+            this.setShow(true, "Recipe create failed")
         }
     }
     
@@ -160,6 +234,7 @@ export class index extends Component {
             toastMessage,
             errors
         } = this.state
+        
         return (
             <UserFrame>
                 <div className="mainHomeDiv">
@@ -167,6 +242,7 @@ export class index extends Component {
                         <h5>Fill in details for your recipe!</h5>
                         {/* image upload */}
                         <ImageUpload getImageFromUploads={this.getImageFromUploads}/>
+                        <p className="err">{this.processError(errors, 'foodImages') ? "Image/s is required" : ''}</p>
                         {/* Recipe Name */}
                         <div className="inputSetFormat">
                             <label>Name of Recipe</label>
@@ -176,6 +252,7 @@ export class index extends Component {
                                 value={recipe.foodName} 
                                 className={this.processError(errors, 'foodName') ? "err" : ''}
                                 onChange={this.handleRecipeChange('foodName')}
+                                placeholder="Aa"
                             />
                             <RenderError 
                                 data={errors.length > 0 ? errors.filter(d => d.path[0] === "foodName") : ''}
@@ -202,22 +279,48 @@ export class index extends Component {
                             <label>How much time does it take to do?</label>
                             <div className="inputSubFormat2">
                                 <div className="inputSubFormat2_1 mr-10">
-                                    <input type="number" min="0" placeholder="0" maxLength="5"/> 
+                                    <input 
+                                        type="number" 
+                                        min="0" 
+                                        placeholder="0" 
+                                        maxLength="5"
+                                        value={recipe.hours} 
+                                        className={this.processError(errors, 'readyIn') ? "err" : ''}
+                                        onChange={this.handleRecipeChange('hours')}
+                                    /> 
                                     <p>Hour/s</p>
                                 </div>
                                 <div className="inputSubFormat2_1">
-                                    <input type="number" min="1" placeholder="1" maxLength="5"/> 
+                                    <input 
+                                        type="number" 
+                                        min="1" 
+                                        placeholder="1" 
+                                        maxLength="5"
+                                        value={recipe.mins} 
+                                        className={this.processError(errors, 'readyIn') ? "err" : ''}
+                                        onChange={this.handleRecipeChange('mins')}
+                                    /> 
                                     <p>Minute/s</p>
                                 </div>
                             </div>
                         </div>
                         {/* Ingredients */}
                         <h4>Ingredients</h4>
-                        <Ingredient />
+                        <Ingredient 
+                            add={this.addNewRow}
+                            delete={this.clickOnDelete}
+                            ingredientDetails={recipe.ingredients}
+                            handleIngredients={this.handleIngredients}
+                        />
                         {/* Procedure */}
+                        <hr/>
                         <h4>Procedure</h4>
-                        <Procedure />
-
+                        <Procedure 
+                            add={this.addNewInstruction}
+                            delete={this.clickOnDelete}
+                            procedure={recipe.instruction}
+                        />
+                        <hr/>
                         {/* Nutrition */}
                         <div>
                             <div className="titleaAndSub">
@@ -267,23 +370,24 @@ export class index extends Component {
                             </div>
                             }
                         </div>
+                        <hr/>
                         {/* Tags */}
                         <div className="tagsFiltDiv">
                             <h4>Tags</h4>
-                                    {
-                                        tags.map((tag, i) => {
-                                            return(
-                                                <button
-                                                    key={i}
-                                                    className={tagsSelected.includes(tag.value)? "tag customTag activeTag" : "tag customTag"}
-                                                    style={{color:tag.tagColor, border: `2px solid ${tag.tagColor}`}}
-                                                    onClick={() => {this.setSelectedTags(tag.value)}}
-                                                    >
-                                                        {tag.tagName}
-                                                </button> 
-                                            )
-                                        })
-                                    }
+                            {
+                                tags.map((tag, i) => {
+                                    return(
+                                        <button
+                                            key={i}
+                                            className={tagsSelected.includes(tag.value)? "tag customTag activeTag" : "tag customTag"}
+                                            style={{color:tag.tagColor, border: `2px solid ${tag.tagColor}`}}
+                                            onClick={() => {this.setSelectedTags(tag.value)}}
+                                            >
+                                                {tag.tagName}
+                                        </button> 
+                                    )
+                                })
+                            }
                             <InputGroup className="mb-3">
                                 <FormControl
                                     className="pHolder customPHolder"

@@ -6,17 +6,17 @@ export class Ingredient_View extends Component {
   state = {
     ingredientDetails: [
       {
-        index: Math.random(),
+        index: Math.floor(Math.random() * Math.floor(900)),
         amount: "",
         unit: "",
-        ingredientName: "",
+        name: "",
         price: ""
       }
     ]
   }
 
   handleChange = e => {
-    if ( ["amount", "unit", "ingredientName", "price"].includes(e.target.name)) {
+    if ( ["amount", "unit", "name", "price"].includes(e.target.name)) {
       let ingredientDetails = [...this.state.bookDetails];
       ingredientDetails[e.target.dataset.id][e.target.name] = e.target.value;
     }
@@ -30,22 +30,14 @@ export class Ingredient_View extends Component {
       ingredientDetails: [
         ...prevState.ingredientDetails,
         {
-          index: Math.random(),
+          index:  Math.floor(Math.random() * Math.floor(900)),
           amount: "",
           unit: "",
-          ingredientName: "",
+          name: "",
           price: ""
         }
       ]
     }))
-  }
-
-  deleteRow = index => {
-    this.setState({
-      ingredientDetails: this.state.ingredientDetails.filter(
-        (s, sindex) => index !== sindex
-      )
-    })
   }
 
   clickOnDelete(record) {
