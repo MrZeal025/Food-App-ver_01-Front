@@ -27,6 +27,7 @@ export class index extends Component {
     }
 
     async componentDidMount() {
+        document.title = "Welcome - Bitezoo"
        try {
             const recipe = await axios.get('/api/recipe/read-all', config);
             const tag = await axios.get('/json/tags.json');

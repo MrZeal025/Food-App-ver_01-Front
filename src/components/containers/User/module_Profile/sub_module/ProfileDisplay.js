@@ -13,7 +13,7 @@ export class ProfileDisplay extends Component {
     }
 
     async componentDidMount() {
-       
+        document.title = "My Profile - Bitezoo"
         if(token) {
             const decode = jwt_decode(token);
             this.setState({

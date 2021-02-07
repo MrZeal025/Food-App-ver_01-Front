@@ -69,6 +69,7 @@ export class index extends Component {
     }
 
     async componentDidMount() {
+        document.title = "Create Recipe - Bitezoo"
         try {
             const tag = await axios.get('/json/tags.json');
             this.setState({

@@ -21,6 +21,10 @@ export class index extends Component {
         status: false,
         message: ""
     }
+
+    componentDidMount() {
+        document.title = "Sign in - Bitezoo"
+    }
     
     OnchangeHandler = (event) => {
         this.setState({

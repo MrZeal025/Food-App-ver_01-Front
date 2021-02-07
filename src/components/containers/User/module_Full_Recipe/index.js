@@ -34,7 +34,7 @@ export class index extends Component {
     }
 
     async componentDidMount() {
-
+        
         try {
             const decode = jwt_decode(token);
             const profile = await axios.get(`/api/user/profile/read/${decode._id}`, config);
@@ -48,6 +48,7 @@ export class index extends Component {
 
         try {
             const recipe = await axios.get(`/api/recipe/${this.props.match.params.id}`, config);
+            document.title = `${recipe.data.data.recipe.foodName} - Bitezoo`
             this.setState({
                 recipe: recipe.data.data.recipe,
             })

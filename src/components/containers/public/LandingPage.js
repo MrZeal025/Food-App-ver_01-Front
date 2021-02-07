@@ -5,7 +5,7 @@ import { FaAngleDown } from 'react-icons/fa';
 import jwt_decode from 'jwt-decode';
 //routing
 import {Link} from "react-router-dom";
-const logoLight = process.env.PUBLIC_URL + '/assets/bite-temp-holder.png';
+const logoLight = process.env.PUBLIC_URL + '/assets/logowhite@2x.png';
 
 export class LandingPage extends Component {
 

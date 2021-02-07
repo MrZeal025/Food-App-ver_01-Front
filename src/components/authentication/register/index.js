@@ -33,6 +33,7 @@ export class index extends Component {
 
     componentDidMount(){
         // verify if there is an existing accessToken
+        document.title = "Sign up - Bitezoo"
         this.verifyAccessToken();
     }
 
