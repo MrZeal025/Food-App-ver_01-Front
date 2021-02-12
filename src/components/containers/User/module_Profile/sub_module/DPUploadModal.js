@@ -29,6 +29,7 @@ export class DPUploadModal extends Component {
     state = {
         _id: '',
         showDPModal: false,
+        allowUpload: false,
         profilePicture: '',
         image : {
             name: [],
@@ -90,7 +91,8 @@ export class DPUploadModal extends Component {
                 name: data,
                 formData: formData
             },
-            profileImageURL: processName
+            profileImageURL: processName,
+            allowUpload: true
         })
     }
 
@@ -102,21 +104,19 @@ export class DPUploadModal extends Component {
                 name: [],
                 formData: []
             },
-            profileImageURL: []
+            profileImageURL: [],
+            allowUpload: true
         })
     }
 
     uploadProfile = async () => {
-        const { image, _id } = this.state
-        // parse image to form data
-        const formData = new FormData();
-        formData.append("profilePicture", image.formData);
-        
+        const { image, _id } = this.state        
         try {
-            const upload =  await axios.put(`/api/uploads/profile/${_id}`, formData, config);
+            const upload =  await axios.put(`/api/uploads/profile/${_id}`, JSON.stringify({ data: image.formData }), config);
             this.setState({
                 showDPModal: false,
-                profilePicture: upload.data.data.user
+                allowUpload: false,
+                profilePicture: upload.data.data.imageResponse.url
             })
             this.SuccessToast(upload.data.data.message)
         }
@@ -126,10 +126,10 @@ export class DPUploadModal extends Component {
     }
 
     render() {
-        const { showDPModal, profilePicture } = this.state
+        const { showDPModal, profilePicture, allowUpload } = this.state
         return (
             <>
-                <img src={profilePicture !== "" ? path + '/profile/' + profilePicture : path + '/profile/' + avatar } alt="DP"/>
+                <img src={profilePicture !== "" ? profilePicture : path + '/profile/' + avatar } alt="DP"/>
                 <div className="image-upload" onClick={() => this.setShowModal()}>
                     <label htmlFor="file-input">
                         <FaCamera/>
@@ -153,7 +153,13 @@ export class DPUploadModal extends Component {
                     <Modal.Body>
                         <ImageUpload getImageFromUploads={this.getImageFromUploads}/>
                         <Button variant="secondary" onClick={e => this.discard()}>Discard</Button>
-                        <Button variant="primary" onClick={e => this.uploadProfile()}>Update</Button>
+                        <Button 
+                            variant="primary" 
+                            onClick={allowUpload ? () => this.uploadProfile() : () => {}}
+                            disabled={!allowUpload}
+                        >
+                            Update
+                        </Button>
                     </Modal.Body>
                 </Modal> 
             </>
