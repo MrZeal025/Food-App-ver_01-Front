@@ -35,7 +35,7 @@ export class index extends Component {
             foodName: "",
             goodFor: "",
             hours: "",
-            mins: "",
+            mins: "1",
             readyIn: "",
             foodImages: "",
             tags: [],
@@ -73,6 +73,7 @@ export class index extends Component {
         document.title = "Create Recipe - Bitezoo"
         try {
             const tag = await axios.get('/json/tags.json');
+            const profile = await axios.get(`/api/user/profile/read/${jwtDecode(token)._id}`, config);
             this.setState({
                 tags: tag.data,
                 recipe: {
@@ -80,7 +81,7 @@ export class index extends Component {
                     ownerInfo: {
                         id: jwtDecode(token)._id,
                         name: jwtDecode(token).fullName,
-                        profilePicture: jwtDecode(token).profilePicture
+                        profilePicture: profile.data.data.profilePicture
                     }
                 }
             })
@@ -92,7 +93,7 @@ export class index extends Component {
 
     checkToHandleDisable = () => {
         const { recipe, image } = this.state
-        if(image.formData.length === 0 || recipe.foodName === "" || recipe.goodFor === "" || recipe.hours === "" || recipe.min === ""){
+        if(image.formData.length === 0 || recipe.foodName === "" || recipe.goodFor === "" || recipe.mins === ""){
             return true
         }
 
@@ -101,14 +102,12 @@ export class index extends Component {
 
     setSelectedTags = (i, tag) => {
         const {tagsSelected} = this.state
-        console.log(tag)
         this.setState({
             tagsSelected: [...tagsSelected, i],
             recipe : {
                 ...this.state.recipe,
                 tags: [...this.state.recipe.tags, tag]
-            }
-            
+            } 
         })
         if (tagsSelected.includes(i)) {
             this.setState({
@@ -274,7 +273,7 @@ export class index extends Component {
         const body = {
             foodName: recipe.foodName,
             goodFor: recipe.goodFor,
-            readyIn: recipe.hours !== '' || recipe.mins !== '' ? recipe.hours + " hour/s " +  + recipe.mins + " minute/s" : '',
+            readyIn: recipe.hours !== '' || recipe.mins !== '' ? recipe.hours || 0 + " hour/s " +  + recipe.mins + " minute/s" : '',
             foodImages: data.imageResponse.map(image => image.url),
             tags: recipe.tags,
             ingredients: recipe.ingredients,

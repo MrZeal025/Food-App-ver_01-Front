@@ -28,7 +28,7 @@ export class AdminNavBar extends Component {
         const { user } = this.state
         return (
             <Navbar className="nav-overrides" collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
-                <Navbar.Brand href="/home" className="BZlogo">
+                <Navbar.Brand href="/admin/home" className="BZlogo">
                     <img
                         src={logoLight}
                         width="30"

@@ -3,11 +3,10 @@ import UserFrame from '../UserFrame'
 import SearchFilter from '../module_Search'
 import axios from 'axios'
 //react icons
-import {MdStar} from 'react-icons/md'
-import jwt_decode from 'jwt-decode';
+import { MdStar } from 'react-icons/md'
+import FsLightbox from 'fslightbox-react';
+import jwtDecode from 'jwt-decode'
 
-const path = process.env.PUBLIC_URL;
-const avatar ="avatar.jpg"
 const token = localStorage.getItem('accessToken');
 const config = {
     headers: {
@@ -28,7 +27,9 @@ export class index extends Component {
             ownerInfo: {},
             tags: [],
             ingredients: [],
-            instruction: []
+            instruction: [],
+            openLightBox: false,
+            profilePicture: ""
         }
     }
 
@@ -36,9 +37,11 @@ export class index extends Component {
         
         try {
             const recipe = await axios.get(`/api/recipe/${this.props.match.params.id}`, config);
+            const profile = await axios.get(`/api/user/profile/read/${jwtDecode(token)._id}`, config);
             document.title = `${recipe.data.data.recipe.foodName} - Bitezoo`
             this.setState({
                 recipe: recipe.data.data.recipe,
+                profilePicture: profile.data.data.profilePicture
             })
         }
         catch(error) {
@@ -46,19 +49,28 @@ export class index extends Component {
         }
     }
 
+    openLightBox = () => {
+        this.setState({
+            openLightBox: !this.state.openLightBox
+        })
+    }
+
     render() {
-        const { recipe } = this.state
+        const { recipe, openLightBox, profilePicture } = this.state
     
         return (
             <UserFrame>
                 <div className="mainHomeDiv">
-                    <SearchFilter />
+                    <SearchFilter 
+                        setQuickFilter={() => {}}
+                        tags={[]}
+                    />
                     <div className="middle">
                         <div className="white-bg mb-4 mt-4">
                             <h4 className="recipeName">{recipe.foodName}</h4>
                             {/* userName */}
                             <div className="flex-row mb-10">
-                                <img className="small-avatar" src={recipe.ownerInfo.profilePicture} alt="DP"/>
+                                <img className="small-avatar" src={recipe.ownerInfo.profilePicture === "" ? profilePicture : recipe.ownerInfo.profilePicture} alt="DP"/>
                                 <div className="userName"><h6>By: {recipe.ownerInfo.name}</h6></div>
                             </div>
                             {/* rating */}
@@ -76,6 +88,7 @@ export class index extends Component {
                                     src={recipe.foodImages[0]} 
                                     alt="RecipeImage"
                                     className="recImg"
+                                    onClick={() => this.openLightBox()}
                                 />
                                 <div className="recDetails">
                                     <div className="flex-row mb-10">
@@ -131,6 +144,7 @@ export class index extends Component {
                                             src={foodImage} 
                                             alt="RecipeImage"
                                             className="recImg"
+                                            onClick={() => this.openLightBox()}
                                         />
                                     })
                                 }
@@ -231,6 +245,11 @@ export class index extends Component {
                         </div>
                     </div>
                 </div>
+                <FsLightbox
+                    toggler={openLightBox}
+                    sources={recipe.foodImages}
+                    slide={true}
+                />
             </UserFrame>
         )
     }

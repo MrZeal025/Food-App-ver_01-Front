@@ -6,7 +6,7 @@ import ImageUpload from '../../../../common/ProfilCoverUpload';
 import { FaCamera, FaTimes } from 'react-icons/fa'
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-
+import FsLightbox from 'fslightbox-react';
 import { toast } from 'react-toastify';
 import SuccessToast from '../../../../common/toastSuccess';
 import ErrorToast from '../../../../common/toastError';
@@ -36,7 +36,8 @@ export class DPUploadModal extends Component {
             formData: []
         },
         profileImageURL: [],
-        status: false
+        status: false,
+        openLightBox: false
     }
 
     async componentDidMount() {
@@ -133,11 +134,21 @@ export class DPUploadModal extends Component {
         }
     }
 
+    openLightBox = () => {
+        this.setState({
+            openLightBox: !this.state.openLightBox
+        })
+    }
+
     render() {
-        const { showDPModal, profilePicture, allowUpload, status } = this.state
+        const { showDPModal, profilePicture, allowUpload, status, openLightBox } = this.state
         return (
             <>
-                <img src={profilePicture !== "" ? profilePicture : path + '/profile/' + avatar } alt="DP"/>
+                <img 
+                    src={profilePicture !== "" ? profilePicture : path + '/profile/' + avatar } 
+                    alt="DP" 
+                    onClick={() => this.openLightBox()}
+                />
                 <div className="image-upload" onClick={() => this.setShowModal()}>
                     <label htmlFor="file-input">
                         <FaCamera/>
@@ -172,6 +183,10 @@ export class DPUploadModal extends Component {
                         </Button>
                     </Modal.Body>
                 </Modal> 
+                <FsLightbox
+                    toggler={openLightBox}
+                    sources={[profilePicture !== "" ? profilePicture : path + '/profile/' + avatar]}
+                />
             </>
         )
     }

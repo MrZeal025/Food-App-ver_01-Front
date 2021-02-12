@@ -6,6 +6,7 @@ import ImageUpload from '../../../../common/ProfilCoverUpload';
 import { FaCamera, FaTimes } from 'react-icons/fa';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import FsLightbox from 'fslightbox-react';
 // notification
 import { toast } from 'react-toastify';
 import SuccessToast from '../../../../common/toastSuccess';
@@ -34,7 +35,8 @@ export class CPUploadModal extends Component {
             name: [],
             formData: []
         },
-        coverPhotoImageURL: []
+        coverPhotoImageURL: [],
+        openLightBox: false
     }
 
     async componentDidMount() {
@@ -131,14 +133,21 @@ export class CPUploadModal extends Component {
         }
     }
 
+    openLightBox = () => {
+        this.setState({
+            openLightBox: !this.state.openLightBox
+        })
+    }
+
     render() {
-        const { showCPModal, coverPhoto, allowUpload, status } = this.state
+        const { showCPModal, coverPhoto, allowUpload, status, openLightBox } = this.state
         return (
             <>
                 <img 
                     className="cover-photo" 
                     src={coverPhoto !== "" ? coverPhoto : avatar} 
                     alt="CP" 
+                    onClick={() => this.openLightBox()}
                 />
                 <button className="btn btn-primary transparent-btn" onClick={()=> this.setShowModal()}>
                     <FaCamera/> {' '}
@@ -173,6 +182,10 @@ export class CPUploadModal extends Component {
                         </Button>
                     </Modal.Body>
                 </Modal> 
+                <FsLightbox
+                    toggler={openLightBox}
+                    sources={[coverPhoto]}
+                />
             </>
         )
     }
