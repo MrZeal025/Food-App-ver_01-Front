@@ -6,6 +6,7 @@ import axios from 'axios';
 import { Card, Button, Container, Row, Col } from 'react-bootstrap';
 //react icons
 import { MdStar } from 'react-icons/md';
+import { FaBreadSlice } from 'react-icons/fa';
 // link
 import { Link } from 'react-router-dom';
 
@@ -66,8 +67,10 @@ export class index extends Component {
                     </div>
                     <div className="middle">
                         <Container fluid >
-                                <Row md={3}>
-                                    {
+                            <Row md={ recipes.length > 0 ? 3 : 12}>
+                                {
+                                    recipes.length > 0 
+                                    ? 
                                         recipes.map((recipe, i) => {
                                             return(
                                                 <Col key={i} className="perCard">
@@ -109,8 +112,13 @@ export class index extends Component {
                                                 </Col>
                                             )
                                         })
-                                    }
-                                </Row>
+                                    : 
+                                    <div className="empty-center-display">
+                                        <FaBreadSlice/>
+                                        <p>No recipes at the moment</p>
+                                    </div>
+                                }
+                            </Row>
                         </Container>
                     </div>
                     <div className="right">

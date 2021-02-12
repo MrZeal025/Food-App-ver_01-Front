@@ -42,19 +42,19 @@ export class index extends Component {
         const {tags, tagsSelected} = this.state
         return (
             <div className="left">
+                <h4>Search Filter</h4>
                 <InputGroup>
                     <FormControl
-                    placeholder="Search for a recipe"
-                    aria-label="Search for a recipe"
-                    aria-describedby="basic-addon2"
-                    className="searchInput"
+                        placeholder="Search for a recipe"
+                        aria-label="Search for a recipe"
+                        aria-describedby="basic-addon2"
+                        className="searchInput"
                     />
                     <InputGroup.Append size="lg">
                     <Button className="searchButton">Search</Button>
                     </InputGroup.Append>
                 </InputGroup>
                 <div className="filterDiv">
-                    <h3>Search Filter</h3>
                     {/* Tags Filter Div */}
                     <div className="tagsFiltDiv">
                         <h5>Tags</h5>
@@ -79,6 +79,7 @@ export class index extends Component {
                             />
                         </InputGroup>
                     </div>
+                     <hr/>
                     {/* Serving Size Filter Div */}
                     <div className="serveFiltDiv">
                         <h5>Serving Size</h5>

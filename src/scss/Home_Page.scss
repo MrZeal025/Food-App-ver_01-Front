@@ -24,8 +24,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    padding-top: 70px;
-    padding-bottom: 10px;
+    padding-top: 50px;
 }
 
 //universal tags css
@@ -73,18 +72,23 @@
 }
 
 .left {
-    left: 10px;
+    left: 0;
     width: 20%;
-    height: 78vh;
+    height: 100vh;
     display: block;
     background-color: #ffffff;
-    padding: 13px;
-    
-
+    padding: 15px;
+    box-shadow: 3px 5px 6px rgba($color: #8fafe2, $alpha: 0.1);
+    h4 {
+        font-weight: 700 !important;
+    }
+    h5 {
+        margin-bottom: 5px;
+    }
     .filterDiv {
-        margin-top: 20px;
+        margin-top: 10px;
         width: 100%;
-        height: 65vh;
+        height: 75vh;
         overflow: auto;
     }
     //searchinput
@@ -151,12 +155,11 @@
 
 .middle {
     width: 100%;
-    padding: 0px 20%;
+    padding: 5px 20%;
     margin: 0 10px;
     flex-direction: row;
     justify-content: center;
-
-
+    
     .perCard {
         margin-bottom: 15px;
     }
@@ -196,7 +199,23 @@
             background-color: #3b3b3b;
             margin-left: 5px;
         }
-        
+    }
+
+    .empty-center-display {
+        width: 100%;
+        margin: 20% 0;
+        text-align: center;
+        justify-content: center;
+        svg {
+            color: rgb(156, 156, 156);
+            height: 100px;
+            width: 100px;
+        }
+        p {
+            margin-top: 10px;
+            font-size: 15px;
+            font-weight: 700;
+        }
     }
     
 }
@@ -204,7 +223,7 @@
 .right {
     right: 10px;
     width: 20%;
-    height: 85vh;
+    height: 100vh;
     display: block;
     background-color: #ffffff;
     padding: 15px;

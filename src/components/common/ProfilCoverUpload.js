@@ -5,13 +5,11 @@ const ImageUpload = props => {
 
   const { getImageFromUploads } = props
   const [previewSource, setPreviewSource] = useState();
-  
+
   const handleImageChange = (e) => {
     e.preventDefault();
     if (e.target.files) { 
-      const filesArray = Array.from(e.target.files).map((file) => URL.createObjectURL(file));
       const getImageFileName = Array.from(e.target.files).map((file) => { return file.name });
-
       Array.from(e.target.files).map(
         (file) => URL.revokeObjectURL(file) // avoid memory leak
       );
