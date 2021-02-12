@@ -26,6 +26,7 @@ export class index extends Component {
         tags: [],
         tagsSelected: [],
         checked: true,
+        submitting: false,
         image: {
             name: "",
             formData: []
@@ -78,7 +79,8 @@ export class index extends Component {
                     ...this.state.recipe,
                     ownerInfo: {
                         id: jwtDecode(token)._id,
-                        name: jwtDecode(token).fullName
+                        name: jwtDecode(token).fullName,
+                        profilePicture: jwtDecode(token).profilePicture
                     }
                 }
             })
@@ -86,6 +88,15 @@ export class index extends Component {
         catch(error) {
          console.log(error)
         }
+    }
+
+    checkToHandleDisable = () => {
+        const { recipe, image } = this.state
+        if(image.formData.length === 0 || recipe.foodName === "" || recipe.goodFor === "" || recipe.hours === "" || recipe.min === ""){
+            return true
+        }
+
+        return false
     }
 
     setSelectedTags = (i, tag) => {
@@ -135,7 +146,7 @@ export class index extends Component {
             ...this.state,
             image: {
                 name: processName,
-                formData: formData
+                formData: [...this.state.image.formData, formData]
             },
             recipe : {
                 ...this.state.recipe,
@@ -258,20 +269,13 @@ export class index extends Component {
         })
     }
 
-    submitRecipe = async () => {
-        const { recipe, image } = this.state
-        const formData = new FormData();
-
-        // loop and compress
-        for (var images of image.formData) {
-            formData.append("recipeImages", images);
-        }
-
+    handleCreateRecipe = async (data) => {
+        const { recipe } = this.state
         const body = {
             foodName: recipe.foodName,
             goodFor: recipe.goodFor,
             readyIn: recipe.hours !== '' || recipe.mins !== '' ? recipe.hours + " hour/s " +  + recipe.mins + " minute/s" : '',
-            foodImages: recipe.foodImages,
+            foodImages: data.imageResponse.map(image => image.url),
             tags: recipe.tags,
             ingredients: recipe.ingredients,
             instruction: recipe.instruction,
@@ -286,16 +290,66 @@ export class index extends Component {
             ownerInfo: recipe.ownerInfo
         }
         try {
+
             const process = await axios.post('/api/recipe/create', body, config);
-            await axios.post('/api/uploads/create/image/recipe', formData);
+            this.setState({
+                submitting: null,
+                recipe: {
+                    foodName: "",
+                    goodFor: "",
+                    hours: "",
+                    mins: "",
+                    readyIn: "",
+                    foodImages: "",
+                    tags: [],
+                    ingredients: [
+                        {
+                            amount: "",
+                            unit: "",
+                            name: "",
+                            price: ""
+                        }
+                    ],
+                    instruction: [""],
+                    nutritions: {
+                        caloricBreakDown: {
+                            carbsLabel : "",
+                            fatLabel : "",
+                            proteinLabel: "",
+
+                            percentCarbs : "",
+                            percentFat : "",
+                            percentProtein :""
+                        }
+                    },
+                    ownerInfo: {
+                        id: "",
+                        name: ""
+                    }
+                }
+            })
             this.setShow(true, process.data.data.message)
-        }
-        catch(error) {
+        } 
+        catch (error) {
             if(error.response.data.length > 0){
                 this.setState({
                     errors: error.response.data
                 })
             }
+            this.setShow(true, "Recipe create failed")
+        }
+    }
+
+    submitRecipe = async () => {
+        const { image } = this.state
+        this.setState({
+            submitting: true
+        })
+        try {
+            const processimage = await axios.post('/api/uploads/create/image/recipe', image.formData);
+            this.handleCreateRecipe(processimage.data.data)
+        }
+        catch(error) {
             this.setShow(true, "Recipe create failed")
         }
     }
@@ -307,6 +361,44 @@ export class index extends Component {
         return false
     }
 
+    discard = () => {
+        this.setState({
+            recipe: {
+                foodName: "",
+                goodFor: "",
+                hours: "",
+                mins: "",
+                readyIn: "",
+                foodImages: "",
+                tags: [],
+                ingredients: [
+                    {
+                        amount: "",
+                        unit: "",
+                        name: "",
+                        price: ""
+                    }
+                ],
+                instruction: [""],
+                nutritions: {
+                    caloricBreakDown: {
+                        carbsLabel : "",
+                        fatLabel : "",
+                        proteinLabel: "",
+
+                        percentCarbs : "",
+                        percentFat : "",
+                        percentProtein :""
+                    }
+                },
+                ownerInfo: {
+                    id: "",
+                    name: ""
+                }
+            }
+        })
+    }
+
     render() {
         const { 
             tags, 
@@ -315,7 +407,8 @@ export class index extends Component {
             recipe,
             showtoast,
             toastMessage,
-            errors
+            errors,
+            submitting
         } = this.state
         
         return (
@@ -519,25 +612,25 @@ export class index extends Component {
                                     )
                                 })
                             }
-                            <InputGroup className="mb-3">
-                                <FormControl
-                                    className="pHolder customPHolder"
-                                    placeholder="Add a tag for your next recipe"
-                                />
-                            </InputGroup>
                         </div>
+                        <hr/>
                         {/* Action Buttons */}
                         <div className="actionButtonDiv">
                             <button 
                                 className="customButtonFormat buttonColorBlue mr-10"
-                                onClick={() => this.submitRecipe()}
+                                onClick={this.checkToHandleDisable() ? () => {} : () => this.submitRecipe()}
+                                disabled={this.checkToHandleDisable()}
                             >
-                                <p>Save and Post</p>
+                                <p>
+                                    {
+                                        submitting ? "Submitting Recipe" : submitting === null ? "Submitted" : "Save and Post"
+                                    }
+                                </p>
                             </button>
                             <button className="customButtonFormat mr-10">
                                 <p>Save to Drafts</p>
                             </button>
-                            <button className="customButtonFormat buttonColorRed">
+                            <button className="customButtonFormat buttonColorRed" onClick={() => this.discard()}>
                                 <p>Cancel</p>
                             </button>
                         </div>

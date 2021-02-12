@@ -10,9 +10,6 @@ const ImageUpload = props => {
     e.preventDefault();
     if (e.target.files) { 
       const getImageFileName = Array.from(e.target.files).map((file) => { return file.name });
-      Array.from(e.target.files).map(
-        (file) => URL.revokeObjectURL(file) // avoid memory leak
-      );
       previewFile(e.target.files[0], getImageFileName);
     }
   };

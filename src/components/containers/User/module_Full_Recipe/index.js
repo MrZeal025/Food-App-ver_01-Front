@@ -29,23 +29,11 @@ export class index extends Component {
             tags: [],
             ingredients: [],
             instruction: []
-        },
-        profilePicture: ''
+        }
     }
 
     async componentDidMount() {
         
-        try {
-            const decode = jwt_decode(token);
-            const profile = await axios.get(`/api/user/profile/read/${decode._id}`, config);
-            this.setState({
-                profilePicture: profile.data.data.profilePicture
-            })
-        }
-        catch(error) {
-            console.log(error.response)
-        }
-
         try {
             const recipe = await axios.get(`/api/recipe/${this.props.match.params.id}`, config);
             document.title = `${recipe.data.data.recipe.foodName} - Bitezoo`
@@ -59,18 +47,18 @@ export class index extends Component {
     }
 
     render() {
-        const { recipe, profilePicture } = this.state
+        const { recipe } = this.state
     
         return (
             <UserFrame>
                 <div className="mainHomeDiv">
                     <SearchFilter />
                     <div className="middle">
-                        <div className="white-bg mb-20">
+                        <div className="white-bg mb-4 mt-4">
                             <h4 className="recipeName">{recipe.foodName}</h4>
                             {/* userName */}
                             <div className="flex-row mb-10">
-                                <img className="small-avatar" src={profilePicture !== "" ? path + '/profile/' + profilePicture : path + '/profile/' + avatar } alt="DP"/>
+                                <img className="small-avatar" src={recipe.ownerInfo.profilePicture} alt="DP"/>
                                 <div className="userName"><h6>By: {recipe.ownerInfo.name}</h6></div>
                             </div>
                             {/* rating */}
@@ -85,7 +73,7 @@ export class index extends Component {
                             {/* Image and Details */}
                             <div className="flex-row mb-10 imgAndDetails">
                                 <img 
-                                    src={path + '/recipe-images/' + recipe.foodImages[0]} 
+                                    src={recipe.foodImages[0]} 
                                     alt="RecipeImage"
                                     className="recImg"
                                 />
@@ -140,7 +128,7 @@ export class index extends Component {
                                     recipe.foodImages.map((foodImage, i) => {
                                         return <img 
                                             key={i}
-                                            src={path + '/recipe-images/' + foodImage} 
+                                            src={foodImage} 
                                             alt="RecipeImage"
                                             className="recImg"
                                         />
@@ -164,7 +152,7 @@ export class index extends Component {
                                 <ol className="justify">
                                     {
                                         recipe.instruction.map((intruction, i) => {
-                                            return <li key={i}>{intruction}</li>
+                                            return <li className="mt-2" key={i}>{intruction}</li>
                                         })
                                     }
                                 </ol>

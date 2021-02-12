@@ -75,7 +75,7 @@ export class index extends Component {
                                             return(
                                                 <Col key={i} className="perCard">
                                                     <Card>
-                                                        <Card.Img variant="top" src={path + '/recipe-images/' + recipe.foodImages[0]} />
+                                                        <Card.Img variant="top" src={recipe.foodImages[0]} />
                                                         <Card.Body className="customCardBody">
                                                         <Card.Title className="title">{recipe.foodName}</Card.Title>
                                                         <div>
