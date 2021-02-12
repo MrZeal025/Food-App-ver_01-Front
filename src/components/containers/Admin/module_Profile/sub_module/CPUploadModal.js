@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 // components
 import { Modal, Button } from 'react-bootstrap';
-import ImageUpload from '../../../../common/ImageUpload';
+import ImageUpload from '../../../../common/ProfilCoverUpload';
 // utilities
 import { FaCamera, FaTimes } from 'react-icons/fa';
 import axios from 'axios';
@@ -34,7 +34,9 @@ export class CPUploadModal extends Component {
             name: [],
             formData: []
         },
-        coverPhotoImageURL: []
+        coverPhotoImageURL: [],
+        allowUpload: false,
+        status: false
     }
 
     async componentDidMount() {
@@ -91,7 +93,8 @@ export class CPUploadModal extends Component {
                 name: data,
                 formData: formData
             },
-            coverPhotoImageURL: processName
+            coverPhotoImageURL: processName,
+            allowUpload: true
         })
     }
 
@@ -103,36 +106,41 @@ export class CPUploadModal extends Component {
                 name: [],
                 formData: []
             },
-            profileImageURL: []
+            profileImageURL: [],
+            allowUpload: false
         })
     }
 
     uploadCoverPhoto = async () => {
         const { image, _id } = this.state
-        // parse image to form data
-        const formData = new FormData();
-        formData.append("coverPhoto", image.formData);
-        
+        this.setState({
+            status: true
+        })
         try {
-            const upload =  await axios.put(`/api/uploads/admin/cover-photo/${_id}`, formData, config);
+            const upload =  await axios.put(`/api/uploads/admin/cover-photo/${_id}`, JSON.stringify({ data: image.formData }), config);
             this.setState({
                 showCPModal: false,
-                coverPhoto: upload.data.data.admin
+                allowUpload: false,
+                coverPhoto: upload.data.data.imageResponse.url,
+                status: null
             })
             this.SuccessToast(upload.data.data.message)
         }
         catch (err) {
+            this.setState({
+                status: false
+            })
             this.ErrorToast(err.response)
         }
     }
 
     render() {
-        const { showCPModal, coverPhoto } = this.state
+        const { showCPModal, coverPhoto, allowUpload, status } = this.state
         return (
             <>
                 <img 
                     className="cover-photo" 
-                    src={coverPhoto !== "" ? path + '/cover-photo/' + coverPhoto : avatar} 
+                    src={coverPhoto !== "" ? coverPhoto : avatar} 
                     alt="CP" 
                 />
                 <button className="btn btn-primary transparent-btn" onClick={()=> this.setShowModal()}>
@@ -157,7 +165,16 @@ export class CPUploadModal extends Component {
                     <Modal.Body>
                         <ImageUpload getImageFromUploads={this.getImageFromUploads}/>
                         <Button variant="secondary" onClick={e => this.discard()}>Discard</Button>
-                        <Button variant="primary" onClick={e => this.uploadCoverPhoto()}>Update</Button></Modal.Body>
+                        <Button 
+                            variant="primary" 
+                            onClick={allowUpload ? () => this.uploadCoverPhoto() : () => {} }
+                            disabled={!allowUpload}
+                        >
+                            {
+                                status ? "Uploading" : status !== null ? "Update" : "Done"
+                            }
+                        </Button>
+                    </Modal.Body>
                 </Modal> 
             </>
         )

@@ -35,7 +35,8 @@ export class DPUploadModal extends Component {
             name: [],
             formData: []
         },
-        profileImageURL: []
+        profileImageURL: [],
+        status: false
     }
 
     async componentDidMount() {
@@ -121,6 +122,9 @@ export class DPUploadModal extends Component {
             this.SuccessToast(upload.data.data.message)
         }
         catch (err) {
+            this.setState({
+                status: false
+            })
             this.ErrorToast(err.response)
         }
     }

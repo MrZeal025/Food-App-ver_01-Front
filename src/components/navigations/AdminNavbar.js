@@ -6,6 +6,7 @@ import { IoNotificationsOutline } from 'react-icons/io5';
 import { FaUsers } from 'react-icons/fa';
 // utilities
 import jwt_decode from 'jwt-decode';
+const logoLight = process.env.PUBLIC_URL + '/assets/logowhite@2x.png';
 
 export class AdminNavBar extends Component {
 
@@ -27,7 +28,16 @@ export class AdminNavBar extends Component {
         const { user } = this.state
         return (
             <Navbar className="nav-overrides" collapseOnSelect expand="lg" bg="dark" variant="dark" fixed="top">
-                <Navbar.Brand href="/">Bitezoo</Navbar.Brand>
+                <Navbar.Brand href="/home" className="BZlogo">
+                    <img
+                        src={logoLight}
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top"
+                        alt=""
+                    />
+                </Navbar.Brand>
+                <Navbar.Brand href="/admin/home">Bitezoo</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <div className="flex-grow-1 w-100"></div>
                 <Navbar.Collapse id="responsive-navbar-nav">
