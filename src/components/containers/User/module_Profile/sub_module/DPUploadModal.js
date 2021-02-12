@@ -111,13 +111,17 @@ export class DPUploadModal extends Component {
     }
 
     uploadProfile = async () => {
-        const { image, _id } = this.state        
+        const { image, _id } = this.state    
+        this.setState({
+            status: true
+        })    
         try {
             const upload =  await axios.put(`/api/uploads/profile/${_id}`, JSON.stringify({ data: image.formData }), config);
             this.setState({
                 showDPModal: false,
                 allowUpload: false,
-                profilePicture: upload.data.data.imageResponse.url
+                profilePicture: upload.data.data.imageResponse.url,
+                status: null
             })
             this.SuccessToast(upload.data.data.message)
         }
@@ -130,7 +134,7 @@ export class DPUploadModal extends Component {
     }
 
     render() {
-        const { showDPModal, profilePicture, allowUpload } = this.state
+        const { showDPModal, profilePicture, allowUpload, status } = this.state
         return (
             <>
                 <img src={profilePicture !== "" ? profilePicture : path + '/profile/' + avatar } alt="DP"/>
@@ -162,7 +166,9 @@ export class DPUploadModal extends Component {
                             onClick={allowUpload ? () => this.uploadProfile() : () => {}}
                             disabled={!allowUpload}
                         >
-                            Update
+                           {
+                                status ? "Uploading" : status !== null ? "Update" : "Done"
+                            }
                         </Button>
                     </Modal.Body>
                 </Modal> 

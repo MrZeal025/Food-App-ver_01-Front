@@ -110,22 +110,29 @@ export class CPUploadModal extends Component {
 
     uploadCoverPhoto = async () => {
         const { image, _id } = this.state
+        this.setState({
+            status: true
+        })   
         try {
             const upload =  await axios.put(`/api/uploads/cover-photo/${_id}`, JSON.stringify({ data: image.formData }), config);
             this.setState({
                 showCPModal: false,
                 allowUpload: false,
-                coverPhoto: upload.data.data.imageResponse.url
+                coverPhoto: upload.data.data.imageResponse.url,
+                status: null
             })
             this.SuccessToast(upload.data.data.message)
         }
         catch (err) {
+            this.setState({
+                status: false
+            })   
             this.ErrorToast(err.response)
         }
     }
 
     render() {
-        const { showCPModal, coverPhoto, allowUpload } = this.state
+        const { showCPModal, coverPhoto, allowUpload, status } = this.state
         return (
             <>
                 <img 
@@ -160,7 +167,9 @@ export class CPUploadModal extends Component {
                             onClick={allowUpload ? () => this.uploadCoverPhoto() : () => {} }
                             disabled={!allowUpload}
                         >
-                            Update
+                            {
+                                status ? "Uploading" : status !== null ? "Update" : "Done"
+                            }
                         </Button>
                     </Modal.Body>
                 </Modal> 

@@ -111,12 +111,16 @@ export class DPUploadModal extends Component {
 
     uploadProfile = async () => {
         const { image, _id } = this.state
+        this.setState({
+            status: true
+        })
         try {
             const upload =  await axios.put(`/api/uploads/admin/profile/${_id}`, JSON.stringify({ data: image.formData }), config);
             this.setState({
                 showDPModal: false,
                 allowUpload: false,
-                profilePicture: upload.data.data.imageResponse.url
+                profilePicture: upload.data.data.imageResponse.url,
+                status: null
             })
             this.SuccessToast(upload.data.data.message)
         }
