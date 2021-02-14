@@ -44,7 +44,7 @@ export class index extends Component {
 
 
     setSelectedTags = (i) => {
-        const { tagsSelected, recipes } = this.state
+        const { tagsSelected } = this.state
         this.setState({
             ...this.state,
             tagsSelected: [...tagsSelected, i]

@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import UserFrame from '../UserFrame'
-import SearchFilter from '../module_Search'
 import axios from 'axios'
 //react icons
+import { Row, Col, Card, Button } from "react-bootstrap";
+import { Link } from 'react-router-dom'
 import { MdStar } from 'react-icons/md'
+import { FaBreadSlice } from 'react-icons/fa';
 import FsLightbox from 'fslightbox-react';
 import jwtDecode from 'jwt-decode'
 
@@ -18,6 +20,7 @@ const config = {
 export class index extends Component {
 
     state = {
+        recipes: [],
         recipe: {
             foodImages: [],
             nutrition: {
@@ -31,6 +34,17 @@ export class index extends Component {
             openLightBox: false,
             profilePicture: ""
         }
+        ,
+        newComment: {
+            recipeId: "",
+            rating: 0,
+            comment: "",
+            userInfo: {
+                _id: "",
+                fullname: ""
+            }
+        },
+        isOnPantry: false
     }
 
     async componentDidMount() {
@@ -47,6 +61,16 @@ export class index extends Component {
         catch(error) {
             console.log(error.response)
         }
+
+        try {
+            const recipe = await axios.get('/api/recipe/read-all', config);
+            this.setState({
+                recipes: recipe.data.data.recipes,
+            })
+       }
+       catch(error) {
+        console.log(error)
+       }
     }
 
     openLightBox = () => {
@@ -55,17 +79,27 @@ export class index extends Component {
         })
     }
 
+    addToPanty = () => {
+        this.setState({
+            isOnPantry: !this.state.isOnPantry
+        })
+    }
+
+    handleComment = input => e => {
+        this.setState({
+            newComment: {
+                ...this.state.newComment,
+                [input]: e.target.value
+            }
+        })
+    }
+
     render() {
-        const { recipe, openLightBox, profilePicture } = this.state
-    
+        const { recipe, recipes, openLightBox, profilePicture, isOnPantry, newComment } = this.state
         return (
             <UserFrame>
                 <div className="mainHomeDiv">
-                    <SearchFilter 
-                        setQuickFilter={() => {}}
-                        tags={[]}
-                    />
-                    <div className="middle">
+                    <div className="middle pr-20">
                         <div className="white-bg mb-4 mt-4">
                             <h4 className="recipeName">{recipe.foodName}</h4>
                             {/* userName */}
@@ -173,10 +207,24 @@ export class index extends Component {
                             </div>
                             {/* Action Button */}
                             <div>
-                                <button className="customButtonFormat buttonColorBlue mr-10"><p>Add to Pantry</p></button>
-                                {/* NOTE: ganito itsura kapag na-add na sa pantry, then kapag niremove yung recipe sa pantry... babalik sa add to pantry lang */}
-                                <button className="customButtonFormat buttonColorBlue mr-10"><p>Add Ingredients to Grocery List</p></button>
-                                <button className="customButtonFormat buttonColorRed"><p>Remove from Pantry</p></button>
+                                {
+                                    !isOnPantry 
+                                    ? <button 
+                                        className="customButtonFormat buttonColorBlue mr-10"
+                                        onClick={() => this.addToPanty()}
+                                    >
+                                        <p>Add to Pantry</p>
+                                    </button> 
+                                    : <>
+                                        <button className="customButtonFormat buttonColorBlue mr-10"><p>Add Ingredients to Grocery List</p></button>
+                                        <button 
+                                            className="customButtonFormat buttonColorRed"
+                                            onClick={() => this.addToPanty()}
+                                        >
+                                            <p>Remove from Pantry</p>
+                                        </button>
+                                    </>   
+                                }
                             </div>
                         </div>
                         <div className="white-bg">
@@ -198,6 +246,8 @@ export class index extends Component {
                                         className="input-type-area"
                                         placeholder={`Add a comment`}
                                         name="method"
+                                        value={newComment.comment}
+                                        onChange={this.handleComment("comment")}
                                     />
                                 </div>
                                 <button className="customButtonFormat rateButton"><p>Post</p></button>
@@ -256,6 +306,58 @@ export class index extends Component {
                     sources={recipe.foodImages}
                     slide={true}
                 />
+                 <Row md={ recipes.length > 0 ? 4 : 12}>
+                    {
+                        recipes.length > 0 
+                        ? 
+                            recipes.map((recipe, i) => {
+                                return(
+                                    <Col key={i} className="perCard">
+                                        <Card>
+                                            <Card.Img variant="top" src={recipe.foodImages[0]} />
+                                            <Card.Body className="customCardBody">
+                                            <Card.Title className="title">{recipe.foodName}</Card.Title>
+                                            <div>
+                                                <p className="userName">By: {recipe.ownerInfo.name}</p>
+                                                <div className="rating">
+                                                    <MdStar className="star true"/>
+                                                    <MdStar className="star true"/>
+                                                    <MdStar className="star true"/>
+                                                    <MdStar className="star false"/>
+                                                    <MdStar className="star false"/>
+                                                    <p>(1.5k)</p>
+                                                </div>
+                                                <div className="tagDiv">
+                                                    {
+                                                        recipe.tags.map((tag, i) => {
+                                                            return(
+                                                                <p 
+                                                                    key={i}
+                                                                    className="tag" 
+                                                                    style={{color:tag.color, border: `2px solid ${tag.color} `}}>
+                                                                        {tag.tagName}
+                                                                </p>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div className="buttonDiv">
+                                            <Button className="customButton" variant="primary"><Link to={`/recipe/view/${recipe._id}`}>See Full Recipe</Link></Button>
+                                            <Button className="customButton custom-secondary">Add to Pantry</Button>
+                                            </div>
+                                            </Card.Body>
+                                        </Card>
+                                    </Col>
+                                )
+                            })
+                        : 
+                        <div className="empty-center-display">
+                            <FaBreadSlice/>
+                            <p>No recipes at the moment</p>
+                        </div>
+                    }
+                </Row>
             </UserFrame>
         )
     }
