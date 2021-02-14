@@ -298,7 +298,7 @@ export class index extends Component {
                             </div>
                             {/* Rating Post Sample */}
                             {
-                                reviews.map((review, i) => {
+                                reviews.reverse().map((review, i) => {
                                     return (
                                         <div key={i} className="flex-col mb-20">
                                             <div className="flex-row mb-10">
