@@ -94,6 +94,36 @@ export class index extends Component {
         })
     }
 
+    addComment = async () => {
+        const { newComment, recipe } = this.state
+        const body = {
+            recipeId: recipe._id,
+            rating: newComment.rating,
+            comment: newComment.comment,
+            userInfo: {
+                _id: jwtDecode(token)._id,
+                fullname: jwtDecode(token).fullName
+            }
+        }
+        console.log(body)
+        try {
+            const postComment = await axios.post(`/api/new/comment`, body, config);
+            console.log(postComment);    
+        } 
+        catch (error) {
+            console.log(error.response)
+        }
+    }
+
+    changeRating = (value) => {
+        this.setState({
+            newComment: {
+                ...this.state.newComment,
+                rating: value
+            }
+        })
+    }
+
     render() {
         const { recipe, recipes, openLightBox, profilePicture, isOnPantry, newComment } = this.state
         return (
@@ -233,11 +263,11 @@ export class index extends Component {
                             <div className="flex-col mb-20">
                                 {/* Stars */}
                                 <div className="rating fullv mb-10">
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
+                                    <MdStar className={newComment.rating >= 1 ? "star true" : "star false" } onClick={() => this.changeRating(1)}/>
+                                    <MdStar className={newComment.rating >= 2 ? "star true" : "star false" } onClick={() => this.changeRating(2)}/>
+                                    <MdStar className={newComment.rating >= 3 ? "star true" : "star false" } onClick={() => this.changeRating(3)}/>
+                                    <MdStar className={newComment.rating >= 4 ? "star true" : "star false" } onClick={() => this.changeRating(4)}/>
+                                    <MdStar className={newComment.rating >= 5 ? "star true" : "star false" } onClick={() => this.changeRating(5)}/>
                                 </div>
                                 <div className="inputSetFormat">
                                     <textarea
@@ -250,7 +280,12 @@ export class index extends Component {
                                         onChange={this.handleComment("comment")}
                                     />
                                 </div>
-                                <button className="customButtonFormat rateButton"><p>Post</p></button>
+                                <button 
+                                    className="customButtonFormat rateButton"
+                                    onClick={() => this.addComment()}
+                                >
+                                    <p>Post</p>
+                                </button>
                             </div>
                             {/* Rating Post Sample */}
                             <div className="flex-col mb-20">
@@ -306,6 +341,7 @@ export class index extends Component {
                     sources={recipe.foodImages}
                     slide={true}
                 />
+                <h4><b>Other recipe you might like</b></h4>
                  <Row md={ recipes.length > 0 ? 4 : 12}>
                     {
                         recipes.length > 0 
@@ -343,7 +379,7 @@ export class index extends Component {
                                                 </div>
                                             </div>
                                             <div className="buttonDiv">
-                                            <Button className="customButton" variant="primary"><Link to={`/recipe/view/${recipe._id}`}>See Full Recipe</Link></Button>
+                                            <Button className="customButton" variant="primary"><a href={`/recipe/view/${recipe._id}`}>See Full Recipe</a></Button>
                                             <Button className="customButton custom-secondary">Add to Pantry</Button>
                                             </div>
                                             </Card.Body>
