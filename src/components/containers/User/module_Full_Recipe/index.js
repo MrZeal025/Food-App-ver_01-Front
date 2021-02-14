@@ -7,6 +7,7 @@ import { MdStar } from 'react-icons/md'
 import { FaBreadSlice } from 'react-icons/fa';
 import FsLightbox from 'fslightbox-react';
 import jwtDecode from 'jwt-decode'
+import Moment from "react-moment";
 
 const token = localStorage.getItem('accessToken');
 const config = {
@@ -304,6 +305,7 @@ export class index extends Component {
                                             <div className="flex-row mb-10">
                                                 <img className="small-avatar" src={review.ownerInfo.profilePicture === "" ? profilePicture : recipe.ownerInfo.profilePicture} alt="DP" />
                                                 <div className="userName"><h6>{review.ownerInfo.fullName}</h6></div>
+                                                <Moment format="ddd YYYY/MM/DD h:mm A">{review.dateStamp}</Moment>
                                             </div>
                                             {/* Stars */}
                                             <div className="rating fullv mb-10">
