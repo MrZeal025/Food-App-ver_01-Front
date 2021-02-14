@@ -107,63 +107,58 @@ export class index extends Component {
                         />
                     </div>
                     <div className="middle">
-                        <Container fluid >
-                            <Row md={ recipes.length > 0 ? 3 : 12}>
-                                {
-                                    filteredStudent.length > 0 
-                                    ? 
-                                        filteredStudent.map((recipe, i) => {
-                                            return(
-                                                <Col key={i} className="perCard">
-                                                    <Card>
-                                                        <Card.Img variant="top" src={recipe.foodImages[0]} />
-                                                        <Card.Body className="customCardBody">
-                                                        <Card.Title className="title">{recipe.foodName}</Card.Title>
-                                                        <div>
-                                                            <p className="userName">By: {recipe.ownerInfo.name}</p>
-                                                            <div className="rating">
-                                                                <MdStar className="star true"/>
-                                                                <MdStar className="star true"/>
-                                                                <MdStar className="star true"/>
-                                                                <MdStar className="star false"/>
-                                                                <MdStar className="star false"/>
-                                                                <p>(1.5k)</p>
-                                                            </div>
-                                                            <div className="tagDiv">
-                                                                {
-                                                                    recipe.tags.map((tag, i) => {
-                                                                        return(
-                                                                            <p 
-                                                                                key={i}
-                                                                                className="tag" 
-                                                                                style={{color:tag.color, border: `2px solid ${tag.color} `}}>
-                                                                                    {tag.tagName}
-                                                                            </p>
-                                                                        )
-                                                                    })
-                                                                }
-                                                            </div>
+                        <Row md={ recipes.length > 0 ? 4 : 12}>
+                            {
+                                filteredStudent.length > 0 
+                                ? 
+                                    filteredStudent.map((recipe, i) => {
+                                        return(
+                                            <Col key={i} className="perCard">
+                                                <Card>
+                                                    <Card.Img variant="top" src={recipe.foodImages[0]} />
+                                                    <Card.Body className="customCardBody">
+                                                    <Card.Title className="title">{recipe.foodName}</Card.Title>
+                                                    <div>
+                                                        <p className="userName">By: {recipe.ownerInfo.name}</p>
+                                                        <div className="rating">
+                                                            <MdStar className="star true"/>
+                                                            <MdStar className="star true"/>
+                                                            <MdStar className="star true"/>
+                                                            <MdStar className="star false"/>
+                                                            <MdStar className="star false"/>
+                                                            <p>(1.5k)</p>
                                                         </div>
-                                                        <div className="buttonDiv">
-                                                        <Button className="customButton" variant="primary"><Link to={`/recipe/view/${recipe._id}`}>See Full Recipe</Link></Button>
-                                                        <Button className="customButton custom-secondary">Add to Pantry</Button>
+                                                        <div className="tagDiv">
+                                                            {
+                                                                recipe.tags.map((tag, i) => {
+                                                                    return(
+                                                                        <p 
+                                                                            key={i}
+                                                                            className="tag" 
+                                                                            style={{color:tag.color, border: `2px solid ${tag.color} `}}>
+                                                                                {tag.tagName}
+                                                                        </p>
+                                                                    )
+                                                                })
+                                                            }
                                                         </div>
-                                                        </Card.Body>
-                                                    </Card>
-                                                </Col>
-                                            )
-                                        })
-                                    : 
-                                    <div className="empty-center-display">
-                                        <FaBreadSlice/>
-                                        <p>No recipes at the moment</p>
-                                    </div>
-                                }
-                            </Row>
-                        </Container>
-                    </div>
-                    <div className="right">
-                        <Link className="customButton" to="/recipe/create">Add Your Recipe</Link>
+                                                    </div>
+                                                    <div className="buttonDiv">
+                                                    <Button className="customButton" variant="primary"><Link to={`/recipe/view/${recipe._id}`}>See Full Recipe</Link></Button>
+                                                    <Button className="customButton custom-secondary">Add to Pantry</Button>
+                                                    </div>
+                                                    </Card.Body>
+                                                </Card>
+                                            </Col>
+                                        )
+                                    })
+                                : 
+                                <div className="empty-center-display">
+                                    <FaBreadSlice/>
+                                    <p>No recipes at the moment</p>
+                                </div>
+                            }
+                        </Row>
                     </div>
                 </div>
             </UserFrame>
