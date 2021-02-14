@@ -82,10 +82,6 @@ export class index extends Component {
                     </div>
                 </Navbar>
                 <div className="mainHomeDiv">
-                    <SearchFilter 
-                        setQuickFilter={() => {}}
-                        tags={[]}
-                    />
                     <div className="middle">
                         <div className="white-bg mb-4 mt-4">
                             <h4 className="recipeName">{recipe.foodName}</h4>
@@ -191,13 +187,6 @@ export class index extends Component {
                                         })
                                     }
                                 </ol>
-                            </div>
-                            {/* Action Button */}
-                            <div>
-                                <button className="customButtonFormat buttonColorBlue mr-10"><p>Add to Pantry</p></button>
-                                {/* NOTE: ganito itsura kapag na-add na sa pantry, then kapag niremove yung recipe sa pantry... babalik sa add to pantry lang */}
-                                <button className="customButtonFormat buttonColorBlue mr-10"><p>Add Ingredients to Grocery List</p></button>
-                                <button className="customButtonFormat buttonColorRed"><p>Remove from Pantry</p></button>
                             </div>
                         </div>
                         <div className="white-bg">

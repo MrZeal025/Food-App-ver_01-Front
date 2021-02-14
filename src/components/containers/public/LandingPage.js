@@ -135,7 +135,6 @@ export class LandingPage extends Component {
                                                 </div>
                                                 <div className="buttonDiv">
                                                 <Button className="customButton" variant="primary"><Link to={`/public/recipe/view/${recipe._id}`}>See Full Recipe</Link></Button>
-                                                <Button className="customButton custom-secondary">Add to Pantry</Button>
                                                 </div>
                                                 </Card.Body>
                                             </Card>
