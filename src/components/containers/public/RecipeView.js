@@ -82,10 +82,6 @@ export class index extends Component {
                     </div>
                 </Navbar>
                 <div className="mainHomeDiv">
-                    <SearchFilter 
-                        setQuickFilter={() => {}}
-                        tags={[]}
-                    />
                     <div className="middle">
                         <div className="white-bg mb-4 mt-4">
                             <h4 className="recipeName">{recipe.foodName}</h4>
@@ -192,31 +188,9 @@ export class index extends Component {
                                     }
                                 </ol>
                             </div>
-                            {/* Action Button */}
-                            <div>
-                                <button className="customButtonFormat buttonColorBlue mr-10"><p>Add to Pantry</p></button>
-                                {/* NOTE: ganito itsura kapag na-add na sa pantry, then kapag niremove yung recipe sa pantry... babalik sa add to pantry lang */}
-                                <button className="customButtonFormat buttonColorBlue mr-10"><p>Add Ingredients to Grocery List</p></button>
-                                <button className="customButtonFormat buttonColorRed"><p>Remove from Pantry</p></button>
-                            </div>
                         </div>
                         <div className="white-bg">
-                            <h5 className="rateTitle mb-10">Ratings</h5>
-                            {/* For Input of the user for a comment */}
-                            <div className="flex-col mb-20">
-                                {/* Stars */}
-                                <div className="rating fullv mb-10">
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                </div>
-                                <div className="inputSetFormat no-mb">
-                                    <input type="text" placeholder="Add a comment" className="mb-10"/>
-                                </div>
-                                <button className="customButtonFormat rateButton"><p>Post</p></button>
-                            </div>
+                            <h5 className="rateTitle mb-10">Ratings and Comments</h5>
                             {/* Rating Post Sample */}
                             <div className="flex-col mb-20">
                                 <div className="flex-row mb-10">
