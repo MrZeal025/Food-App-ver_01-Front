@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import UserFrame from '../UserFrame';
 import axios from 'axios';
 //React Bootstrap
-import { InputGroup, FormControl, Toast } from 'react-bootstrap'
+import { Toast } from 'react-bootstrap'
 // components
 import Ingredient from './sub_module/Ingredient_Create'
 import Procedure from "./sub_module/Procedure_Create";

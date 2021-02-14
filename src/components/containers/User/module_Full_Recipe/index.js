@@ -191,8 +191,14 @@ export class index extends Component {
                                     <MdStar className="star false"/>
                                     <MdStar className="star false"/>
                                 </div>
-                                <div className="inputSetFormat no-mb">
-                                    <input type="text" placeholder="Add a comment" className="mb-10"/>
+                                <div className="inputSetFormat">
+                                    <textarea
+                                        rows="4"
+                                        type="text"
+                                        className="input-type-area"
+                                        placeholder={`Add a comment`}
+                                        name="method"
+                                    />
                                 </div>
                                 <button className="customButtonFormat rateButton"><p>Post</p></button>
                             </div>
