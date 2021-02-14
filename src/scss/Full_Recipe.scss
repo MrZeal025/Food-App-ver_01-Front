@@ -1,10 +1,12 @@
+.fullRecDiv {
+    width: 70%;
+}
 .white-bg {
     width: 100%;
     min-width: 340px;
     background-color: white;
     border-radius: 5px;
     padding: 20px;
-    margin: 0 10px;
 }
 
 .no-mb {
@@ -18,6 +20,11 @@
 }
 .mb_5 {
     margin-bottom: 5px;
+}
+.just-center {
+    display: flex;
+    justify-content: center;
+    
 }
 
 .recipeName {
@@ -34,16 +41,9 @@
     flex-direction: column;
 }
 //user
-.imgTempo {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background-color: gray;
-    margin-right: 10px;
-}
 .userName {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
 }
 
 //rating
@@ -58,11 +58,17 @@
         align-items: center;
     }
 }
+.rateUserName {
+    margin-bottom: unset;
+}
+.timeStamp {
+    font-size: unset;
+}
 
 //recipe Image
 .recImg {
     border-radius: 5px;
-    width: 50%;
+    width: 56%;
     max-width: 600px;
     cursor: pointer;
 }
@@ -70,9 +76,8 @@
 //recipe Details
 .recDetails {
     width: 40%;
-    max-width: 340px;
     height: fit-content;
-    border: 5px solid #212529;
+    border: 1px solid #d4d4d4;
     border-radius: 5px;
     padding: 15px;
     margin-left: 3%;
@@ -80,14 +85,19 @@
     .label {
         font-weight: bold;
         color: $dark-6;
+        
     }
-    .nutCont {
-        width: 50px;
+    .nutContLabel {
+        width: 120px;
+        color: $dark-6;
     }
 }
 
 .ingTitle, .procTitle, .rateTitle {
     font-weight: bold;
+}
+.ingList {
+    margin-left: 20px;
 }
 
 .justify {
@@ -104,11 +114,26 @@
 
 .small-avatar {
     height: 50px;
+    width: 50px;
     border-radius: 50px;
+    object-fit: cover;
 }
 
+//Other Recipes Div
+.otherRec {
+    margin: 0 10px 0 10px;
+}
+.otherRecTitle {
+    margin-left: 10px;
+}
+
+
 //query for the recipe img and details
-@media only (max-width: 1000px) and (min-width: 300px) {
+@media only screen and (max-width: 1000px) and (min-width: 250px) {
+    .fullRecDiv{
+        width: 90%;
+
+    }
     .imgAndDetails {
         flex-direction: column !important;
     }
