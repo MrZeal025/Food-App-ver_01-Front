@@ -171,7 +171,7 @@ export class index extends Component {
                         <Form.Control 
                             type="password" 
                             name="password"
-                            placeholder="6 character min" 
+                            placeholder="8 character min" 
                             value={account.password}  
                             onChange={this.onChangeHandler}
                         />

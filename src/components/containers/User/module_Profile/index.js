@@ -7,7 +7,9 @@ export class index extends Component {
     render() {
         return (
             <UserFrame>
-                <ProfileDisplay/>
+                <ProfileDisplay
+                    id={this.props.match.params.id}
+                />
             </UserFrame>
         )
     }

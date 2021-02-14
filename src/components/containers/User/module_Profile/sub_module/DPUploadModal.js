@@ -6,7 +6,7 @@ import ImageUpload from '../../../../common/ProfilCoverUpload';
 import { FaCamera, FaTimes } from 'react-icons/fa'
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-
+import FsLightbox from 'fslightbox-react';
 import { toast } from 'react-toastify';
 import SuccessToast from '../../../../common/toastSuccess';
 import ErrorToast from '../../../../common/toastError';
@@ -29,12 +29,15 @@ export class DPUploadModal extends Component {
     state = {
         _id: '',
         showDPModal: false,
+        allowUpload: false,
         profilePicture: '',
         image : {
             name: [],
             formData: []
         },
-        profileImageURL: []
+        profileImageURL: [],
+        status: false,
+        openLightBox: false
     }
 
     async componentDidMount() {
@@ -90,7 +93,8 @@ export class DPUploadModal extends Component {
                 name: data,
                 formData: formData
             },
-            profileImageURL: processName
+            profileImageURL: processName,
+            allowUpload: true
         })
     }
 
@@ -102,34 +106,49 @@ export class DPUploadModal extends Component {
                 name: [],
                 formData: []
             },
-            profileImageURL: []
+            profileImageURL: [],
+            allowUpload: true
         })
     }
 
     uploadProfile = async () => {
-        const { image, _id } = this.state
-        // parse image to form data
-        const formData = new FormData();
-        formData.append("profilePicture", image.formData);
-        
+        const { image, _id } = this.state    
+        this.setState({
+            status: true
+        })    
         try {
-            const upload =  await axios.put(`/api/uploads/profile/${_id}`, formData, config);
+            const upload =  await axios.put(`/api/uploads/profile/${_id}`, JSON.stringify({ data: image.formData }), config);
             this.setState({
                 showDPModal: false,
-                profilePicture: upload.data.data.user
+                allowUpload: false,
+                profilePicture: upload.data.data.imageResponse.url,
+                status: null
             })
             this.SuccessToast(upload.data.data.message)
         }
         catch (err) {
+            this.setState({
+                status: false
+            })
             this.ErrorToast(err.response)
         }
     }
 
+    openLightBox = () => {
+        this.setState({
+            openLightBox: !this.state.openLightBox
+        })
+    }
+
     render() {
-        const { showDPModal, profilePicture } = this.state
+        const { showDPModal, profilePicture, allowUpload, status, openLightBox } = this.state
         return (
             <>
-                <img src={profilePicture !== "" ? path + '/profile/' + profilePicture : path + '/profile/' + avatar } alt="DP"/>
+                <img 
+                    src={profilePicture !== "" ? profilePicture : path + '/profile/' + avatar } 
+                    alt="DP" 
+                    onClick={() => this.openLightBox()}
+                />
                 <div className="image-upload" onClick={() => this.setShowModal()}>
                     <label htmlFor="file-input">
                         <FaCamera/>
@@ -153,9 +172,21 @@ export class DPUploadModal extends Component {
                     <Modal.Body>
                         <ImageUpload getImageFromUploads={this.getImageFromUploads}/>
                         <Button variant="secondary" onClick={e => this.discard()}>Discard</Button>
-                        <Button variant="primary" onClick={e => this.uploadProfile()}>Update</Button>
+                        <Button 
+                            variant="primary" 
+                            onClick={allowUpload ? () => this.uploadProfile() : () => {}}
+                            disabled={!allowUpload}
+                        >
+                           {
+                                status ? "Uploading" : status !== null ? "Update" : "Done"
+                            }
+                        </Button>
                     </Modal.Body>
                 </Modal> 
+                <FsLightbox
+                    toggler={openLightBox}
+                    sources={[profilePicture !== "" ? profilePicture : path + '/profile/' + avatar]}
+                />
             </>
         )
     }

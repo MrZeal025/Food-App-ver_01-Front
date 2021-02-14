@@ -13,6 +13,7 @@ import Login from './components/authentication/login/index'
 import Register from './components/authentication/register/index';
 import RegisterVerifyPanel from './components/containers/public/RegisterVerifyPanel';
 import RegisterConfirmed from './components/containers/public/RegisterConfirmed';
+import PublicRecipeView from './components/containers/public/RecipeView';
 // Routes
 import ProtectedUserRoute from './routes/ProtectedUserRoute';
 import ProtectedAdminRoute from './routes/ProtectedAdminRoute';
@@ -45,7 +46,7 @@ export class App extends Component {
             <Route path="/sign-up" exact component={Register}/> 
             <Route path="/verify/u/:id/e/action" exact component={RegisterVerifyPanel}/>
             <Route path="/register/:id/s/confirmed" exact component={RegisterConfirmed}/>
-
+            <Route path="/public/recipe/view/:id" exact component={PublicRecipeView} />
             {/* User */}
             <ProtectedUserRoute path="/home" exact component={Home} />
             <ProtectedUserRoute path="/profile/:id" exact component={Profile}/>

@@ -1,60 +1,30 @@
 import React, { Component } from 'react'
-import axios from 'axios';
-
 //react bootstrap
 import {Button, InputGroup, FormControl} from 'react-bootstrap'
 //react icons
-import {MdStar} from 'react-icons/md'
+import { MdStar } from 'react-icons/md'
 
 export class index extends Component {
-    
-    state = {
-        tags: [],
-        tagsSelected: []
-    }
-
-    async componentDidMount() {
-        try {
-             const tag = await axios.get('/json/tags.json');
-             this.setState({
-                 tags: tag.data
-             })
-        }
-        catch(error) {
-         console.log(error)
-        }
-     }
-
-     setSelectedTags = (i) => {
-        const {tagsSelected} = this.state
-        this.setState({
-            tagsSelected: [...tagsSelected, i]
-            
-        })
-        if (tagsSelected.includes(i)) {
-            this.setState({
-                tagsSelected: tagsSelected.filter(tags => tags !== i)
-            })
-        }
-    }
 
     render() {
-        const {tags, tagsSelected} = this.state
+        const { tags, tagsSelected, setSelectedTags, value, setQuickFilter } = this.props
         return (
             <div className="left">
+                <h4>Search Filter</h4>
                 <InputGroup>
                     <FormControl
-                    placeholder="Search for a recipe"
-                    aria-label="Search for a recipe"
-                    aria-describedby="basic-addon2"
-                    className="searchInput"
+                        placeholder="Search for a recipe"
+                        aria-label="Search for a recipe"
+                        aria-describedby="basic-addon2"
+                        className="searchInput"
+                        onChange={setQuickFilter('quickFilter')}
+                        value={value}
                     />
                     <InputGroup.Append size="lg">
-                    <Button className="searchButton">Search</Button>
+                        <Button className="searchButton">Search</Button>
                     </InputGroup.Append>
                 </InputGroup>
                 <div className="filterDiv">
-                    <h3>Search Filter</h3>
                     {/* Tags Filter Div */}
                     <div className="tagsFiltDiv">
                         <h5>Tags</h5>
@@ -65,7 +35,7 @@ export class index extends Component {
                                             key={i}
                                             className={tagsSelected.includes(tag.tagName)? "tag customTag activeTag" : "tag customTag"}
                                             style={{color:tag.color, border: `2px solid ${tag.color}`}}
-                                            onClick={() => {this.setSelectedTags(tag.tagName)}}
+                                            onClick={() => {setSelectedTags(tag.tagName)}}
                                             >
                                                 {tag.tagName}
                                         </button> 
@@ -79,6 +49,7 @@ export class index extends Component {
                             />
                         </InputGroup>
                     </div>
+                     <hr/>
                     {/* Serving Size Filter Div */}
                     <div className="serveFiltDiv">
                         <h5>Serving Size</h5>
@@ -94,14 +65,14 @@ export class index extends Component {
                         <h5>Rating</h5>
                         <div>
                             <input type="radio" value="1" name="oneStar"className="radio"/>
-                            <label for="oneStar" className="rateLabel">
+                            <label htmlFor="oneStar" className="rateLabel">
                                 <MdStar className="star starfilt true"/>
                                 (and above)
                             </label>
                         </div>
                         <div>
                             <input type="radio" value="1" name="twoStar"className="radio"/>
-                            <label for="twoStar" className="rateLabel">
+                            <label htmlFor="twoStar" className="rateLabel">
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
                                 (and above)
@@ -109,7 +80,7 @@ export class index extends Component {
                         </div>
                         <div>
                             <input type="radio" value="1" name="threeStar"className="radio"/>
-                            <label for="threeStar" className="rateLabel">
+                            <label htmlFor="threeStar" className="rateLabel">
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
@@ -118,7 +89,7 @@ export class index extends Component {
                         </div>
                         <div>
                             <input type="radio" value="1" name="fourStar"className="radio"/>
-                            <label for="fourStar" className="rateLabel">
+                            <label htmlFor="fourStar" className="rateLabel">
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
@@ -128,7 +99,7 @@ export class index extends Component {
                         </div>
                         <div>
                             <input type="radio" value="1" name="fiveStar"className="radio"/>
-                            <label for="fiveStar" className="rateLabel">
+                            <label htmlFor="fiveStar" className="rateLabel">
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>

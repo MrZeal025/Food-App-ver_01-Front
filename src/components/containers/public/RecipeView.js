@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import UserFrame from '../UserFrame'
-import SearchFilter from '../module_Search'
+import SearchFilter from '../User/module_Search/index';
 import axios from 'axios'
 //react icons
+import { Navbar, Nav } from 'react-bootstrap'
 import { MdStar } from 'react-icons/md'
+import { Link } from 'react-router-dom';
 import FsLightbox from 'fslightbox-react';
 import jwtDecode from 'jwt-decode'
 
@@ -14,6 +15,7 @@ const config = {
       "Authorization" : token
     },
 };
+const logoLight = process.env.PUBLIC_URL + '/assets/logowhite@2x.png';
 
 export class index extends Component {
 
@@ -36,12 +38,10 @@ export class index extends Component {
     async componentDidMount() {
         
         try {
-            const recipe = await axios.get(`/api/recipe/${this.props.match.params.id}`, config);
-            const profile = await axios.get(`/api/user/profile/read/${jwtDecode(token)._id}`, config);
+            const recipe = await axios.get(`/api/recipe/public/${this.props.match.params.id}`)
             document.title = `${recipe.data.data.recipe.foodName} - Bitezoo`
             this.setState({
-                recipe: recipe.data.data.recipe,
-                profilePicture: profile.data.data.profilePicture
+                recipe: recipe.data.data.recipe
             })
         }
         catch(error) {
@@ -59,7 +59,28 @@ export class index extends Component {
         const { recipe, openLightBox, profilePicture } = this.state
     
         return (
-            <UserFrame>
+            <>
+                <Navbar className="landNav" sticky="top" variant="dark">
+                    <Navbar.Brand href="/" className="BZlogo">
+                        <img
+                            src={logoLight}
+                            width="30"
+                            height="30"
+                            className="d-inline-block align-top"
+                            alt=""
+                        />
+                    </Navbar.Brand>
+                    <Navbar.Brand href="/" className="brandN">Bitezoo</Navbar.Brand>
+                    <Nav className="mr-auto">
+                        <Nav.Link href="#home" className="navLink">Home</Nav.Link>
+                        <Nav.Link href="#features" className="navLink">Features</Nav.Link>
+                        <Nav.Link href="#" className="navLink">Contact</Nav.Link>
+                    </Nav>
+                    <div className="signLinks">
+                        <Link to="/sign-in" className="sign-in-link">Sign In</Link>
+                        <Link to="/sign-up" className="sign-up-link">Sign Up</Link>
+                    </div>
+                </Navbar>
                 <div className="mainHomeDiv">
                     <SearchFilter 
                         setQuickFilter={() => {}}
@@ -250,7 +271,7 @@ export class index extends Component {
                     sources={recipe.foodImages}
                     slide={true}
                 />
-            </UserFrame>
+            </>
         )
     }
 }

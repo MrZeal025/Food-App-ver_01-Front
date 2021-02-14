@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import AdminFrame from '../AdminFrame';
-import Delete from './Delete/index';
+// import SearchFilter from '../module_Search'
 import axios from 'axios';
 //react bootstrap
-import { Card, Button, InputGroup, FormControl, Container, Row, Col } from 'react-bootstrap';
+import { Card, Button, Container, Row, Col } from 'react-bootstrap';
+//react icons
 import { MdStar } from 'react-icons/md';
+import { FaBreadSlice } from 'react-icons/fa';
+// link
+import { Link } from 'react-router-dom';
 
-const path = process.env.PUBLIC_URL;
 const token = localStorage.getItem('accessToken');
 const config = {
     headers: {
@@ -18,18 +21,17 @@ const config = {
 export class index extends Component {
 
     state = {
-        show: false,
         recipes: [],
         tags: [],
         tagsSelected: []
     }
 
     async componentDidMount() {
+        document.title = "Welcome - Bitezoo"
        try {
             const recipe = await axios.get('/api/recipe/read-all', config);
             const tag = await axios.get('/json/tags.json');
             this.setState({
-                ...this.state,
                 recipes: recipe.data.data.recipes,
                 tags: tag.data
             })
@@ -39,47 +41,40 @@ export class index extends Component {
        }
     }
 
-    handleClose = (condition) => {
-        this.setState({
-            show: condition
-        })
-    }
 
-    removeDeletedRecipe  = (_id) => {
-        const { recipes } = this.state
-        // filter out the facility that is not deleted && set it back to the state
+    setSelectedTags = (i) => {
+        const {tagsSelected} = this.state
         this.setState({
-            recipes: recipes.filter(recipe => recipe._id !== _id)
+            ...this.state,
+            tagsSelected: [...tagsSelected, i]
+            
         })
+        if (tagsSelected.includes(i)) {
+            this.setState({
+                tagsSelected: tagsSelected.filter(tags => tags !== i)
+            })
+        }
     }
 
     render() {
-        const { recipes, show } = this.state
+        const { recipes} = this.state
         return (
             <AdminFrame>
                 <div className="mainHomeDiv">
                     <div className="left">
-                        <InputGroup>
-                            <FormControl
-                            placeholder="Search for a recipe"
-                            aria-label="Search for a recipe"
-                            aria-describedby="basic-addon2"
-                            className="pholder2"
-                            />
-                            <InputGroup.Append size="lg">
-                            <Button className="searchButton">Search</Button>
-                            </InputGroup.Append>
-                        </InputGroup>
+                        {/* <SearchFilter /> */}
                     </div>
                     <div className="middle">
                         <Container fluid >
-                                <Row md={3}>
-                                    {
+                            <Row md={ recipes.length > 0 ? 3 : 12}>
+                                {
+                                    recipes.length > 0 
+                                    ? 
                                         recipes.map((recipe, i) => {
                                             return(
                                                 <Col key={i} className="perCard">
                                                     <Card>
-                                                        <Card.Img variant="top" src={path + '/recipe-images/' + recipe.foodImages[0]} />
+                                                        <Card.Img variant="top" src={recipe.foodImages[0]} />
                                                         <Card.Body className="customCardBody">
                                                         <Card.Title className="title">{recipe.foodName}</Card.Title>
                                                         <div>
@@ -108,26 +103,26 @@ export class index extends Component {
                                                             </div>
                                                         </div>
                                                         <div className="buttonDiv">
-                                                            <Button className="customButton" variant="primary">See Full Recipe</Button>
-                                                            <Delete
-                                                                _id={recipe._id}
-                                                                name={recipe.foodName}
-                                                                show={show}
-                                                                handleClose={this.handleClose}
-                                                                removeRecipe={this.removeDeletedRecipe}
-                                                            />
+                                                        <Button className="customButton w-100 mt-1" variant="primary">
+                                                            <Link to={`/recipe/view/${recipe._id}`}>See Full Recipe</Link>
+                                                        </Button>
                                                         </div>
                                                         </Card.Body>
                                                     </Card>
                                                 </Col>
                                             )
                                         })
-                                    }
-                                </Row>
+                                    : 
+                                    <div className="empty-center-display">
+                                        <FaBreadSlice/>
+                                        <p>No recipes at the moment</p>
+                                    </div>
+                                }
+                            </Row>
                         </Container>
                     </div>
                     <div className="right">
-                        <button className="customButton" onClick={() => {}}>Add Your Recipe</button>
+                        <Link className="customButton" to="/recipe/create">Add Your Recipe</Link>
                     </div>
                 </div>
             </AdminFrame>
