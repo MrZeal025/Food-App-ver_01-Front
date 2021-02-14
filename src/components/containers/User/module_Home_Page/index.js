@@ -22,6 +22,7 @@ export class index extends Component {
 
     state = {
         recipes: [],
+        reviews: [],
         tags: [],
         tagsSelected: [],
         quickFilter: ""
@@ -29,17 +30,19 @@ export class index extends Component {
 
     async componentDidMount() {
         document.title = "Welcome - Bitezoo"
-       try {
+        try {
             const recipe = await axios.get('/api/recipe/read-all', config);
             const tag = await axios.get('/json/tags.json');
+            const reviews = await axios.get('/api/review/all-reviews');
             this.setState({
                 recipes: recipe.data.data.recipes,
-                tags: tag.data
+                tags: tag.data,
+                reviews: reviews.data.data
             })
-       }
-       catch(error) {
-        console.log(error)
-       }
+        }
+        catch(error) {
+            console.log(error)
+        }
     }
 
 
@@ -66,7 +69,7 @@ export class index extends Component {
     }
 
     render() {
-        const { recipes, tags, tagsSelected, quickFilter} = this.state
+        const { recipes, tags, tagsSelected, quickFilter, reviews} = this.state
         
         // transform the array object tag into a much simplier array string
         const items = recipes.map((element) => ({
@@ -127,12 +130,22 @@ export class index extends Component {
                                                     <div>
                                                         <p className="userName">By: {recipe.ownerInfo.name}</p>
                                                         <div className="rating">
-                                                            <MdStar className="star true"/>
-                                                            <MdStar className="star true"/>
-                                                            <MdStar className="star true"/>
-                                                            <MdStar className="star false"/>
-                                                            <MdStar className="star false"/>
-                                                            <p>(1.5k)</p>
+                                                            <MdStar 
+                                                                className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 1 ? "star true" : "star false"}
+                                                            />
+                                                            <MdStar 
+                                                                className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 2 ? "star true" : "star false"}
+                                                            />
+                                                            <MdStar 
+                                                                className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 3 ? "star true" : "star false"}
+                                                            />
+                                                            <MdStar 
+                                                                className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 4 ? "star true" : "star false"}
+                                                            />
+                                                            <MdStar 
+                                                                className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 5 ? "star true" : "star false"}
+                                                            />
+                                                            <p>({ reviews.filter(review => review.recipeId === recipe._id).length })</p>
                                                         </div>
                                                         <div className="tagDiv">
                                                             {
