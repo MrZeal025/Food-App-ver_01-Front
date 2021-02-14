@@ -3,7 +3,6 @@ import UserFrame from '../UserFrame'
 import axios from 'axios'
 //react icons
 import { Row, Col, Card, Button } from "react-bootstrap";
-import { Link } from 'react-router-dom'
 import { MdStar } from 'react-icons/md'
 import { FaBreadSlice } from 'react-icons/fa';
 import FsLightbox from 'fslightbox-react';
@@ -21,6 +20,7 @@ export class index extends Component {
 
     state = {
         recipes: [],
+        reviews: [],
         recipe: {
             foodImages: [],
             nutrition: {
@@ -37,9 +37,9 @@ export class index extends Component {
         ,
         newComment: {
             recipeId: "",
-            rating: 0,
+            rating: 1,
             comment: "",
-            userInfo: {
+            ownerInfo: {
                 _id: "",
                 fullname: ""
             }
@@ -52,10 +52,12 @@ export class index extends Component {
         try {
             const recipe = await axios.get(`/api/recipe/${this.props.match.params.id}`, config);
             const profile = await axios.get(`/api/user/profile/read/${jwtDecode(token)._id}`, config);
+            const reviews = await axios.get(`/api/review/get/${this.props.match.params.id}`, config);
             document.title = `${recipe.data.data.recipe.foodName} - Bitezoo`
             this.setState({
                 recipe: recipe.data.data.recipe,
-                profilePicture: profile.data.data.profilePicture
+                profilePicture: profile.data.data.profilePicture,
+                reviews: reviews.data.data
             })
         }
         catch(error) {
@@ -100,15 +102,22 @@ export class index extends Component {
             recipeId: recipe._id,
             rating: newComment.rating,
             comment: newComment.comment,
-            userInfo: {
+            ownerInfo: {
                 _id: jwtDecode(token)._id,
-                fullname: jwtDecode(token).fullName
+                fullName: jwtDecode(token).fullName,
+                profilePicture: jwtDecode(token).profilePicture
             }
         }
-        console.log(body)
         try {
-            const postComment = await axios.post(`/api/new/comment`, body, config);
-            console.log(postComment);    
+            const postComment = await axios.post(`/api/review/new/comment`, body, config);
+            this.setState({
+                reviews: [...this.state.reviews, postComment.data.data],
+                newComment: {
+                    ...this.state.newComment,
+                    comment: "",
+                    rating: 1
+                }
+            }) 
         } 
         catch (error) {
             console.log(error.response)
@@ -125,7 +134,7 @@ export class index extends Component {
     }
 
     render() {
-        const { recipe, recipes, openLightBox, profilePicture, isOnPantry, newComment } = this.state
+        const { recipe, recipes, openLightBox, profilePicture, isOnPantry, newComment, reviews } = this.state
         return (
             <UserFrame>
                 <div className="mainHomeDiv">
@@ -288,51 +297,27 @@ export class index extends Component {
                                 </button>
                             </div>
                             {/* Rating Post Sample */}
-                            <div className="flex-col mb-20">
-                                <div className="flex-row mb-10">
-                                    <div className="imgTempo"></div>
-                                    <div className="userName"><h6>Other User</h6></div>
-                                </div>
-                                {/* Stars */}
-                                <div className="rating fullv mb-10">
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                </div>
-                                <p className="justify">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione voluptatibus iure recusandae, repellendus quam tenetur voluptates corrupti nesciunt, suscipit perferendis quos ab nostrum tempore aut modi ad porro repudiandae eligendi.</p>
-                            </div>
-                            <div className="flex-col mb-20">
-                                <div className="flex-row mb-10">
-                                    <div className="imgTempo"></div>
-                                    <div className="userName"><h6>Other User</h6></div>
-                                </div>
-                                {/* Stars */}
-                                <div className="rating fullv mb-10">
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                </div>
-                                <p className="justify">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione voluptatibus iure recusandae, repellendus quam tenetur voluptates corrupti nesciunt, suscipit perferendis quos ab nostrum tempore aut modi ad porro repudiandae eligendi.</p>
-                            </div>
-                            <div className="flex-col mb-20">
-                                <div className="flex-row mb-10">
-                                    <div className="imgTempo"></div>
-                                    <div className="userName"><h6>Other User</h6></div>
-                                </div>
-                                {/* Stars */}
-                                <div className="rating fullv mb-10">
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                </div>
-                                <p className="justify">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione voluptatibus iure recusandae, repellendus quam tenetur voluptates corrupti nesciunt, suscipit perferendis quos ab nostrum tempore aut modi ad porro repudiandae eligendi.</p>
-                            </div>
+                            {
+                                reviews.map((review, i) => {
+                                    return (
+                                        <div key={i} className="flex-col mb-20">
+                                            <div className="flex-row mb-10">
+                                                <img className="small-avatar" src={review.ownerInfo.profilePicture === "" ? profilePicture : recipe.ownerInfo.profilePicture} alt="DP" />
+                                                <div className="userName"><h6>{review.ownerInfo.fullName}</h6></div>
+                                            </div>
+                                            {/* Stars */}
+                                            <div className="rating fullv mb-10">
+                                                <MdStar className={review.rating >= 1 ? "star true" : "star false" }  />
+                                                <MdStar className={review.rating >= 2 ? "star true" : "star false" }  />
+                                                <MdStar className={review.rating >= 3 ? "star true" : "star false" }  />
+                                                <MdStar className={review.rating >= 4 ? "star true" : "star false" }  />
+                                                <MdStar className={review.rating >= 5 ? "star true" : "star false" }  />
+                                            </div>
+                                            <p className="justify">{review.comment}</p>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                 </div>
