@@ -626,9 +626,6 @@ export class index extends Component {
                                     }
                                 </p>
                             </button>
-                            <button className="customButtonFormat mr-10">
-                                <p>Save to Drafts</p>
-                            </button>
                             <button className="customButtonFormat buttonColorRed" onClick={() => this.discard()}>
                                 <p>Cancel</p>
                             </button>
