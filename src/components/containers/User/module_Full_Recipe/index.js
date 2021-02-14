@@ -229,7 +229,7 @@ export class index extends Component {
                                 <ul>
                                     {
                                         recipe.ingredients.map((ingredient, i) => {
-                                            return <li key={i} >{ingredient.name}</li>
+                                            return <li key={i}>{ingredient.amount + " " + ingredient.unit + " " + ingredient.name}</li>
                                         })
                                     }
                                 </ul>
