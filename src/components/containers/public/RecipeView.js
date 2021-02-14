@@ -190,22 +190,7 @@ export class index extends Component {
                             </div>
                         </div>
                         <div className="white-bg">
-                            <h5 className="rateTitle mb-10">Ratings</h5>
-                            {/* For Input of the user for a comment */}
-                            <div className="flex-col mb-20">
-                                {/* Stars */}
-                                <div className="rating fullv mb-10">
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                </div>
-                                <div className="inputSetFormat no-mb">
-                                    <input type="text" placeholder="Add a comment" className="mb-10"/>
-                                </div>
-                                <button className="customButtonFormat rateButton"><p>Post</p></button>
-                            </div>
+                            <h5 className="rateTitle mb-10">Ratings and Comments</h5>
                             {/* Rating Post Sample */}
                             <div className="flex-col mb-20">
                                 <div className="flex-row mb-10">
