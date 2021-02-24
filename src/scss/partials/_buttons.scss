@@ -34,6 +34,25 @@ button {
         }
     }    
 }
+.outlineButtonFormat {
+    background-color: rgba(0, 0, 0, 0);
+    border: 2px solid white;
+    color: white;
+
+    p {
+        font-size: 13px;
+        padding: 5px;
+    }
+    h5 {
+        margin-bottom: 0;
+        font-weight: bold;
+        padding: 5px;
+    }
+}
+.outlineButtonFormat:hover {
+    background-color: white;
+    color: black;
+}
 
 .buttonColorGray {
     background-color: $dark-6;
