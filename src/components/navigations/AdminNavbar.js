@@ -45,15 +45,11 @@ export class AdminNavBar extends Component {
                         <Nav.Link href="/admin/home">
                             <AiOutlineUnorderedList/>
                         </Nav.Link>
-                        <Nav.Link href="#messages">
+                        <Nav.Link href="/users">
                             <FaUsers/>
-                        </Nav.Link>
-                        <Nav.Link href="#pricing">
-                            <IoNotificationsOutline/>
                         </Nav.Link>
                         <NavDropdown className="to-uppercase" title={user.fullName || "Loading"} id="collasible-nav-dropdown">
                             <NavDropdown.Item href={`/admin/profile/${user._id}`}>Profile</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <Logout/>
                         </NavDropdown>

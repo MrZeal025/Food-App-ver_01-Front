@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 import AdminFrame from '../AdminFrame'
 import axios from 'axios'
 //react icons
-import { Row, Col, Card, Button } from "react-bootstrap";
 import { MdStar } from 'react-icons/md'
-import { FaBreadSlice } from 'react-icons/fa';
 import FsLightbox from 'fslightbox-react';
 import jwtDecode from 'jwt-decode'
 import Moment from "react-moment";
@@ -95,6 +93,16 @@ export class index extends Component {
                 [input]: e.target.value
             }
         })
+    }
+
+    remove = async (_id) => {
+        const { recipes } = this.state
+        try {
+            await axios.delete(`/api/recipe/delete/${_id}`, config);
+            window.location.href = "/admin/home"
+        } catch (error) {
+            console.log(error.response)
+        }
     }
 
     addComment = async () => {
@@ -249,7 +257,7 @@ export class index extends Component {
                             <div>
                                 <button 
                                     className="customButtonFormat buttonColorRed"
-                                    onClick={() => this.addToPanty()}
+                                    onClick={() => this.remove(recipe._id)}
                                 >
                                     Turn down post
                                 </button>

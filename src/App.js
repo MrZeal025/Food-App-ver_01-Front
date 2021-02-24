@@ -27,6 +27,7 @@ import Pantry from './components/containers/User/module_Pantry';
 import Dashboard from './components/containers/Admin/module_Admin_Page/index';
 import AdminProfile from './components/containers/Admin/module_Profile/index';
 import AdminFullView from './components/containers/Admin/FullRecipe/FullRecipe';
+import UserDashboard from './components/containers/Admin/Users/index';
 //router
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // redux
@@ -60,6 +61,7 @@ export class App extends Component {
             <ProtectedAdminRoute path="/admin/home" exact component ={Dashboard} />
             <ProtectedAdminRoute path="/admin/profile/:id" exact component={AdminProfile} />
             <ProtectedAdminRoute path="/recipe/admin/view/:id" exact component={AdminFullView}/>
+            <ProtectedAdminRoute path="/users" exact component={UserDashboard}/>
           </Switch>
         </Router>
       </Provider>
