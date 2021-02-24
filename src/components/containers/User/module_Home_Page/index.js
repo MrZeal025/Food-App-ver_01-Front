@@ -29,6 +29,7 @@ export class index extends Component {
         tags: [],
         tagsSelected: [],
         quickFilter: "",
+        ratingData: 0,
         showtoast: false,
         toastMessage: ""
     }
@@ -93,8 +94,14 @@ export class index extends Component {
         }
     }
     
+    filterByRating = (data) => {
+        this.setState({
+            ratingData: data
+        })
+    }
+
     render() {
-        const { recipes, tags, tagsSelected, quickFilter, reviews, showtoast, toastMessage } = this.state
+        const { recipes, tags, tagsSelected, quickFilter, reviews, showtoast, toastMessage, ratingData } = this.state
         
         // transform the array object tag into a much simplier array string
         const items = recipes.map((element) => ({
@@ -107,14 +114,14 @@ export class index extends Component {
             // default values for filtering
             let tags = true;
             let recipeName = recipe.foodName.toUpperCase().indexOf(quickFilter.toUpperCase()) !== -1;
-
+            let rating = (reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= ratingData ;
             // check if tag is selected
             if(tagsSelected.length > 0) {
                 tags = recipe.sub.some(r => tagsSelected.includes(r));
             }
 
             // check if boolean condition is false to not render items
-            if(!recipeName || !tags) {
+            if(!recipeName || !tags || !rating) {
                 return false
             }
 
@@ -131,6 +138,8 @@ export class index extends Component {
                             tagsSelected={tagsSelected}
                             setSelectedTags={this.setSelectedTags}
                             setQuickFilter={this.setQuickFilter}
+                            filterByRating={this.filterByRating}
+                            ratingData={ratingData}
                             quickFilter={quickFilter}
                         />
                     </div>
