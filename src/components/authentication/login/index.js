@@ -4,6 +4,8 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 // import error renderer
 import RenderError from '../../common/Renderer/RenderErrors';
+// link
+import { Link } from 'react-router-dom';
 
 const config = {
     headers: {
@@ -91,7 +93,12 @@ export class index extends Component {
         return (
             <div className="">
                 <div className="d-flex center-flex">
+                    
                     <Form>
+                        <div className="flex-row home-link">
+                            <h5>Sign In</h5>
+                            <a href="/" >Back to Home</a>
+                        </div>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email</Form.Label>
                             <Form.Control
@@ -123,6 +130,10 @@ export class index extends Component {
                             />
                             <p className={status ? "form-success" : "form-error"}>{message}</p>
                         </Form.Group>
+                       <div className="flex-row"> 
+                           <p className="mr-10">No account yet?</p>
+                           <Link to="/sign-up" className="sign-up-link">Click here!</Link>
+                        </div>
                         <Button 
                             variant="primary" 
                             type="submit"

@@ -1,11 +1,10 @@
 import React, { Component } from 'react'
-import { Navbar, Nav, Button, Card, Container, Row, Col } from 'react-bootstrap'
-import { FaAngleDown } from 'react-icons/fa';
+import { Navbar, Nav, Button, Card, Container, Row, Col } from 'react-bootstrap';
 // utilities
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 //react icons
-import { MdStar, MdSearch, MdExpandMore } from 'react-icons/md';
+import { MdStar, MdSearch, MdExpandMore, MdShoppingBasket, MdNoteAdd, MdCheck, MdClose } from 'react-icons/md';
 import { FaBreadSlice } from 'react-icons/fa';
 // link
 import { Link } from 'react-router-dom';
@@ -74,11 +73,6 @@ export class LandingPage extends Component {
                         />
                     </Navbar.Brand>
                     <Navbar.Brand href="#home" className="brandN">Bitezoo</Navbar.Brand>
-                    <Nav className="mr-auto">
-                        <Nav.Link href="#home" className="navLink">Home</Nav.Link>
-                        <Nav.Link href="#features" className="navLink">Features</Nav.Link>
-                        <Nav.Link href="#" className="navLink">Contact</Nav.Link>
-                    </Nav>
                     <div className="signLinks">
                         <Link to="/sign-in" className="sign-in-link">Sign In</Link>
                         <Link to="/sign-up" className="sign-up-link">Sign Up</Link>
@@ -88,82 +82,86 @@ export class LandingPage extends Component {
                     <div className="promText">
                         <h1>Thousands of recipes,</h1>
                         <h1>ready to be cooked and served.</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et.</p>
-                        <Button variant="outline-light customButtonFormat"><h5>Get Started</h5></Button>
+                        <p>Various kinds of recipes waiting for you to try everyday, and many more coming!</p>
+                        <Link to="/sign-up"><button className="outlineButtonFormat"><h5>Get Started</h5></button></Link>
                     </div>
-                    <div className="center-container">
-                        <p>Learn More</p>
+                    <Container fluid className="center-container">
+                        <a href="#features"><h6>Learn More</h6></a>
                         <div className="center-icon">
-                            <MdExpandMore className="landing-icon"/>
+                            <a href="#features"><MdExpandMore className="landing-icon"/></a>
                         </div>
-                    </div>
+                    </Container>
                 </div>
-                <Container className="mb-10">
+                {/* Features */}
+                <Container className="mb-20">
+                    <h1 className="bannerTitle" id="features">Features</h1>
                     <Row>
-                        <Col>
-                            <Card>
-                                <Card.Body>
+                        <Col className="mb-20">
+                            <Card className="featureCard">
+                                <Card.Body  className="nt-pad">
                                     <div className="featureIconDiv">
                                         <MdSearch className="featureIcon"/>
                                     </div>
-                                    <Card.Title>Search</Card.Title>
+                                    <Card.Title className="bold">Search</Card.Title>
                                     <Card.Text>
                                         Search every type of recipe you desire to make.
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
                         </Col>
-                        <Col>
-                            <Card>
-                                <Card.Body>
+                        <Col className="mb-20">
+                            <Card className="featureCard">
+                                <Card.Body className="nt-pad">
                                     <div className="featureIconDiv">
-                                        <MdSearch className="featureIcon"/>
+                                        <MdShoppingBasket className="featureIcon"/>
                                     </div>
-                                    <Card.Title>Search</Card.Title>
+                                    <Card.Title className="bold">Add</Card.Title>
                                     <Card.Text>
-                                        Search every type of recipe you desire to make.
+                                        Add recipes to your pantry to cook later.
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
                         </Col>
-                        <Col>
-                            <Card>
-                                <Card.Body>
+                        <Col className="mb-20">
+                            <Card className="featureCard">
+                                <Card.Body  className="nt-pad">
                                     <div className="featureIconDiv">
-                                        <MdSearch className="featureIcon"/>
+                                        <MdStar className="featureIcon"/>
                                     </div>
-                                    <Card.Title>Search</Card.Title>
+                                    <Card.Title className="bold">Rate</Card.Title>
                                     <Card.Text>
-                                        Search every type of recipe you desire to make.
+                                       Rate and comment on other recipes you have tried cooking.
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
                         </Col>
-                        <Col>
-                            <Card>
-                                <Card.Body>
+                        <Col className="mb-20">
+                            <Card className="featureCard">
+                                <Card.Body className="nt-pad">
                                     <div className="featureIconDiv">
-                                        <MdSearch className="featureIcon"/>
+                                        <MdNoteAdd className="featureIcon"/>
                                     </div>
-                                    <Card.Title>Search</Card.Title>
+                                    <Card.Title className="bold">Post and Share</Card.Title>
                                     <Card.Text>
-                                        Search every type of recipe you desire to make.
+                                        Post and share your own recipes online.
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
                         </Col>
                     </Row>
                 </Container>
-
-                <Container fluid >
-                    <Row md={ recipes.length > 0 ? 3 : 12}>
+                
+                {/* Featured Recipes */}
+                <Container className="mb-10">
+                    <h1 className="bannerTitle">Featured Recipes</h1>
+                    <Row md={ recipes.length > 0 ? 4 : 12}>
                         {
                             recipes.length > 0 
                             ? 
                                 recipes.map((recipe, i) => {
                                     return(
                                         <Col key={i} className="perCard">
-                                            <Card>
+                                            <Card className="mb-10">
                                                 <Card.Img variant="top" src={recipe.foodImages[0]} />
                                                 <Card.Body className="customCardBody">
                                                 <Card.Title className="title">{recipe.foodName}</Card.Title>
@@ -193,7 +191,7 @@ export class LandingPage extends Component {
                                                     </div>
                                                 </div>
                                                 <div className="buttonDiv">
-                                                <Button className="customButton" variant="primary"><Link to={`/public/recipe/view/${recipe._id}`}>See Full Recipe</Link></Button>
+                                                <Link to={`/public/recipe/view/${recipe._id}`}><Button className="customButton" variant="primary">See Full Recipe</Button></Link>
                                                 </div>
                                                 </Card.Body>
                                             </Card>
@@ -208,6 +206,48 @@ export class LandingPage extends Component {
                         }
                     </Row>
                 </Container>
+                
+                 {/* Pro and Reg Users */}
+                 <Container className="mb-20">
+                <h1 className="bannerTitle">Be a Pro user now!</h1>
+                    <Row className="rowUser">
+                        <Col className="userType">
+                            <div className="typeDiv reg"><h4>Regular</h4></div>
+                            <div className="userBody">
+                                <div className="flex-row userFeat">
+                                    <MdCheck className="MDcheck"/>
+                                    <p>Post and share recipes.</p>
+                                </div>
+                                <div className="flex-row userFeat">
+                                    <MdCheck className="MDcheck"/>
+                                    <p>Store recipes in your personal pantry.</p>
+                                </div>
+                                <div className="flex-row userFeat">
+                                    <MdClose className="MDclose"/>
+                                    <p>Add a price before other users can view your recipe</p>
+                                </div>
+                            </div>
+                        </Col>
+                        <Col className="userType">
+                            <div className="typeDiv pro"><h4>Pro</h4></div>
+                            <div className="userBody">
+                                <div className="flex-row userFeat">
+                                    <MdCheck className="MDcheck"/>
+                                    <p>Post and share recipes.</p>
+                                </div>
+                                <div className="flex-row userFeat">
+                                    <MdCheck className="MDcheck"/>
+                                    <p>Store recipes in your personal pantry.</p>
+                                </div>
+                                <div className="flex-row userFeat">
+                                    <MdCheck className="MDcheck"/>
+                                    <p>Add a price before other users can view your recipe</p>
+                                </div>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+
             </>
         )
     }
