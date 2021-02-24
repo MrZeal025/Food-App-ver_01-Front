@@ -49,17 +49,7 @@ export class index extends Component {
                             />
                         </InputGroup>
                     </div>
-                     <hr/>
-                    {/* Serving Size Filter Div */}
-                    <div className="serveFiltDiv">
-                        <h5>Serving Size</h5>
-                            <button className="serveOp">1</button>
-                            <button className="serveOp">2</button>
-                            <button className="serveOp">3-5</button>
-                            <button className="serveOp">6-10</button>
-                            <button className="serveOp">11-20</button>
-                            <button className="serveOp">21 and above</button>
-                    </div>
+                    <hr/>
                     {/* Rating Filter Div */}
                     <div className="ratingFiltDiv">
                         <h5>Rating</h5>

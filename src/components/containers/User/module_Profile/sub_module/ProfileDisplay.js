@@ -5,10 +5,12 @@ import DPUploadModal from './DPUploadModal';
 import CPUploadModal from './CPUploadModal';
 import axios from 'axios';
 //react bootstrap
-import { Card, Button, Row, Col } from 'react-bootstrap';
+import { Card, Button } from 'react-bootstrap';
+import { Toast } from 'react-bootstrap'
 //react icons
 import { MdStar } from 'react-icons/md';
 import { FaBreadSlice } from 'react-icons/fa';
+import { FaExclamationTriangle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const token = localStorage.getItem('accessToken');
@@ -23,7 +25,9 @@ export class ProfileDisplay extends Component {
 
     state = {
         fullname: '',
-        recipes: []
+        recipes: [],
+        showtoast: false,
+        toastMessage: ""
     }
 
     async componentDidMount() {
@@ -44,9 +48,30 @@ export class ProfileDisplay extends Component {
             console.log(error)
         }
     }
+
+    remove = async (_id) => {
+        const { recipes } = this.state
+        try {
+            await axios.delete(`/api/recipe/delete/${_id}`, config);
+            const newRecipes =  recipes.filter(recipe => recipe._id !== _id);
+            this.setState({
+                recipes: newRecipes
+            })
+            this.setShow(true, 'Post has been deleted');
+        } catch (error) {
+            this.setShow(true, 'Failed to delete post');
+        }
+    }
+
+    setShow = (condition, message) => {
+        this.setState({
+            showtoast: condition,
+            toastMessage: message ? message : "Something went wrong"
+        })
+    }
     
     render() {
-        const { fullname, recipes } = this.state
+        const { fullname, recipes, showtoast, toastMessage } = this.state
         return (
             <>
                 <div className="profile-control">
@@ -96,21 +121,30 @@ export class ProfileDisplay extends Component {
                                                     </div>
                                                 </div>
                                                 <div className="buttonDiv">
-                                                <a href={`/recipe/view/${recipe._id}`}><Button className="customButton" variant="primary">See Full Recipe</Button></a>
-                                                <Button className="customButton custom-secondary">Add to Pantry</Button>
+                                                    <a href={`/recipe/view/${recipe._id}`}><Button className="customButton" variant="primary">See Full Recipe</Button></a>
+                                                    <Button variant="danger" className="mt-2" onClick={() => this.remove(recipe._id)}>Remove Post</Button>
                                                 </div>
                                             </Card.Body>
                                         </Card>
                                     )
                                 })
                             : 
-                            <div className="empty-center-display">
+                            <div className="empty-center-display-profile">
                                 <FaBreadSlice/>
-                                <p>No recipes at the moment</p>
+                                <p>You have no post at the moment</p>
+                                <Link to="/recipe/create"><Button className="mt-4">Add a post</Button></Link>
                             </div>
                         }
                     </div>
                 </div>
+                <Toast onClose={() => this.setShow(false)} show={showtoast} delay={4000} autohide>
+                    <Toast.Header>
+                        <FaExclamationTriangle/>
+                        <strong className="mr-auto ml-2"> Notice!</strong>
+                        <small>just now</small>
+                    </Toast.Header>
+                    <Toast.Body>{toastMessage}!</Toast.Body>
+                </Toast>
             </>
         )
     }

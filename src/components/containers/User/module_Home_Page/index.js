@@ -3,12 +3,15 @@ import UserFrame from '../UserFrame';
 import SearchFilter from '../module_Search'
 import axios from 'axios';
 //react bootstrap
-import { Card, Button, Container, Row, Col } from 'react-bootstrap';
+import { Card, Button, Row, Col } from 'react-bootstrap';
 //react icons
 import { MdStar } from 'react-icons/md';
 import { FaBreadSlice } from 'react-icons/fa';
+import { Toast } from 'react-bootstrap'
+import { FaExclamationTriangle } from 'react-icons/fa';
 // link
 import { Link } from 'react-router-dom';
+import jwtDecode from 'jwt-decode';
 
 const token = localStorage.getItem('accessToken');
 const config = {
@@ -25,7 +28,9 @@ export class index extends Component {
         reviews: [],
         tags: [],
         tagsSelected: [],
-        quickFilter: ""
+        quickFilter: "",
+        showtoast: false,
+        toastMessage: ""
     }
 
     async componentDidMount() {
@@ -45,6 +50,12 @@ export class index extends Component {
         }
     }
 
+    setShow = (condition, message) => {
+        this.setState({
+            showtoast: condition,
+            toastMessage: message ? message : "Something went wrong"
+        })
+    }
 
     setSelectedTags = (i) => {
         const { tagsSelected } = this.state
@@ -68,8 +79,22 @@ export class index extends Component {
         })
     }
 
+    addToPantry = async (id) => {
+        const body = {
+            recipeId: id,
+            ownerId: jwtDecode(token)._id
+        }
+        try {
+            const addItem = await axios.post(`/api/pantry/add`, body, config);
+            this.setShow(true, addItem.data.data.message)
+        } 
+        catch (error) {
+            this.setShow(true, error.response.data.data.message)
+        }
+    }
+    
     render() {
-        const { recipes, tags, tagsSelected, quickFilter, reviews} = this.state
+        const { recipes, tags, tagsSelected, quickFilter, reviews, showtoast, toastMessage } = this.state
         
         // transform the array object tag into a much simplier array string
         const items = recipes.map((element) => ({
@@ -164,7 +189,7 @@ export class index extends Component {
                                                     </div>
                                                     <div className="buttonDiv">
                                                     <Link to={`/recipe/view/${recipe._id}`}><Button className="customButton buttonColorBlue" variant="primary"><p>See Full Recipe</p></Button></Link>
-                                                    <Button className="customButton custom-secondary"><p>Add to Pantry</p></Button>
+                                                    <Button className="customButton custom-secondary" onClick={() => this.addToPantry(recipe._id)}><p>Add to Pantry</p></Button>
                                                     </div>
                                                     </Card.Body>
                                                 </Card>
@@ -180,6 +205,14 @@ export class index extends Component {
                         </Row>
                     </div>
                 </div>
+                <Toast onClose={() => this.setShow(false)} show={showtoast} delay={4000} autohide>
+                    <Toast.Header>
+                        <FaExclamationTriangle/>
+                        <strong className="mr-auto ml-2"> Notice!</strong>
+                        <small>just now</small>
+                    </Toast.Header>
+                    <Toast.Body>{toastMessage}!</Toast.Body>
+                </Toast>
             </UserFrame>
         )
     }

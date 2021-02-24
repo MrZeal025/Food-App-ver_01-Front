@@ -3,6 +3,7 @@ import UserFrame from '../UserFrame';
 import axios from 'axios';
 //React Bootstrap
 import { Toast } from 'react-bootstrap'
+import { FaExclamationTriangle } from 'react-icons/fa';
 // components
 import Ingredient from './sub_module/Ingredient_Create'
 import Procedure from "./sub_module/Procedure_Create";
@@ -10,7 +11,7 @@ import ImageUpload from '../../../common/ImageUpload';
 import RenderError from '../../../common/Renderer/RenderErrors';
 // utilities and icons
 import jwtDecode from 'jwt-decode';
-import { FaExclamationTriangle } from 'react-icons/fa';
+
 
 const token = localStorage.getItem('accessToken');
 const config = {
@@ -328,6 +329,7 @@ export class index extends Component {
                 }
             })
             this.setShow(true, process.data.data.message)
+            window.location.href = "/home" 
         } 
         catch (error) {
             if(error.response.data.length > 0){
