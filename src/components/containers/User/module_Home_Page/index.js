@@ -145,7 +145,8 @@ export class index extends Component {
             // default values for filtering
             let tags = true;
             let recipeName = recipe.foodName.toUpperCase().indexOf(quickFilter.toUpperCase()) !== -1;
-            let rating = (reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= ratingData ;
+            let rating = (Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                / reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length)) >= ratingData ;
             // check if tag is selected
             if(tagsSelected.length > 0) {
                 tags = recipe.sub.some(r => tagsSelected.includes(r));
@@ -195,19 +196,59 @@ export class index extends Component {
                                                         <p className="userName">By: {recipe.ownerInfo.name}</p>
                                                         <div className="rating">
                                                             <MdStar 
-                                                                className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 1 ? "star true" : "star false"}
+                                                                className={
+                                                                    Math.round(
+                                                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                                                        / 
+                                                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                                                        ) >= 1 
+                                                                    ? "star true" 
+                                                                    : "star false"
+                                                                }
                                                             />
                                                             <MdStar 
-                                                                className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 2 ? "star true" : "star false"}
+                                                                className={
+                                                                    Math.round(
+                                                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                                                        / 
+                                                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                                                        ) >= 2 
+                                                                    ? "star true" 
+                                                                    : "star false"
+                                                                }
                                                             />
                                                             <MdStar 
-                                                                className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 3 ? "star true" : "star false"}
+                                                                className={
+                                                                    Math.round(
+                                                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                                                        / 
+                                                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                                                        ) >= 3 
+                                                                    ? "star true" 
+                                                                    : "star false"
+                                                                }
                                                             />
                                                             <MdStar 
-                                                                className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 4 ? "star true" : "star false"}
+                                                                className={
+                                                                    Math.round(
+                                                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                                                        / 
+                                                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                                                        ) >= 4 
+                                                                    ? "star true" 
+                                                                    : "star false"
+                                                                }
                                                             />
                                                             <MdStar 
-                                                                className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 5 ? "star true" : "star false"}
+                                                                className={
+                                                                    Math.round(
+                                                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                                                        / 
+                                                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                                                        ) >= 5 
+                                                                    ? "star true" 
+                                                                    : "star false"
+                                                                }
                                                             />
                                                             <p>({ reviews.filter(review => review.recipeId === recipe._id).length })</p>
                                                         </div>
