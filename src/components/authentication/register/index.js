@@ -4,6 +4,8 @@ import axios from 'axios';
 // import error renderer
 import RenderErrors from '../../common/Renderer/RenderErrors';
 import jwt_decode from 'jwt-decode';
+// link
+import { Link } from 'react-router-dom';
 
 const config = {
     headers: {
@@ -138,6 +140,10 @@ export class index extends Component {
                         <></>
                 }
                <Form className="center-flex">
+                    <div className="flex-row home-link">
+                        <h5>Sign In</h5>
+                        <a href="/" >Back to Home</a>
+                    </div>
                     <Form.Group controlId="formGroupEmail">
                         <Form.Label>Fullname</Form.Label>
                         <Form.Control 
@@ -200,13 +206,17 @@ export class index extends Component {
                                 <></>
                         }
                     </Form.Group>
-                    
+                    <div className="flex-row"> 
+                           <p className="mr-10">Already have an account?</p>
+                           <Link to="/sign-in" className="sign-in-link">Click here!</Link>
+                        </div>
                     <Button 
                         variant="primary" 
                         onClick={this.onSubmit}
                         disabled={!account.password || !confirmPassword}
+                        className="customButtonFormat buttonColorBlue"
                     >
-                        SIGN UP
+                        <p>Sign Up</p>
                     </Button>
                 </Form>
             </Container>

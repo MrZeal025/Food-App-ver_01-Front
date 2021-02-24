@@ -71,27 +71,22 @@ export class index extends Component {
                         />
                     </Navbar.Brand>
                     <Navbar.Brand href="/" className="brandN">Bitezoo</Navbar.Brand>
-                    <Nav className="mr-auto">
-                        <Nav.Link href="#home" className="navLink">Home</Nav.Link>
-                        <Nav.Link href="#features" className="navLink">Features</Nav.Link>
-                        <Nav.Link href="#" className="navLink">Contact</Nav.Link>
-                    </Nav>
                     <div className="signLinks">
                         <Link to="/sign-in" className="sign-in-link">Sign In</Link>
                         <Link to="/sign-up" className="sign-up-link">Sign Up</Link>
                     </div>
                 </Navbar>
                 <div className="mainHomeDiv">
-                    <div className="middle">
+                    <div className="fullRecDiv mb-10">
                         <div className="white-bg mb-4 mt-4">
-                            <h4 className="recipeName">{recipe.foodName}</h4>
+                            <h4 className="recipeName mb-10">{recipe.foodName}</h4>
                             {/* userName */}
                             <div className="flex-row mb-10">
-                                <img className="small-avatar" src={recipe.ownerInfo.profilePicture === "" ? profilePicture : recipe.ownerInfo.profilePicture} alt="DP"/>
+                                <img className="small-avatar mr-10" src={recipe.ownerInfo.profilePicture === "" ? profilePicture : recipe.ownerInfo.profilePicture} alt="DP"/>
                                 <div className="userName"><h6>By: {recipe.ownerInfo.name}</h6></div>
                             </div>
                             {/* rating */}
-                            <div className="rating fullv mb-10">
+                            <div className="rating fullv mb-10 flex-row">
                                 <MdStar className="star true"/>
                                 <MdStar className="star true"/>
                                 <MdStar className="star true"/>
@@ -117,23 +112,23 @@ export class index extends Component {
                                         <h6>{recipe.goodFor}</h6>
                                     </div>
                                     <div className="mb-10">
-                                        <h6 className="label mb-10">Nutrition Facts</h6>
-                                        <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">{recipe.nutrition.totalCalories === '' ? "None" : recipe.nutrition.totalCalories }</h6>
-                                            <h6 className="label">Total Calories</h6>
-                                        </div>
-                                        <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">{recipe.nutrition.caloricBreakDown.percentCarbs}</h6>
-                                            <h6 className="label">Carbohydrates</h6>
-                                        </div>
-                                        <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">{recipe.nutrition.caloricBreakDown.percentProtein}</h6>
-                                            <h6 className="label">Protein</h6>
-                                        </div>
-                                        <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">{recipe.nutrition.caloricBreakDown.percentFat}</h6>
-                                            <h6 className="label">Fat</h6>
-                                        </div>
+                                        <h6 className="label mb-10">Nutrition&nbsp;Facts</h6>
+                                            <div className="flex-row mb_5">
+                                                <h6 className="nutContLabel mr-10">Total&nbsp;Calories</h6>
+                                                <h6 className="nutCont">{recipe.nutrition.totalCalories === '' ? "None" : recipe.nutrition.totalCalories }</h6>
+                                            </div>
+                                            <div className="flex-row mb_5">
+                                                <h6 className="nutContLabel mr-10">Carbohydrates</h6>
+                                                <h6 className="nutCont">{recipe.nutrition.caloricBreakDown.percentCarbs}</h6>
+                                            </div>
+                                            <div className="flex-row mb_5">
+                                            <h6 className="nutContLabel mr-10">Protein</h6>
+                                            <h6 className="nutCont">{recipe.nutrition.caloricBreakDown.percentProtein}</h6>
+                                            </div>
+                                            <div className="flex-row mb_5">
+                                                <h6 className="nutContLabel mr-10">Fat</h6>
+                                                <h6 className="nutCont">{recipe.nutrition.caloricBreakDown.percentFat}</h6>
+                                            </div>
                                     </div>
                                     {/* tags */}
                                     <div>
@@ -169,24 +164,28 @@ export class index extends Component {
                             {/* Ingredients */}
                             <div className="mb-10">
                                 <h5 className="mb-10 ingTitle">Ingredients</h5>
+                                <div className="ingList">
                                 <ul>
                                     {
                                         recipe.ingredients.map((ingredient, i) => {
-                                            return <li key={i} >{ingredient.name}</li>
+                                            return <li key={i}>{ingredient.amount + " " + ingredient.unit + " " + ingredient.name}</li>
                                         })
                                     }
                                 </ul>
+                                </div>
                             </div>
                             {/* Procedure */}
                             <div className="mb-10">
                                 <h5 className="mb-10 procTitle">Procedure</h5>
-                                <ol className="justify">
-                                    {
-                                        recipe.instruction.map((intruction, i) => {
-                                            return <li className="mt-2" key={i}>{intruction}</li>
-                                        })
-                                    }
-                                </ol>
+                                <div className="ingList">
+                                    <ol className="justify">
+                                        {
+                                            recipe.instruction.map((intruction, i) => {
+                                                return <li className="mt-2" key={i}>{intruction}</li>
+                                            })
+                                        }
+                                    </ol>
+                                </div>
                             </div>
                         </div>
                         <div className="white-bg">
