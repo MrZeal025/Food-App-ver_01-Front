@@ -7,7 +7,7 @@ import { MdStar } from 'react-icons/md'
 export class index extends Component {
 
     render() {
-        const { tags, tagsSelected, setSelectedTags, value, setQuickFilter } = this.props
+        const { tags, tagsSelected, setSelectedTags, value, setQuickFilter, ratingData, filterByRating } = this.props
         return (
             <div className="left">
                 <h4>Search Filter</h4>
@@ -54,41 +54,43 @@ export class index extends Component {
                     <div className="ratingFiltDiv">
                         <h5>Rating</h5>
                         <div>
-                            <input type="radio" value="1" name="oneStar"className="radio"/>
+                            <input type="radio" value="1" name="oneStar" className="radio" checked={ratingData === 0 ? true : false} onChange={e => filterByRating(0)} />
                             <label htmlFor="oneStar" className="rateLabel">
-                                <MdStar className="star starfilt true"/>
-                                (and above)
+                                <p className="ml-2">All Item</p>
                             </label>
                         </div>
                         <div>
-                            <input type="radio" value="1" name="twoStar"className="radio"/>
+                            <input type="radio" value="1" name="oneStar" className="radio" checked={ratingData === 1 ? true : false} onChange={e => filterByRating(1)} />
+                            <label htmlFor="oneStar" className="rateLabel">
+                                <MdStar className="star starfilt true"/>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" value="1" name="twoStar" className="radio" checked={ratingData === 2 ? true : false} onChange={e => filterByRating(2)} />
                             <label htmlFor="twoStar" className="rateLabel">
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
-                                (and above)
                             </label>
                         </div>
                         <div>
-                            <input type="radio" value="1" name="threeStar"className="radio"/>
+                            <input type="radio" value="1" name="threeStar" className="radio" checked={ratingData === 3 ? true : false} onChange={e => filterByRating(3)} />
                             <label htmlFor="threeStar" className="rateLabel">
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
-                                (and above)
                             </label>
                         </div>
                         <div>
-                            <input type="radio" value="1" name="fourStar"className="radio"/>
+                            <input type="radio" value="1" name="fourStar" className="radio" checked={ratingData === 4 ? true : false} onChange={e => filterByRating(4)} />
                             <label htmlFor="fourStar" className="rateLabel">
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>
-                                (and above)
                             </label>
                         </div>
                         <div>
-                            <input type="radio" value="1" name="fiveStar"className="radio"/>
+                            <input type="radio" value="1" name="fiveStar" className="radio" checked={ratingData === 5 ? true : false} onChange={e => filterByRating(5)} />
                             <label htmlFor="fiveStar" className="rateLabel">
                                 <MdStar className="star starfilt true"/>
                                 <MdStar className="star starfilt true"/>

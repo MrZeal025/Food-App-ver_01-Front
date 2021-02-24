@@ -29,8 +29,10 @@ export class index extends Component {
         tags: [],
         tagsSelected: [],
         quickFilter: "",
+        ratingData: 0,
         showtoast: false,
-        toastMessage: ""
+        toastMessage: "",
+        pantries: []
     }
 
     async componentDidMount() {
@@ -39,10 +41,13 @@ export class index extends Component {
             const recipe = await axios.get('/api/recipe/read-all', config);
             const tag = await axios.get('/json/tags.json');
             const reviews = await axios.get('/api/review/all-reviews');
+            const getMyRecipes = await axios.get(`/api/pantry/read-checker/${jwtDecode(token)._id}`, config);
+
             this.setState({
                 recipes: recipe.data.data.recipes,
                 tags: tag.data,
-                reviews: reviews.data.data
+                reviews: reviews.data.data,
+                pantries: getMyRecipes.data.data
             })
         }
         catch(error) {
@@ -86,15 +91,48 @@ export class index extends Component {
         }
         try {
             const addItem = await axios.post(`/api/pantry/add`, body, config);
+            this.setState({
+                pantries: [...this.state.pantries, body]
+            })
             this.setShow(true, addItem.data.data.message)
         } 
         catch (error) {
             this.setShow(true, error.response.data.data.message)
         }
     }
+
+    removeFromPantty = async (id) => {
+        const { pantries } = this.state
+        try {
+            await axios.delete(`/api/pantry/remove/${id}`, config);
+            const newPantry = pantries.filter(pantry => pantry.recipeId !== id);
+            this.setState({
+                pantries: newPantry
+            })
+            this.setShow(true, "Item removed from pantry")
+        } 
+        catch (error) {
+            this.setShow(true, "Failed to remove from pantry")
+        }
+    }
     
+    filterByRating = (data) => {
+        this.setState({
+            ratingData: data
+        })
+    }
+
+    checkIfInPantry = (recipeId) => {
+        const { recipes, pantries } = this.state
+        const process = recipes.map(recipe => {
+            const item = pantries.filter( pantry => pantry.recipeId === recipe._id).map(data => { return data.recipeId })            
+            return item[0] === recipeId
+        })
+        return process
+    }
+
     render() {
-        const { recipes, tags, tagsSelected, quickFilter, reviews, showtoast, toastMessage } = this.state
+        const { recipes, tags, tagsSelected, quickFilter, reviews, showtoast, toastMessage, ratingData } = this.state
         
         // transform the array object tag into a much simplier array string
         const items = recipes.map((element) => ({
@@ -107,20 +145,19 @@ export class index extends Component {
             // default values for filtering
             let tags = true;
             let recipeName = recipe.foodName.toUpperCase().indexOf(quickFilter.toUpperCase()) !== -1;
-
+            let rating = (reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= ratingData ;
             // check if tag is selected
             if(tagsSelected.length > 0) {
                 tags = recipe.sub.some(r => tagsSelected.includes(r));
             }
 
             // check if boolean condition is false to not render items
-            if(!recipeName || !tags) {
+            if(!recipeName || !tags || !rating) {
                 return false
             }
 
             return true
         })
-
 
         return (
             <UserFrame>
@@ -131,6 +168,8 @@ export class index extends Component {
                             tagsSelected={tagsSelected}
                             setSelectedTags={this.setSelectedTags}
                             setQuickFilter={this.setQuickFilter}
+                            filterByRating={this.filterByRating}
+                            ratingData={ratingData}
                             quickFilter={quickFilter}
                         />
                     </div>
@@ -189,7 +228,15 @@ export class index extends Component {
                                                     </div>
                                                     <div className="buttonDiv">
                                                     <Link to={`/recipe/view/${recipe._id}`}><Button className="customButton buttonColorBlue" variant="primary"><p>See Full Recipe</p></Button></Link>
-                                                    <Button className="customButton custom-secondary" onClick={() => this.addToPantry(recipe._id)}><p>Add to Pantry</p></Button>
+                                                    <Button 
+                                                        className={`customButton ${this.checkIfInPantry(recipe._id)[i] ? "buttonColorRed" : "custom-secondary"}`} 
+                                                        onClick={() => this.checkIfInPantry(recipe._id)[i] 
+                                                            ? this.removeFromPantty(recipe._id) 
+                                                            : this.addToPantry(recipe._id)
+                                                        }
+                                                    >
+                                                       <p>{ this.checkIfInPantry(recipe._id)[i] ? "Remove from pantry" : "Add to pantry" }</p>
+                                                    </Button>
                                                     </div>
                                                     </Card.Body>
                                                 </Card>

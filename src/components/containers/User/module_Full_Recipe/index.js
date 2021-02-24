@@ -49,7 +49,6 @@ export class index extends Component {
     }
 
     async componentDidMount() {
-        
         try {
             const recipe = await axios.get(`/api/recipe/${this.props.match.params.id}`, config);
             const profile = await axios.get(`/api/user/profile/read/${jwtDecode(token)._id}`, config);
