@@ -149,12 +149,22 @@ export class index extends Component {
                             </div>
                             {/* rating */}
                             <div className="rating fullv mb-10 flex-row">
-                                <MdStar className="star true"/>
-                                <MdStar className="star true"/>
-                                <MdStar className="star true"/>
-                                <MdStar className="star false"/>
-                                <MdStar className="star false"/>
-                                <p className="rateCount">(1.5k)</p>
+                                <MdStar 
+                                    className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 1 ? "star true" : "star false"}
+                                />
+                                <MdStar 
+                                    className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 2 ? "star true" : "star false"}
+                                />
+                                <MdStar 
+                                    className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 3 ? "star true" : "star false"}
+                                />
+                                <MdStar 
+                                    className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 4 ? "star true" : "star false"}
+                                />
+                                <MdStar 
+                                    className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 5 ? "star true" : "star false"}
+                                />
+                                <p>({ reviews.filter(review => review.recipeId === recipe._id).length })</p>
                             </div>
                             {/* Image and Details */}
                             <div className="flex-row mb-10 imgAndDetails">
@@ -260,7 +270,6 @@ export class index extends Component {
                                         <p>Add to Pantry</p>
                                     </button> 
                                     : <>
-                                        <button className="customButtonFormat buttonColorBlue mr-10"><p>Add Ingredients to Grocery List</p></button>
                                         <button 
                                             className="customButtonFormat buttonColorRed"
                                             onClick={() => this.addToPanty()}

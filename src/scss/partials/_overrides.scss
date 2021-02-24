@@ -14,7 +14,7 @@
     bottom: 10px;
     left: 20px;
     width: 300px;
-
+    z-index: 99999;
     .toast-header {
         background-color: $blue-grey-light-5;
         color: white;
@@ -28,5 +28,23 @@
         background-color: white;
         font-size: 13px;
         font-weight: 500;
+    }
+}
+
+
+.empty-center-display-profile {
+    text-align: center;
+    padding: 20% 0;
+
+    svg {
+        height: 60px;
+        width: 60px;
+    }
+
+    p {
+        margin-top: 20px;
+        font-size: 20px;
+        color: black !important;
+        font-weight: 600;
     }
 }

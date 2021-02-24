@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Logout from '../authentication/logout/index';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { AiOutlineMessage } from 'react-icons/ai';
-import { IoNotificationsOutline, IoHome } from 'react-icons/io5';
+import { IoHome } from 'react-icons/io5';
 // utilities
 import jwt_decode from 'jwt-decode';
 import { FaPlus } from 'react-icons/fa';
+import { MdShoppingBasket } from 'react-icons/md';
 const logoLight = process.env.PUBLIC_URL + '/assets/logowhite@2x.png';
 
 export class NavBar extends Component {
@@ -47,6 +47,9 @@ export class NavBar extends Component {
                         </Nav.Link>
                         <Nav.Link href="/">
                             <IoHome/>
+                        </Nav.Link>
+                        <Nav.Link href="/pantry">
+                            <MdShoppingBasket/>
                         </Nav.Link>
                         <NavDropdown className="to-uppercase" title={user.fullName || "Loading"} id="collasible-nav-dropdown">
                             <NavDropdown.Item href={`/profile/${user._id}`}>Profile</NavDropdown.Item>
