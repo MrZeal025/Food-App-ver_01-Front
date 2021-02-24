@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import Logout from '../authentication/logout/index';
 import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
-import { IoHome } from 'react-icons/io5';
 // utilities
 import jwt_decode from 'jwt-decode';
 import { FaPlus } from 'react-icons/fa';
-import { MdShoppingBasket } from 'react-icons/md';
+import { MdShoppingBasket, MdHome } from 'react-icons/md';
 const logoLight = process.env.PUBLIC_URL + '/assets/logowhite@2x.png';
 
 export class NavBar extends Component {
@@ -31,8 +30,8 @@ export class NavBar extends Component {
                 <Navbar.Brand href="/home" className="BZlogo">
                     <img
                         src={logoLight}
-                        width="30"
-                        height="30"
+                        width="40"
+                        height="40"
                         className="d-inline-block align-top"
                         alt=""
                     />
@@ -42,18 +41,18 @@ export class NavBar extends Component {
                 <div className="flex-grow-1 w-100"></div>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="mr-auto">
-                        <Nav.Link href="/recipe/create">
-                            <FaPlus/>
+                        <Nav.Link href="/recipe/create"className="navLink">
+                            <FaPlus className="navIcon"/>
                         </Nav.Link>
-                        <Nav.Link href="/">
-                            <IoHome/>
+                        <Nav.Link href="/" className="navLink">
+                            <MdHome className="navIcon"/>
                         </Nav.Link>
-                        <Nav.Link href="/pantry">
-                            <MdShoppingBasket/>
+                        <Nav.Link href="/pantry"  className="navLink">
+                            <MdShoppingBasket className="navIcon"/>
                         </Nav.Link>
-                        <NavDropdown className="to-uppercase" title={user.fullName || "Loading"} id="collasible-nav-dropdown">
+                        <NavDropdown className="to-uppercase navName " title={user.fullName || "Loading"} id="collasible-nav-dropdown">
                             <NavDropdown.Item href={`/profile/${user._id}`}>Profile</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Settings</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Go Pro!</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <Logout/>
                         </NavDropdown>

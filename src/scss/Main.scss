@@ -84,13 +84,14 @@ footer {
         }
 
         .footer-primary-item {
-            margin-bottom: 2em;
+            margin-bottom: 1em;
         }
 
         .footer-logo {
+            margin-left: 15px;
             width: auto;
             height: 2.5em;
-            margin-bottom: 1rem;
+            margin-bottom: 10px;
         }
     }
 
@@ -102,12 +103,12 @@ footer {
             color: $light-6;
         }
 
-        padding-top: 1em;
+        padding-top: 0.5em;
         border-top: 1px solid $light-8;
 
         img {
             width: auto;
-            height: 1.5em;
+            height: 1.5rem;
         }
     }
 }
