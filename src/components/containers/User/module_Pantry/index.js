@@ -56,9 +56,21 @@ export class index extends Component {
             step: step
         })
     }
-    
-    remove = () => {
 
+    removeFromPantty = async (id) => {
+        const { pantries } = this.state
+        try {
+            await axios.delete(`/api/pantry/remove/${id}`, config);
+            const newPantry = pantries.filter(pantry => pantry._id !== id);
+            console.log(newPantry)
+            this.setState({
+                pantries: newPantry
+            })
+            this.setShow(true, "Item removed from pantry")
+        } 
+        catch (error) {
+            this.setShow(true, "Failed to remove from pantry")
+        }
     }
 
     setShow = (condition, message) => {
@@ -140,8 +152,14 @@ export class index extends Component {
                                                                 </div>
                                                             </div>
                                                             <div className="buttonDiv">
-                                                            <Link to={`/recipe/view/${recipe._id}`}><Button className="customButton buttonColorBlue" variant="primary"><p>See Full Recipe</p></Button></Link>
-                                                            <Button className="customButton" variant="danger" onClick={() => this.remove(recipe._id)}><p>Remove from pantry</p></Button>
+                                                            <Link to={`/recipe/view/${recipe._id}`}>
+                                                                <Button className="customButton buttonColorBlue" variant="primary">
+                                                                    <p>See Full Recipe</p>
+                                                                </Button>
+                                                            </Link>
+                                                            <Button className="customButton" variant="danger" onClick={() => this.removeFromPantty(recipe._id)}>
+                                                                <p>Remove from pantry</p>
+                                                            </Button>
                                                             </div>
                                                             </Card.Body>
                                                         </Card>
