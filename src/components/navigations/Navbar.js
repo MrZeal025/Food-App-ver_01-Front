@@ -52,7 +52,7 @@ export class NavBar extends Component {
                         </Nav.Link>
                         <NavDropdown className="to-uppercase navName " title={user.fullName || "Loading"} id="collasible-nav-dropdown">
                             <NavDropdown.Item href={`/profile/${user._id}`}>Profile</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Go Pro!</NavDropdown.Item>
+                            <NavDropdown.Item href="/user/pro" className="goProLink">Go Pro!</NavDropdown.Item>
                             <NavDropdown.Divider />
                             <Logout/>
                         </NavDropdown>
