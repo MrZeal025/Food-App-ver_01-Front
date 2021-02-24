@@ -2,7 +2,7 @@ button {
     border-radius: 5px !important;
     padding: 4px 8px;
     font-weight: 600 !important;
-    font-size: 12px !important;
+    font-size: 12px ;
 }
 
 .customButtonFormat {
@@ -63,12 +63,13 @@ button {
     color: white;
 }
 .buttonColorRed {
-    background-color: $red;
-    color: white;
+    background-color: #dc3545 !important;
+    color: white !important;
+    border: unset !important;
 }
 .buttonColorRed:hover {
-    background-color: #d12a43;
-    color: white;
+    background-color: #cf3040 !important;
+    color: white !important;
 }
 .buttonColorBlue {
     background-color: $blue;

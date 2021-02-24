@@ -157,7 +157,7 @@ export class index extends Component {
                                                                     <p>See Full Recipe</p>
                                                                 </Button>
                                                             </Link>
-                                                            <Button className="customButton" variant="danger" onClick={() => this.removeFromPantty(recipe._id)}>
+                                                            <Button className="customButton butonColorRed" variant="danger" onClick={() => this.removeFromPantty(recipe._id)}>
                                                                 <p>Remove from pantry</p>
                                                             </Button>
                                                             </div>
@@ -188,16 +188,14 @@ export class index extends Component {
                                                             <Card.Header>
                                                                 <Accordion.Toggle as={Button} className="d-flex w-100" variant="link" eventKey={i.toLocaleString()}>
                                                                     <div className="w-75 text-left">
-                                                                        <p>Recipe Name: {pantry.foodName}</p>
+                                                                        <h5 className="no-mb">{pantry.foodName}</h5>
                                                                     </div>
-                                                                    <div className="w-25">
-                                                                        <Button variant="danger" className="float-right">Remove</Button>
-                                                                    </div>
+                                                                    
                                                                 </Accordion.Toggle>
                                                             </Card.Header>
                                                             <Accordion.Collapse eventKey={i.toLocaleString()}>
                                                                 <Card.Body>
-                                                                    <ul>
+                                                                    <ul className="ingList">
                                                                         {
                                                                             pantry.ingredients.map((ingredient, i) => {
                                                                                 return (

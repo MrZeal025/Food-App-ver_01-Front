@@ -8,6 +8,8 @@ import { MdStar, MdSearch, MdExpandMore, MdShoppingBasket, MdNoteAdd, MdCheck, M
 import { FaBreadSlice } from 'react-icons/fa';
 // link
 import { Link } from 'react-router-dom';
+//Footer
+import Footer from '../../common/Footer'
 const logoLight = process.env.PUBLIC_URL + '/assets/logowhite@2x.png';
 
 export class LandingPage extends Component {
@@ -199,9 +201,9 @@ export class LandingPage extends Component {
                                     )
                                 })
                             : 
-                            <div className="empty-center-display">
+                            <div className="landing-center-display">
                                 <FaBreadSlice/>
-                                <p>No recipes at the moment</p>
+                                <p>No featured recipes at the moment</p>
                             </div>
                         }
                     </Row>
@@ -247,7 +249,7 @@ export class LandingPage extends Component {
                         </Col>
                     </Row>
                 </Container>
-
+                <Footer/>
             </>
         )
     }
