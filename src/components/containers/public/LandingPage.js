@@ -201,9 +201,9 @@ export class LandingPage extends Component {
                                     )
                                 })
                             : 
-                            <div className="empty-center-display">
+                            <div className="landing-center-display">
                                 <FaBreadSlice/>
-                                <p>No recipes at the moment</p>
+                                <p>No featured recipes at the moment</p>
                             </div>
                         }
                     </Row>
