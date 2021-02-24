@@ -1,0 +1,37 @@
+.recipeIngList {
+    background-color: $light-3;
+    border-radius: 5px;
+    padding: 10px;
+    
+}
+.flexrow-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ntmargin {
+    margin-top: 0;
+}
+.nbmargin {
+    margin-bottom: 0;
+}
+.IngList {
+    width: 100%;
+    display: flex;
+    padding-left: 25px;
+}
+
+@media only screen and (max-width: 700px) and (min-width: 200px) {
+    .smScreen {
+        display: flex;
+        flex-direction: column;
+        
+    }
+    .nrmargin-sm {
+            margin-right: 0;
+        }
+
+    .mb5-sm {
+        margin-bottom: 5px;
+    }
+}

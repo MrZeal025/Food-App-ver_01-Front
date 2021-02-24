@@ -5,7 +5,7 @@ import { FaAngleDown } from 'react-icons/fa';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 //react icons
-import { MdStar } from 'react-icons/md';
+import { MdStar, MdSearch, MdExpandMore } from 'react-icons/md';
 import { FaBreadSlice } from 'react-icons/fa';
 // link
 import { Link } from 'react-router-dom';
@@ -84,18 +84,77 @@ export class LandingPage extends Component {
                         <Link to="/sign-up" className="sign-up-link">Sign Up</Link>
                     </div>
                 </Navbar>
-                <div className="coverDisp">
+                <div className="coverDisp mb-10">
                     <div className="promText">
                         <h1>Thousands of recipes,</h1>
                         <h1>ready to be cooked and served.</h1>
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et.</p>
-                        <Button variant="outline-light">Get Started</Button>
+                        <Button variant="outline-light customButtonFormat"><h5>Get Started</h5></Button>
                     </div>
                     <div className="center-container">
                         <p>Learn More</p>
-                        <FaAngleDown className="landing-icon"/>
+                        <div className="center-icon">
+                            <MdExpandMore className="landing-icon"/>
+                        </div>
                     </div>
                 </div>
+                <Container className="mb-10">
+                    <Row>
+                        <Col>
+                            <Card>
+                                <Card.Body>
+                                    <div className="featureIconDiv">
+                                        <MdSearch className="featureIcon"/>
+                                    </div>
+                                    <Card.Title>Search</Card.Title>
+                                    <Card.Text>
+                                        Search every type of recipe you desire to make.
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <Card>
+                                <Card.Body>
+                                    <div className="featureIconDiv">
+                                        <MdSearch className="featureIcon"/>
+                                    </div>
+                                    <Card.Title>Search</Card.Title>
+                                    <Card.Text>
+                                        Search every type of recipe you desire to make.
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <Card>
+                                <Card.Body>
+                                    <div className="featureIconDiv">
+                                        <MdSearch className="featureIcon"/>
+                                    </div>
+                                    <Card.Title>Search</Card.Title>
+                                    <Card.Text>
+                                        Search every type of recipe you desire to make.
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col>
+                            <Card>
+                                <Card.Body>
+                                    <div className="featureIconDiv">
+                                        <MdSearch className="featureIcon"/>
+                                    </div>
+                                    <Card.Title>Search</Card.Title>
+                                    <Card.Text>
+                                        Search every type of recipe you desire to make.
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    </Row>
+                </Container>
+
                 <Container fluid >
                     <Row md={ recipes.length > 0 ? 3 : 12}>
                         {

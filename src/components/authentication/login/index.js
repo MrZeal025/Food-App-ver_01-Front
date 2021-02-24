@@ -90,7 +90,7 @@ export class index extends Component {
         const {email, password, errors, message, status} = this.state
         return (
             <div className="">
-                <div className="d-flex">
+                <div className="d-flex center-flex">
                     <Form>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Email</Form.Label>
@@ -127,8 +127,9 @@ export class index extends Component {
                             variant="primary" 
                             type="submit"
                             onClick={this.onSubmit}
+                            className="customButtonFormat"
                         >
-                            SIGN IN
+                            <p>Sign In</p>
                         </Button>
                     </Form>
                 </div>
