@@ -19,6 +19,7 @@
 @import './Home_Page.scss';
 @import './Create_Recipe.scss';
 @import './Full_Recipe.scss';
+@import './Pantry.scss';
 
 // overrides
 @import './partials/overrides';
@@ -34,6 +35,7 @@
 }
 body {
     background-color: $bg-main;
+    transition: all .25s ease-in-out;
 }
 
 .d-flex {

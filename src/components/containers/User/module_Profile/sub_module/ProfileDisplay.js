@@ -95,9 +95,9 @@ export class ProfileDisplay extends Component {
                                                         }
                                                     </div>
                                                 </div>
-                                                <div className="d-flex">
-                                                    <Button className="customButton mr-1" variant="primary"><Link to={`/recipe/view/${recipe._id}`}>See Full Recipe</Link></Button>
-                                                    <Button className="customButton custom-secondary">Edit Post</Button>
+                                                <div className="buttonDiv">
+                                                <a href={`/recipe/view/${recipe._id}`}><Button className="customButton" variant="primary">See Full Recipe</Button></a>
+                                                <Button className="customButton custom-secondary">Add to Pantry</Button>
                                                 </div>
                                             </Card.Body>
                                         </Card>

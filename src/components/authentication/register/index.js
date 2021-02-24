@@ -137,7 +137,7 @@ export class index extends Component {
                     :
                         <></>
                 }
-               <Form>
+               <Form className="center-flex">
                     <Form.Group controlId="formGroupEmail">
                         <Form.Label>Fullname</Form.Label>
                         <Form.Control 

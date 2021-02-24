@@ -156,14 +156,9 @@
 .middle {
     width: 100%;
     padding-left: 20%;
-    padding-right: 20px;
     margin: 0 10px;
     flex-direction: row;
     justify-content: center;
-    
-    &.pr-20 {
-        padding-right: 20% !important;
-    }
 
     .perCard {
         margin-top: 20px;
@@ -191,22 +186,7 @@
         display: flex;
         align-items: left;
     }
-    .buttonDiv {
-        display: flex;
-        flex-grow: 1;
-        justify-content: flex-end;
-
-        .customButton {
-            color: white;
-            width: 70%;
-            padding: 2px 5px;
-        }
-        .custom-secondary {
-            background-color: #3b3b3b;
-            margin-left: 5px;
-        }
-    }
-
+    
     .empty-center-display {
         width: 100%;
         margin: 20% auto;
@@ -224,4 +204,38 @@
         }
     }
     
+}
+.buttonDiv {
+    display: flex;
+    flex-direction: column;
+
+    .customButton {
+        color: white;
+        width: 100%;
+        padding: 5px;
+        margin-top: 5px;
+    }
+    .custom-secondary {
+        background-color: $secondary;
+        color: $dark-1;
+        border: unset;
+
+    }
+    .custom-secondary:hover {
+        background-color: $secondary-dark;
+    }
+}
+
+.card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+@media only screen and (max-width: 1000px) and (min-width: 250px) {
+    .middle {
+        padding-left: 10px;
+    }
+    .left {
+        display: none;
+    }
 }

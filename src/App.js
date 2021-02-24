@@ -22,6 +22,7 @@ import Home from './components/containers/User/module_Home_Page/index';
 import Profile from './components/containers/User/module_Profile/index';
 import CreateRecipe from './components/containers/User/module_Create/index';
 import FullRecipe from './components/containers/User/module_Full_Recipe/index';
+import Pantry from './components/containers/User/module_Pantry';
 // Admin
 import Dashboard from './components/containers/Admin/module_Admin_Page/index';
 import AdminProfile from './components/containers/Admin/module_Profile/index';
@@ -53,6 +54,7 @@ export class App extends Component {
             <ProtectedUserRoute path="/profile/:id" exact component={Profile}/>
             <ProtectedUserRoute path="/recipe/create" exact component={CreateRecipe}/>
             <ProtectedUserRoute path="/recipe/view/:id" exact component={FullRecipe}/>
+            <ProtectedUserRoute path="/pantry" exact component={Pantry}/>
 
             {/* Admin */}
             <ProtectedAdminRoute path="/admin/home" exact component ={Dashboard} />

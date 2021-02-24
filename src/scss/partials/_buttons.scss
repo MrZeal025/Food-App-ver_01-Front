@@ -11,12 +11,17 @@ button {
     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
 
     p {
-        font-size: 15px;
+        font-size: 13px;
+        padding: 5px;
+    }
+    h5 {
+        margin-bottom: 0;
+        font-weight: bold;
         padding: 5px;
     }
 }
 .customButtonFormat:hover {
-    background-color: #dddddd;
+    background-color: $light-5;
 }
 .customButtonsize100 {
     width: 100%;
@@ -29,12 +34,13 @@ button {
         }
     }    
 }
-.buttonColorGray:hover {
-    background-color: $dark-4;
-    color: white;
-}
+
 .buttonColorGray {
     background-color: $dark-6;
+    color: white;
+}
+.buttonColorGray:hover {
+    background-color: $dark-4;
     color: white;
 }
 .buttonColorRed {
@@ -60,6 +66,9 @@ button {
     color: white;
     margin-top: unset;
 
+}
+.rateButton:hover {
+    background-color: $green-light-5;
 }
 
 .modal-close-button{

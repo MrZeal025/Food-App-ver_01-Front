@@ -139,16 +139,16 @@ export class index extends Component {
         return (
             <UserFrame>
                 <div className="mainHomeDiv">
-                    <div className="middle pr-20">
+                    <div className="fullRecDiv mb-10">
                         <div className="white-bg mb-4 mt-4">
-                            <h4 className="recipeName">{recipe.foodName}</h4>
+                            <h4 className="recipeName mb-10">{recipe.foodName}</h4>
                             {/* userName */}
                             <div className="flex-row mb-10">
-                                <img className="small-avatar" src={recipe.ownerInfo.profilePicture === "" ? profilePicture : recipe.ownerInfo.profilePicture} alt="DP"/>
+                                <img className="small-avatar mr-10" src={recipe.ownerInfo.profilePicture === "" ? profilePicture : recipe.ownerInfo.profilePicture} alt="DP"/>
                                 <div className="userName"><h6>By: {recipe.ownerInfo.name}</h6></div>
                             </div>
                             {/* rating */}
-                            <div className="rating fullv mb-10">
+                            <div className="rating fullv mb-10 flex-row">
                                 <MdStar className="star true"/>
                                 <MdStar className="star true"/>
                                 <MdStar className="star true"/>
@@ -174,22 +174,22 @@ export class index extends Component {
                                         <h6>{recipe.goodFor}</h6>
                                     </div>
                                     <div className="mb-10">
-                                        <h6 className="label mb-10">Nutrition Facts</h6>
+                                        <h6 className="label mb-10">Nutrition&nbsp;Facts</h6>
                                         <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">{recipe.nutrition.totalCalories === '' ? "None" : recipe.nutrition.totalCalories }</h6>
-                                            <h6 className="label">Total Calories</h6>
+                                            <h6 className="nutContLabel mr-10">Total&nbsp;Calories</h6>
+                                            <h6 className="nutCont">{recipe.nutrition.totalCalories === '' ? "None" : recipe.nutrition.totalCalories }</h6>
                                         </div>
                                         <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">{recipe.nutrition.caloricBreakDown.percentCarbs}</h6>
-                                            <h6 className="label">Carbohydrates</h6>
+                                            <h6 className="nutContLabel mr-10">Carbohydrates</h6>
+                                            <h6 className="nutCont">{recipe.nutrition.caloricBreakDown.percentCarbs}</h6>
                                         </div>
                                         <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">{recipe.nutrition.caloricBreakDown.percentProtein}</h6>
-                                            <h6 className="label">Protein</h6>
+                                           <h6 className="nutContLabel mr-10">Protein</h6>
+                                           <h6 className="nutCont">{recipe.nutrition.caloricBreakDown.percentProtein}</h6>
                                         </div>
                                         <div className="flex-row mb_5">
-                                            <h6 className="nutCont mr-10">{recipe.nutrition.caloricBreakDown.percentFat}</h6>
-                                            <h6 className="label">Fat</h6>
+                                            <h6 className="nutContLabel mr-10">Fat</h6>
+                                            <h6 className="nutCont">{recipe.nutrition.caloricBreakDown.percentFat}</h6>
                                         </div>
                                     </div>
                                     {/* tags */}
@@ -226,6 +226,7 @@ export class index extends Component {
                             {/* Ingredients */}
                             <div className="mb-10">
                                 <h5 className="mb-10 ingTitle">Ingredients</h5>
+                                <div className="ingList">
                                 <ul>
                                     {
                                         recipe.ingredients.map((ingredient, i) => {
@@ -233,17 +234,20 @@ export class index extends Component {
                                         })
                                     }
                                 </ul>
+                                </div>
                             </div>
                             {/* Procedure */}
                             <div className="mb-10">
                                 <h5 className="mb-10 procTitle">Procedure</h5>
-                                <ol className="justify">
-                                    {
-                                        recipe.instruction.map((intruction, i) => {
-                                            return <li className="mt-2" key={i}>{intruction}</li>
-                                        })
-                                    }
-                                </ol>
+                                <div className="ingList">
+                                    <ol className="justify">
+                                        {
+                                            recipe.instruction.map((intruction, i) => {
+                                                return <li className="mt-2" key={i}>{intruction}</li>
+                                            })
+                                        }
+                                    </ol>
+                                </div>
                             </div>
                             {/* Action Button */}
                             <div>
@@ -267,7 +271,7 @@ export class index extends Component {
                                 }
                             </div>
                         </div>
-                        <div className="white-bg">
+                        <div className="white-bg mb-10">
                             <h5 className="rateTitle mb-10">Ratings</h5>
                             {/* For Input of the user for a comment */}
                             <div className="flex-col mb-20">
@@ -303,9 +307,12 @@ export class index extends Component {
                                     return (
                                         <div key={i} className="flex-col mb-20">
                                             <div className="flex-row mb-10">
-                                                <img className="small-avatar" src={review.ownerInfo.profilePicture === "" ? profilePicture : recipe.ownerInfo.profilePicture} alt="DP" />
-                                                <div className="userName"><h6>{review.ownerInfo.fullName}</h6></div>
-                                                <Moment format="ddd YYYY/MM/DD h:mm A">{review.dateStamp}</Moment>
+                                                <img className="small-avatar mr-10" src={review.ownerInfo.profilePicture === "" ? profilePicture : recipe.ownerInfo.profilePicture} alt="DP" />
+                                                <div className="userName">
+                                                    <h6 className="mr-10 rateUserName">{review.ownerInfo.fullName}</h6>
+                                                    <Moment format="ddd YYYY/MM/DD h:mm A" className="timeStamp">{review.dateStamp}</Moment>
+                                                </div>
+                                                
                                             </div>
                                             {/* Stars */}
                                             <div className="rating fullv mb-10">
@@ -328,59 +335,61 @@ export class index extends Component {
                     sources={recipe.foodImages}
                     slide={true}
                 />
-                <h4><b>Other recipe you might like</b></h4>
-                 <Row md={ recipes.length > 0 ? 4 : 12}>
-                    {
-                        recipes.length > 0 
-                        ? 
-                            recipes.map((recipe, i) => {
-                                return(
-                                    <Col key={i} className="perCard">
-                                        <Card>
-                                            <Card.Img variant="top" src={recipe.foodImages[0]} />
-                                            <Card.Body className="customCardBody">
-                                            <Card.Title className="title">{recipe.foodName}</Card.Title>
-                                            <div>
-                                                <p className="userName">By: {recipe.ownerInfo.name}</p>
-                                                <div className="rating">
-                                                    <MdStar className="star true"/>
-                                                    <MdStar className="star true"/>
-                                                    <MdStar className="star true"/>
-                                                    <MdStar className="star false"/>
-                                                    <MdStar className="star false"/>
-                                                    <p>(1.5k)</p>
+                <h4 className="otherRecTitle mb-10"><b>Other recipes you might like</b></h4>
+                <div className="otherRec just-center">
+                    <Row md={ recipes.length > 0 ? 4 : 12}>
+                        {
+                            recipes.length > 0 
+                            ? 
+                                recipes.map((recipe, i) => {
+                                    return(
+                                        <Col key={i} className="perCard">
+                                            <Card>
+                                                <Card.Img variant="top" src={recipe.foodImages[0]} />
+                                                <Card.Body className="customCardBody">
+                                                <Card.Title className="title">{recipe.foodName}</Card.Title>
+                                                <div>
+                                                    <p className="userName">By: {recipe.ownerInfo.name}</p>
+                                                    <div className="rating">
+                                                        <MdStar className="star true"/>
+                                                        <MdStar className="star true"/>
+                                                        <MdStar className="star true"/>
+                                                        <MdStar className="star false"/>
+                                                        <MdStar className="star false"/>
+                                                        <p>(1.5k)</p>
+                                                    </div>
+                                                    <div className="tagDiv">
+                                                        {
+                                                            recipe.tags.map((tag, i) => {
+                                                                return(
+                                                                    <p 
+                                                                        key={i}
+                                                                        className="tag" 
+                                                                        style={{color:tag.color, border: `2px solid ${tag.color} `}}>
+                                                                            {tag.tagName}
+                                                                    </p>
+                                                                )
+                                                            })
+                                                        }
+                                                    </div>
                                                 </div>
-                                                <div className="tagDiv">
-                                                    {
-                                                        recipe.tags.map((tag, i) => {
-                                                            return(
-                                                                <p 
-                                                                    key={i}
-                                                                    className="tag" 
-                                                                    style={{color:tag.color, border: `2px solid ${tag.color} `}}>
-                                                                        {tag.tagName}
-                                                                </p>
-                                                            )
-                                                        })
-                                                    }
+                                                <div className="buttonDiv">
+                                                <a href={`/recipe/view/${recipe._id}`}><Button className="customButton" variant="primary"><p>See Full Recipe</p></Button></a>
+                                                <Button className="customButton custom-secondary"><p>Add to Pantry</p></Button>
                                                 </div>
-                                            </div>
-                                            <div className="buttonDiv">
-                                            <Button className="customButton" variant="primary"><a href={`/recipe/view/${recipe._id}`}>See Full Recipe</a></Button>
-                                            <Button className="customButton custom-secondary">Add to Pantry</Button>
-                                            </div>
-                                            </Card.Body>
-                                        </Card>
-                                    </Col>
-                                )
-                            })
-                        : 
-                        <div className="empty-center-display">
-                            <FaBreadSlice/>
-                            <p>No recipes at the moment</p>
-                        </div>
-                    }
-                </Row>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    )
+                                })
+                            : 
+                            <div className="empty-center-display">
+                                <FaBreadSlice/>
+                                <p>No recipes at the moment</p>
+                            </div>
+                        }
+                    </Row>
+                </div>
             </UserFrame>
         )
     }

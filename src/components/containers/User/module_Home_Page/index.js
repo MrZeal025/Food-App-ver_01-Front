@@ -118,7 +118,13 @@ export class index extends Component {
                                         return(
                                             <Col key={i} className="perCard">
                                                 <Card>
-                                                    <Card.Img variant="top" src={recipe.foodImages[0]} />
+                                                    <div>
+                                                        <Card.Img 
+                                                            variant="top" 
+                                                            src={recipe.foodImages[0]} 
+                                                            
+                                                        />
+                                                    </div>
                                                     <Card.Body className="customCardBody">
                                                     <Card.Title className="title">{recipe.foodName}</Card.Title>
                                                     <div>
@@ -157,8 +163,8 @@ export class index extends Component {
                                                         </div>
                                                     </div>
                                                     <div className="buttonDiv">
-                                                    <Button className="customButton" variant="primary"><Link to={`/recipe/view/${recipe._id}`}>See Full Recipe</Link></Button>
-                                                    <Button className="customButton custom-secondary">Add to Pantry</Button>
+                                                    <Link to={`/recipe/view/${recipe._id}`}><Button className="customButton buttonColorBlue" variant="primary"><p>See Full Recipe</p></Button></Link>
+                                                    <Button className="customButton custom-secondary"><p>Add to Pantry</p></Button>
                                                     </div>
                                                     </Card.Body>
                                                 </Card>
