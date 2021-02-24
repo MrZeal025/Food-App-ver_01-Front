@@ -145,15 +145,26 @@ export class index extends Component {
             // default values for filtering
             let tags = true;
             let recipeName = recipe.foodName.toUpperCase().indexOf(quickFilter.toUpperCase()) !== -1;
-            let rating = (Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
-                / reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length)) >= ratingData ;
+            let numCommnets = (Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length))
+            let numRatings = (Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0)))
+            let ratings = true;
+
+            if(numCommnets > 0) {
+                ratings = (numRatings/numCommnets) >= ratingData 
+                if(ratings) {
+                    ratings = true
+                }
+                else {
+                    ratings = false
+                }
+            }
             // check if tag is selected
             if(tagsSelected.length > 0) {
                 tags = recipe.sub.some(r => tagsSelected.includes(r));
             }
 
             // check if boolean condition is false to not render items
-            if(!recipeName || !tags || !rating) {
+            if(!recipeName || !tags || !ratings) {
                 return false
             }
 

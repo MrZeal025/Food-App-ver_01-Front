@@ -53,11 +53,14 @@ export class index extends Component {
             const recipe = await axios.get(`/api/recipe/${this.props.match.params.id}`, config);
             const profile = await axios.get(`/api/user/profile/read/${recipe.data.data.recipe.ownerInfo.id}`, config);
             const reviews = await axios.get(`/api/review/get/${this.props.match.params.id}`, config);
+            const profileMy = await axios.get(`/api/user/profile/read/${jwtDecode(token)._id}`, config);
+
             document.title = `${recipe.data.data.recipe.foodName} - Bitezoo`
             this.setState({
                 recipe: recipe.data.data.recipe,
                 profilePicture: profile.data.data.profilePicture,
-                reviews: reviews.data.data
+                reviews: reviews.data.data,
+                myProfilePic: profileMy.data.data.profilePicture
             })
         }
         catch(error) {
@@ -97,7 +100,7 @@ export class index extends Component {
     }
 
     addComment = async () => {
-        const { newComment, recipe } = this.state
+        const { newComment, recipe, myProfilePic } = this.state
         const body = {
             recipeId: recipe._id,
             rating: newComment.rating,
@@ -105,7 +108,7 @@ export class index extends Component {
             ownerInfo: {
                 _id: jwtDecode(token)._id,
                 fullName: jwtDecode(token).fullName,
-                profilePicture: jwtDecode(token).profilePicture
+                profilePicture: myProfilePic
             }
         }
         try {
