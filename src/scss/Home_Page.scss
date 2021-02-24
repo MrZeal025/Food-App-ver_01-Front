@@ -283,3 +283,22 @@
         display: none;
     }
 }
+
+//Go Pro Page Design
+.goProDiv {
+    margin-top: 15vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .BZucArt {
+        width: 40%;
+        max-width: 1000px;
+        min-width: 200px;
+    }
+    h3, h4 {
+        font-weight: bold;
+    }
+}
