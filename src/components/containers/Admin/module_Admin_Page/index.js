@@ -61,12 +61,8 @@ export class index extends Component {
         return (
             <AdminFrame>
                 <div className="mainHomeDiv">
-                    <div className="left">
-                        {/* <SearchFilter /> */}
-                    </div>
-                    <div className="middle">
-                        <Container fluid >
-                            <Row md={ recipes.length > 0 ? 3 : 12}>
+                    <div className="center-item">
+                            <Row md={ recipes.length > 0 ? 4 : 12}>
                                 {
                                     recipes.length > 0 
                                     ? 
@@ -104,7 +100,7 @@ export class index extends Component {
                                                         </div>
                                                         <div className="buttonDiv">
                                                         <Button className="customButton w-100 mt-1" variant="primary">
-                                                            <Link to={`/recipe/view/${recipe._id}`}>See Full Recipe</Link>
+                                                            <Link to={`/recipe/admin/view/${recipe._id}`}>Manage Recipe</Link>
                                                         </Button>
                                                         </div>
                                                         </Card.Body>
@@ -119,11 +115,7 @@ export class index extends Component {
                                     </div>
                                 }
                             </Row>
-                        </Container>
-                    </div>
-                    <div className="right">
-                        <Link className="customButton" to="/recipe/create">Add Your Recipe</Link>
-                    </div>
+                        </div>
                 </div>
             </AdminFrame>
         )
