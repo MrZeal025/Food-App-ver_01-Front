@@ -163,8 +163,8 @@ export class index extends Component {
                                                         </div>
                                                     </div>
                                                     <div className="buttonDiv">
-                                                    <Link to={`/recipe/view/${recipe._id}`}><Button className="customButton buttonColorBlue" variant="primary">See Full Recipe</Button></Link>
-                                                    <Button className="customButton custom-secondary">Add to Pantry</Button>
+                                                    <Link to={`/recipe/view/${recipe._id}`}><Button className="customButton buttonColorBlue" variant="primary"><p>See Full Recipe</p></Button></Link>
+                                                    <Button className="customButton custom-secondary"><p>Add to Pantry</p></Button>
                                                     </div>
                                                     </Card.Body>
                                                 </Card>
