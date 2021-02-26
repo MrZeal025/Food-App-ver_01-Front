@@ -51,13 +51,16 @@ export class index extends Component {
     async componentDidMount() {
         try {
             const recipe = await axios.get(`/api/recipe/${this.props.match.params.id}`, config);
-            const profile = await axios.get(`/api/user/profile/read/${jwtDecode(token)._id}`, config);
+            const profile = await axios.get(`/api/user/profile/read/${recipe.data.data.recipe.ownerInfo.id}`, config);
             const reviews = await axios.get(`/api/review/get/${this.props.match.params.id}`, config);
+            const profileMy = await axios.get(`/api/user/profile/read/${jwtDecode(token)._id}`, config);
+
             document.title = `${recipe.data.data.recipe.foodName} - Bitezoo`
             this.setState({
                 recipe: recipe.data.data.recipe,
                 profilePicture: profile.data.data.profilePicture,
-                reviews: reviews.data.data
+                reviews: reviews.data.data,
+                myProfilePic: profileMy.data.data.profilePicture
             })
         }
         catch(error) {
@@ -97,7 +100,7 @@ export class index extends Component {
     }
 
     addComment = async () => {
-        const { newComment, recipe } = this.state
+        const { newComment, recipe, myProfilePic } = this.state
         const body = {
             recipeId: recipe._id,
             rating: newComment.rating,
@@ -105,7 +108,7 @@ export class index extends Component {
             ownerInfo: {
                 _id: jwtDecode(token)._id,
                 fullName: jwtDecode(token).fullName,
-                profilePicture: jwtDecode(token).profilePicture
+                profilePicture: myProfilePic
             }
         }
         try {
@@ -134,7 +137,7 @@ export class index extends Component {
     }
 
     render() {
-        const { recipe, recipes, openLightBox, profilePicture, isOnPantry, newComment, reviews } = this.state
+        const { recipe, recipes, openLightBox, profilePicture, newComment, reviews } = this.state
         return (
             <UserFrame>
                 <div className="mainHomeDiv">
@@ -149,19 +152,59 @@ export class index extends Component {
                             {/* rating */}
                             <div className="rating fullv mb-10 flex-row">
                                 <MdStar 
-                                    className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 1 ? "star true" : "star false"}
+                                    className={
+                                        Math.round(
+                                            reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                            / 
+                                            reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                            ) >= 1 
+                                        ? "star true" 
+                                        : "star false"
+                                    }
                                 />
                                 <MdStar 
-                                    className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 2 ? "star true" : "star false"}
+                                    className={
+                                        Math.round(
+                                            reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                            / 
+                                            reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                            ) >= 2 
+                                        ? "star true" 
+                                        : "star false"
+                                    }
                                 />
                                 <MdStar 
-                                    className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 3 ? "star true" : "star false"}
+                                    className={
+                                        Math.round(
+                                            reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                            / 
+                                            reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                            ) >= 3 
+                                        ? "star true" 
+                                        : "star false"
+                                    }
                                 />
                                 <MdStar 
-                                    className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 4 ? "star true" : "star false"}
+                                    className={
+                                        Math.round(
+                                            reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                            / 
+                                            reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                            ) >= 4 
+                                        ? "star true" 
+                                        : "star false"
+                                    }
                                 />
                                 <MdStar 
-                                    className={Math.round(reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) / 5) >= 5 ? "star true" : "star false"}
+                                    className={
+                                        Math.round(
+                                            reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                            / 
+                                            reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                            ) >= 5 
+                                        ? "star true" 
+                                        : "star false"
+                                    }
                                 />
                                 <p>({ reviews.filter(review => review.recipeId === recipe._id).length })</p>
                             </div>
@@ -258,26 +301,6 @@ export class index extends Component {
                                     </ol>
                                 </div>
                             </div>
-                            {/* Action Button */}
-                            <div>
-                                {
-                                    !isOnPantry 
-                                    ? <button 
-                                        className="customButtonFormat buttonColorBlue mr-10"
-                                        onClick={() => this.addToPanty()}
-                                    >
-                                        <p>Add to Pantry</p>
-                                    </button> 
-                                    : <>
-                                        <button 
-                                            className="customButtonFormat buttonColorRed"
-                                            onClick={() => this.addToPanty()}
-                                        >
-                                            <p>Remove from Pantry</p>
-                                        </button>
-                                    </>   
-                                }
-                            </div>
                         </div>
                         <div className="white-bg mb-10">
                             <h5 className="rateTitle mb-10">Ratings</h5>
@@ -315,7 +338,11 @@ export class index extends Component {
                                     return (
                                         <div key={i} className="flex-col mb-20">
                                             <div className="flex-row mb-10">
-                                                <img className="small-avatar mr-10" src={review.ownerInfo.profilePicture === "" ? profilePicture : recipe.ownerInfo.profilePicture} alt="DP" />
+                                                <img 
+                                                    className="small-avatar mr-10" 
+                                                    src={review.ownerInfo.profilePicture} 
+                                                    alt="DP" 
+                                                />
                                                 <div className="userName">
                                                     <h6 className="mr-10 rateUserName">{review.ownerInfo.fullName}</h6>
                                                     <Moment format="ddd YYYY/MM/DD h:mm A" className="timeStamp">{review.dateStamp}</Moment>

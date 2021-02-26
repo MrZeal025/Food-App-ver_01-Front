@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import SearchFilter from '../User/module_Search/index';
 import axios from 'axios'
 //react icons
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar } from 'react-bootstrap'
 import { MdStar } from 'react-icons/md'
 import { Link } from 'react-router-dom';
 import FsLightbox from 'fslightbox-react';
-import jwtDecode from 'jwt-decode'
+import Moment from "react-moment";
 
 const token = localStorage.getItem('accessToken');
 const config = {
@@ -20,6 +19,7 @@ const logoLight = process.env.PUBLIC_URL + '/assets/logowhite@2x.png';
 export class index extends Component {
 
     state = {
+         reviews: [],
         recipe: {
             foodImages: [],
             nutrition: {
@@ -39,9 +39,11 @@ export class index extends Component {
         
         try {
             const recipe = await axios.get(`/api/recipe/public/${this.props.match.params.id}`)
+            const reviews = await axios.get('/api/review/all-reviews');
             document.title = `${recipe.data.data.recipe.foodName} - Bitezoo`
             this.setState({
-                recipe: recipe.data.data.recipe
+                recipe: recipe.data.data.recipe,
+                reviews: reviews.data.data
             })
         }
         catch(error) {
@@ -56,7 +58,7 @@ export class index extends Component {
     }
 
     render() {
-        const { recipe, openLightBox, profilePicture } = this.state
+        const { recipe, openLightBox, reviews } = this.state
     
         return (
             <>
@@ -82,17 +84,67 @@ export class index extends Component {
                             <h4 className="recipeName mb-10">{recipe.foodName}</h4>
                             {/* userName */}
                             <div className="flex-row mb-10">
-                                <img className="small-avatar mr-10" src={recipe.ownerInfo.profilePicture === "" ? profilePicture : recipe.ownerInfo.profilePicture} alt="DP"/>
+                                <img className="small-avatar mr-10" src={recipe.ownerInfo.profilePicture} alt="DP"/>
                                 <div className="userName"><h6>By: {recipe.ownerInfo.name}</h6></div>
                             </div>
                             {/* rating */}
                             <div className="rating fullv mb-10 flex-row">
-                                <MdStar className="star true"/>
-                                <MdStar className="star true"/>
-                                <MdStar className="star true"/>
-                                <MdStar className="star false"/>
-                                <MdStar className="star false"/>
-                                <p className="rateCount">(1.5k)</p>
+                                <MdStar 
+                                className={
+                                    Math.round(
+                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                        / 
+                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                        ) >= 1 
+                                    ? "star true" 
+                                    : "star false"
+                                }
+                            />
+                            <MdStar 
+                                className={
+                                    Math.round(
+                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                        / 
+                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                        ) >= 2 
+                                    ? "star true" 
+                                    : "star false"
+                                }
+                            />
+                            <MdStar 
+                                className={
+                                    Math.round(
+                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                        / 
+                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                        ) >= 3 
+                                    ? "star true" 
+                                    : "star false"
+                                }
+                            />
+                            <MdStar 
+                                className={
+                                    Math.round(
+                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                        / 
+                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                        ) >= 4 
+                                    ? "star true" 
+                                    : "star false"
+                                }
+                            />
+                            <MdStar 
+                                className={
+                                    Math.round(
+                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).reduce((a, b) => a + b, 0) 
+                                        / 
+                                        reviews.filter(review => review.recipeId === recipe._id).map(data => { return data.rating }).length
+                                        ) >= 5 
+                                    ? "star true" 
+                                    : "star false"
+                                }
+                            />
+                            <p>({ reviews.filter(review => review.recipeId === recipe._id).length })</p>
                             </div>
                             {/* Image and Details */}
                             <div className="flex-row mb-10 imgAndDetails">
@@ -188,54 +240,38 @@ export class index extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="white-bg">
+                        <div className="white-bg mb-10">
                             <h5 className="rateTitle mb-10">Ratings and Comments</h5>
                             {/* Rating Post Sample */}
-                            <div className="flex-col mb-20">
-                                <div className="flex-row mb-10">
-                                    <div className="imgTempo"></div>
-                                    <div className="userName"><h6>Other User</h6></div>
-                                </div>
-                                {/* Stars */}
-                                <div className="rating fullv mb-10">
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                </div>
-                                <p className="justify">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione voluptatibus iure recusandae, repellendus quam tenetur voluptates corrupti nesciunt, suscipit perferendis quos ab nostrum tempore aut modi ad porro repudiandae eligendi.</p>
-                            </div>
-                            <div className="flex-col mb-20">
-                                <div className="flex-row mb-10">
-                                    <div className="imgTempo"></div>
-                                    <div className="userName"><h6>Other User</h6></div>
-                                </div>
-                                {/* Stars */}
-                                <div className="rating fullv mb-10">
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                </div>
-                                <p className="justify">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione voluptatibus iure recusandae, repellendus quam tenetur voluptates corrupti nesciunt, suscipit perferendis quos ab nostrum tempore aut modi ad porro repudiandae eligendi.</p>
-                            </div>
-                            <div className="flex-col mb-20">
-                                <div className="flex-row mb-10">
-                                    <div className="imgTempo"></div>
-                                    <div className="userName"><h6>Other User</h6></div>
-                                </div>
-                                {/* Stars */}
-                                <div className="rating fullv mb-10">
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star true"/>
-                                    <MdStar className="star false"/>
-                                    <MdStar className="star false"/>
-                                </div>
-                                <p className="justify">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ratione voluptatibus iure recusandae, repellendus quam tenetur voluptates corrupti nesciunt, suscipit perferendis quos ab nostrum tempore aut modi ad porro repudiandae eligendi.</p>
-                            </div>
+                            {
+                                reviews.reverse().map((review, i) => {
+                                    return (
+                                        <div key={i} className="flex-col mb-20">
+                                            <div className="flex-row mb-10">
+                                                <img 
+                                                    className="small-avatar mr-10" 
+                                                    src={review.ownerInfo.profilePicture} 
+                                                    alt="DP" 
+                                                />
+                                                <div className="userName">
+                                                    <h6 className="mr-10 rateUserName">{review.ownerInfo.fullName}</h6>
+                                                    <Moment format="ddd YYYY/MM/DD h:mm A" className="timeStamp">{review.dateStamp}</Moment>
+                                                </div>
+                                                
+                                            </div>
+                                            {/* Stars */}
+                                            <div className="rating fullv mb-10">
+                                                <MdStar className={review.rating >= 1 ? "star true" : "star false" }  />
+                                                <MdStar className={review.rating >= 2 ? "star true" : "star false" }  />
+                                                <MdStar className={review.rating >= 3 ? "star true" : "star false" }  />
+                                                <MdStar className={review.rating >= 4 ? "star true" : "star false" }  />
+                                                <MdStar className={review.rating >= 5 ? "star true" : "star false" }  />
+                                            </div>
+                                            <p className="justify">{review.comment}</p>
+                                        </div>
+                                    )
+                                })
+                            }
                         </div>
                     </div>
                 </div>
